@@ -1,1 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap');
+
 @import "tailwindcss";
+
+/* Satoshi */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-BlackItalic.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Helvetica Now Display */
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-LightIta.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-RegIta.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-MedIta.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica Now Display';
+  src: url('./assets/fonts/HelveticaNowDisplay-BoldIta.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+  --font-helvetica: 'Helvetica Now Display', 'Helvetica Neue', Arial, sans-serif;
+  --font-bricolage: 'Bricolage Grotesque', system-ui, sans-serif;
+
+  --color-bb-dark: #0a0908;
+  --color-bb-light: #fdfdf3;
+  --color-bb-gold: #dca331;
+  --color-bb-gold-mid: #cf9947;
+  --color-bb-gold-dark: #7d5d2c;
+  --color-bb-green: #5fc26b;
+  --color-bb-green-light: #7BD686;
+  --color-bb-green-dark: #3fa44e;
+  --color-bb-cream: #f5efe1;
+  --color-bb-text-dim: #c6c6c6;
+  --color-bb-text-muted: #d9d9d9;
+  --color-bb-text-dark: #0d0c0c;
+  --color-bb-separator: #2d2d2d;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  background-color: #0a0908;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Primary green CTA button — exact Figma spec */
+.btn-cta {
+  display: inline-block;
+  background: linear-gradient(180deg, #47CF6E 0%, #2C7D2E 100%);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #A6FFAD;
+  border-radius: 210px;
+  padding: 16px 32px;
+  font-size: 16px;
+  text-align: center;
+  box-shadow: 0 4px 80.8px 0 rgba(89, 215, 70, 0.20);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+.btn-cta:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 80.8px 0 rgba(89, 215, 70, 0.35);
+}
+.btn-cta:active {
+  transform: translateY(1px);
+}
+.btn-cta-sm {
+  padding: 10px 22px;
+  font-size: 14px;
+}
+.btn-cta-lg {
+  padding: 18px 40px;
+  font-size: 18px;
+}
+
+/* Gold gradient CTA — used in Navbar */
+.btn-cta-gold {
+  display: inline-block;
+  background: linear-gradient(180deg, #f0c060 0%, #b88424 100%);
+  color: #0a0908;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(255, 220, 150, 0.5);
+  border-radius: 210px;
+  padding: 12px 26px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 4px 24px 0 rgba(220, 163, 49, 0.25);
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+.btn-cta-gold:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 4px 28px 0 rgba(220, 163, 49, 0.4);
+}

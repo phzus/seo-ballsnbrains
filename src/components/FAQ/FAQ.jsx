@@ -1,140 +1,101 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const faqs = [
   {
     q: 'What is Balls and Brains?',
-    a: "Balls and Brains is the first testosterone-optimizing mushroom coffee specifically designed for men over 30. It combines premium Colombian coffee (100mg caffeine) with clinical doses of 11 functional ingredients—including Tongkat Ali, Fadogia, Ashwagandha, Lion's Mane, and adaptogens—to naturally raise your testosterone by 15-46% while providing sustained energy for 6-8 hours. It replaces both your morning coffee AND your supplement stack with one delicious ritual.",
+    a: 'Balls and Brains is the first testosterone-optimizing mushroom coffee specifically designed for men over 30. It combines premium Colombian coffee (100mg caffeine) with clinical doses of 11 functional ingredients — including Tongkat Ali, Ashwagandha, Lion\'s Mane, and adaptogens — to naturally support testosterone while providing sustained energy for 6–8 hours. It replaces both your morning coffee AND your supplement stack with one delicious ritual.',
   },
   {
     q: 'Who is Balls & Brains for?',
-    a: 'Men over 30 who feel their energy, drive, and performance declining. If you rely on 3+ cups of coffee to function, skip workouts because you feel drained, or notice belly fat increasing and muscle decreasing — this was designed for you.',
+    a: 'Men over 30 who want to support natural testosterone levels, eliminate the afternoon energy crash, and replace a fragmented supplement routine with one daily habit.',
   },
   {
     q: 'How is this different from RYZE or MUD\\WTR?',
-    a: "RYZE and MUD\\WTR are wellness mushroom coffees marketed to everyone. They reduce coffee side effects but don't optimize testosterone. Balls and Brains is the FIRST mushroom coffee designed specifically for men's hormonal health, with clinical doses of Tongkat Ali, Ashwagandha, and Shilajit.",
+    a: 'RYZE and MUD\\WTR are mushroom wellness blends. Balls & Brains is specifically formulated for testosterone support with clinical doses of Tongkat Ali LJ100®, Ashwagandha KSM-66®, Shilajit, and Zinc — at the amounts used in human studies. It also has real caffeine (100mg) so you don\'t have to give up your coffee.',
   },
   {
     q: 'When will I see results?',
-    a: 'Week 1: Immediate smooth energy, no jitters or crash. Week 4: Morning wood returns, libido increases, faster workout recovery. Week 8: Visible body composition changes, testosterone increases 15-46%. Most men feel the difference in Week 1.',
+    a: 'Most users notice cleaner energy and reduced afternoon crash within the first week. Testosterone-support effects (better sleep, improved drive and focus) typically build over 30–90 days as ingredients reach effective concentration.',
   },
   {
     q: 'How do I prepare it?',
-    a: 'Super simple: Add 1 scoop to 8-12oz hot water. Stir or use a frother for 10 seconds. Enjoy. You can also blend with ice for iced coffee, or mix with your favorite milk/creamer. Takes 30 seconds total.',
+    a: 'One scoop in 8–12oz of hot water. Stir or froth. Drink black or with your preferred milk. That\'s it.',
   },
   {
     q: 'Does it really taste good?',
-    a: "Yes. We spent 11 formulation rounds getting this right. We use premium Colombian Arabica as the base, balanced the mushroom extracts so they're functional but not overpowering. Our customers say: 'Tastes like real coffee, not mushrooms.'",
+    a: 'Yes. The base is smooth Colombian Arabica. It tastes like good black coffee — no earthy or bitter aftertaste from the mushrooms. That\'s by design.',
   },
   {
     q: 'How much caffeine does it have?',
-    a: '100mg per serving—about 1/3 of regular coffee. The 100mg is paired with L-Theanine (calm focus) and Cordyceps (cellular ATP). This creates SUSTAINED energy for 6-8 hours without the cortisol spike or crash.',
+    a: '100mg per serving — roughly equivalent to one standard cup of coffee. Combined with 100mg of L-Theanine, the energy is smoother and more sustained than regular coffee.',
   },
   {
     q: 'Will I go through caffeine withdrawal?',
-    a: "Maybe mild symptoms for 2-3 days if you're at 400mg+ daily. Week 1: Keep one regular coffee in afternoon if needed. Week 2: Maybe half-caff afternoon. Week 3+: Just Balls and Brains — you won't need anything else.",
+    a: "If you're replacing a higher-caffeine habit, you may feel mild effects for a day or two. Most users report the L-Theanine makes the transition much smoother than quitting coffee cold turkey.",
   },
   {
     q: 'Is this safe? Will it mess with my hormones?',
-    a: "This is testosterone SUPPORT, not replacement. We're supporting your body's natural ability to produce testosterone. Every ingredient has decades of traditional use. Third-party tested, manufactured in FDA-registered, cGMP-certified facilities.",
+    a: 'Balls & Brains supports your body\'s natural testosterone production — it doesn\'t suppress it. The ingredients are adaptogens and minerals that work with your hormonal axis, not against it. No synthetic hormones, no SARMs, no prohormones.',
   },
   {
     q: "Can I take this if I'm already on TRT?",
-    a: "Consult your doctor, but generally yes. Many TRT patients use this for the cognitive benefits (Lion's Mane, L-Theanine), stress management (Ashwagandha), and clean energy. Discuss with your prescribing physician first.",
+    a: 'Consult your prescribing physician. The ingredients are generally safe alongside TRT but your doctor should know what you\'re supplementing.',
   },
   {
     q: 'Can I use this as a pre-workout?',
-    a: 'Absolutely. Many guys drink it 30-45 minutes before training. The Cordyceps improves VO2 max and cellular ATP, MCT provides fat-burning energy, and the adaptogens support performance without jitters.',
+    a: 'Many users do. The Cordyceps Militaris improves oxygen utilization and the clean caffeine + L-Theanine stack provides steady energy without the crash or jitters of most pre-workouts.',
   },
   {
     q: 'Do I need to cycle off?',
-    a: "No. This supports natural production, so there's no need to cycle. You can use it daily indefinitely.",
+    a: 'No cycling required. The ingredients are food-based and adaptogenic. Daily use is safe and produces compounding benefits over time.',
   },
   {
     q: "What's your refund policy?",
-    a: "365-Day, 100% Money-Back Guarantee. Try Balls and Brains for 365 days. If you don't feel dramatically better — just email us. We'll refund every penny. No questions asked. No return required. You can drink the entire container and still get your money back.",
+    a: '365-day money-back guarantee. If you\'re not satisfied for any reason, contact support@ballsnbrains.com and we\'ll refund every penny. No questions asked.',
   },
 ];
 
-const FAQItem = ({ q, a, isOpen, onToggle }) => (
-  <div
-    className="border border-[#1f1f1f] rounded-2xl overflow-hidden transition-all duration-200"
-    style={{ background: isOpen ? '#161616' : '#111' }}
-  >
-    <button
-      onClick={onToggle}
-      className="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
-    >
-      <span className="text-white font-sans font-black text-sm md:text-base leading-snug">
-        {q}
-      </span>
-      <span
-        className="text-[#dca331] text-xl flex-shrink-0 transition-transform duration-200"
-        style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+function Item({ q, a, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="flex flex-col">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left bg-[#14100c] border border-bb-separator rounded-2xl cursor-pointer hover:border-bb-gold-dark/60 transition-colors"
       >
-        +
-      </span>
-    </button>
+        <span className="text-white font-medium text-[14px] md:text-[16px] leading-snug">{q}</span>
+        <span className="text-bb-gold text-[18px] leading-none shrink-0">
+          {open ? '→' : '↓'}
+        </span>
+      </button>
+      {open && (
+        <p className="text-bb-text-dim text-[13px] md:text-[15px] leading-relaxed px-5 md:px-6 pt-4 pb-2">{a}</p>
+      )}
+    </div>
+  );
+}
 
-    {isOpen && (
-      <div className="px-6 pb-5">
-        <div className="border-t border-[#1f1f1f] pt-4">
-          <p className="text-white/60 font-sans text-sm leading-relaxed">{a}</p>
-        </div>
-      </div>
-    )}
-  </div>
-);
-
-export const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggle = i => setOpenIndex(openIndex === i ? null : i);
-
-  const half = Math.ceil(faqs.length / 2);
-  const leftFaqs = faqs.slice(0, half);
-  const rightFaqs = faqs.slice(half);
+export default function FAQ() {
+  const mid = Math.ceil(faqs.length / 2);
+  const left = faqs.slice(0, mid);
+  const right = faqs.slice(mid);
 
   return (
-    <section className="bg-[#0e0e0e] py-20 px-6" id="faq">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-white">
-            Frequently Asked Questions
-          </h2>
-        </div>
+    <section id="faq" className="bg-bb-dark border-t border-bb-separator py-20 md:py-28 px-6">
+      <div className="max-w-[1140px] mx-auto">
+        <h2 className="text-white/15 text-[32px] md:text-[55px] font-bold leading-tight mb-12 md:mb-16 text-center">
+          Frequently Asked Questions
+        </h2>
 
-        {/* Two-column accordion */}
-        <div className="grid md:grid-cols-2 gap-3">
-          {/* Left column */}
-          <div className="flex flex-col gap-3">
-            {leftFaqs.map((faq, i) => (
-              <FAQItem
-                key={i}
-                q={faq.q}
-                a={faq.a}
-                isOpen={openIndex === i}
-                onToggle={() => toggle(i)}
-              />
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+          <div className="flex flex-col gap-3 md:gap-4">
+            {left.map((f, i) => <Item key={i} {...f} defaultOpen={i === 0} />)}
           </div>
-
-          {/* Right column */}
-          <div className="flex flex-col gap-3">
-            {rightFaqs.map((faq, i) => (
-              <FAQItem
-                key={half + i}
-                q={faq.q}
-                a={faq.a}
-                isOpen={openIndex === half + i}
-                onToggle={() => toggle(half + i)}
-              />
-            ))}
+          <div className="flex flex-col gap-3 md:gap-4">
+            {right.map((f, i) => <Item key={i} {...f} />)}
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default FAQ;
+}

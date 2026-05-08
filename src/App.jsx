@@ -1,3 +1,4 @@
+import AlertBanner from './components/AlertBanner/AlertBanner';
 import Navbar from './components/Navbar/Navbar';
 import HeroSection from './components/HeroSection/HeroSection';
 import IngredientsSection from './components/IngredientsSection/IngredientsSection';
@@ -9,9 +10,10 @@ import Guarantee from './components/Guarantee/Guarantee';
 import FAQ from './components/FAQ/FAQ';
 import Footer from './components/Footer/Footer';
 
-export default function SnoringPage() {
+export default function App() {
   return (
     <div>
+      <AlertBanner />
       <Navbar />
       <HeroSection />
       <IngredientsSection />

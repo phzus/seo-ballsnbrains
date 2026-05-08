@@ -1,128 +1,82 @@
-import React, { useState } from 'react';
-import image05 from '../../assets/images/image-04.webp';
-import image04 from '../../assets/images/image-05.webp';
+import checkIcon from '../../assets/icons/check-compartive.svg';
+import xIcon from '../../assets/icons/x-compartive.svg';
+import vsStamp from '../../assets/icons/vs-stamp.svg';
+import bbImg from '../../assets/images/img-ballsnbrains-comparative.webp';
+import othersImg from '../../assets/images/img-others-comparative.webp';
+import guaranteeStamp from '../../assets/utils/guarantee-stamp.webp';
+
+const CTA_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
 
 const rows = [
-  {
-    product: 'Works with your morning coffee ritual',
-    others: 'Pills you forget to take by Wednesday',
-  },
-  {
-    product: 'Supports natural T production',
-    others: 'Shuts down or ignores your hormonal axis',
-  },
-  {
-    product: '12 clinical-dose ingredients in one scoop',
-    others: 'Underdosed formulas padded with fillers',
-  },
-  {
-    product: 'Patented extracts (KSM-66®, LJ100®)',
-    others: 'Generic, unbranded, unverified ingredients',
-  },
-  {
-    product: 'No needles, no prescriptions, no side effects',
-    others: 'Injections, doctor visits, and ongoing dependency',
-  },
+  { bb: 'Works with your morning coffee ritual', others: 'Pills you forget to take by Wednesday' },
+  { bb: 'Supports natural T production', others: 'Shuts down or ignores your hormonal axis' },
+  { bb: '12 clinical-dose ingredients in one scoop', others: 'Underdosed formulas padded with fillers' },
+  { bb: 'Patented extracts (KSM-66®, LJ100®)', others: 'Generic, unbranded, unverified ingredients' },
+  { bb: 'No needles, no prescriptions, no side effects.', others: 'Injections, doctor visits, and ongoing dependency' },
 ];
 
-const CheckIcon = () => (
-  <svg viewBox="0 0 10 8" fill="none" width="10" height="10">
-    <polyline
-      points="1,4 4,7 9,1"
-      stroke="#fff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg viewBox="0 0 10 10" fill="none" width="10" height="10">
-    <line x1="2" y1="2" x2="8" y2="8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-    <line x1="8" y1="2" x2="2" y2="8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
-export const Comparison = () => {
-  const [ctaHover, setCtaHover] = useState(false);
-
+export default function Comparison() {
   return (
-    <section className="bg-[#070707] py-20 px-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-white font-serif text-4xl md:text-5xl font-bold leading-tight">
-            One Cup<span className="text-[#dca331]"> vs.</span> Everything Else
-          </h2>
-          <p className="text-white/50 font-sans text-base mt-4 max-w-md mx-auto leading-relaxed">
-            See how Balls&amp;Brains compares to the solutions men typically rely on.
-          </p>
-        </div>
+    <section className="bg-bb-cream py-20 md:py-28 px-6">
+      <div className="max-w-[1140px] mx-auto">
+        {/* Top: products + guarantee stamp */}
+        <div className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 mb-10 md:mb-12">
+          {/* Guarantee stamp top-left */}
+          <img
+            src={guaranteeStamp}
+            alt="100% Satisfaction Guarantee"
+            className="absolute top-0 left-0 w-20 md:w-28 object-contain z-10"
+          />
 
-        {/* Images VS row */}
-        <div className="grid grid-cols-[1fr_auto_1fr] border border-[#1f1f1f] rounded-2xl overflow-hidden mb-3">
-          {/* Product image */}
-          <div className="relative overflow-hidden">
-            <div className="relative aspect-[4/3]">
-              <img src={image04} alt="Balls N'Brains" loading="lazy" decoding="async" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3 md:p-4">
-                <span className="text-white font-sans font-black text-[10px] md:text-xs uppercase tracking-widest">
-                  Balls &amp; Brains
-                </span>
-              </div>
-            </div>
+          <div className="flex justify-center">
+            <img src={bbImg} alt="Balls & Brains" className="w-full max-w-[280px] md:max-w-[320px] object-contain" />
           </div>
 
-          {/* VS divider */}
-          <div className="bg-[#0e0e0e] w-10 md:w-14 flex items-center justify-center">
-            <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-white flex items-center justify-center">
-              <span className="text-black text-[10px] md:text-xs font-black tracking-wider">VS.</span>
-            </div>
-          </div>
+          <img src={vsStamp} alt="VS" className="w-14 md:w-20 shrink-0" />
 
-          {/* Competitors image */}
-          <div className="relative overflow-hidden">
-            <div className="relative aspect-[4/3]">
-              <img src={image05} alt="Competitors" loading="lazy" decoding="async" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3 md:p-4 justify-end">
-                <span className="text-white/70 font-sans font-black text-[10px] md:text-xs uppercase tracking-widest">
-                  Everything Else
-                </span>
-              </div>
-            </div>
+          <div className="flex justify-center bg-white/40 rounded-2xl p-4 md:p-6 border border-[#e6e6e6]">
+            <img src={othersImg} alt="Others" className="w-full max-w-[280px] md:max-w-[320px] object-contain" />
           </div>
         </div>
 
         {/* Comparison rows */}
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2 md:gap-3">
           {rows.map((row, i) => (
-            <div key={i} className="flex flex-col md:grid md:grid-cols-2 gap-2">
-              {/* Product pill */}
-              <div className="bg-[#c47a1e] rounded-2xl md:rounded-full px-5 py-3.5 flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                  <CheckIcon />
-                </div>
-                <span className="text-white font-black text-xs md:text-[11px] uppercase tracking-[1px] md:tracking-[1.5px] leading-snug flex-1">
-                  {row.product}
-                </span>
+            <div
+              key={i}
+              className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-4 md:gap-8"
+            >
+              {/* BB side — gold gradient pill */}
+              <div
+                className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 text-white text-[13px] md:text-[15px] font-semibold"
+                style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
+              >
+                <span>{row.bb}</span>
+                <img src={checkIcon} alt="✓" className="w-5 h-5 shrink-0" />
               </div>
 
-              {/* Others pill */}
-              <div className="bg-[#1c1c1c] border border-[#2a2a2a] rounded-2xl md:rounded-full px-5 py-3.5 flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full bg-red-600/80 flex items-center justify-center flex-shrink-0">
-                  <XIcon />
-                </div>
-                <span className="text-white/40 font-bold text-xs md:text-[11px] uppercase tracking-[1px] md:tracking-[1.5px] leading-snug flex-1">
-                  {row.others}
-                </span>
+              {/* Spacer for VS column */}
+              <div className="w-14 md:w-20" />
+
+              {/* Others side — grey pill */}
+              <div className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 bg-[#f0f0f0] text-[#424242] text-[13px] md:text-[15px] font-medium">
+                <span>{row.others}</span>
+                <img src={xIcon} alt="✗" className="w-5 h-5 shrink-0" />
               </div>
             </div>
           ))}
         </div>
+
+        {/* CTA */}
+        <div className="mt-12 md:mt-16 flex flex-col items-center gap-3">
+          <a href={CTA_URL} className="btn-cta btn-cta-lg">
+            Try It & Save 44%
+          </a>
+          <p className="text-bb-text-dark/70 text-[14px] md:text-[15px] font-medium">
+            ✅ 365-Day Guarantee.
+          </p>
+        </div>
       </div>
     </section>
   );
-};
-
-export default Comparison;
+}
