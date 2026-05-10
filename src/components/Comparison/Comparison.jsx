@@ -17,7 +17,7 @@ const rows = [
 
 export default function Comparison() {
   return (
-    <section className="bg-bb-cream py-20 md:py-28 px-6">
+    <section className="bg-bb-dark py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Top: products + guarantee stamp */}
         <div className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 mb-10 md:mb-12">
@@ -72,7 +72,7 @@ export default function Comparison() {
           <a href={CTA_URL} className="btn-cta btn-cta-lg">
             Try It & Save 44%
           </a>
-          <p className="text-bb-text-dark/70 text-[0.875rem] md:text-[0.9375rem] font-medium">
+          <p className="text-bb-text-muted text-[0.875rem] md:text-[0.9375rem] font-medium">
             ✅ 365-Day Guarantee.
           </p>
         </div>

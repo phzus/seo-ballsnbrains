@@ -81,7 +81,7 @@ export default function FAQ() {
   const right = faqs.slice(mid);
 
   return (
-    <section id="faq" className="bg-bb-dark border-t border-bb-separator py-20 md:py-28 px-6">
+    <section id="faq" className="bg-bb-dark py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         <h2 className="text-white/15 text-[2.25rem] md:text-[3.25rem] font-bold leading-tight mb-12 md:mb-16 text-center">
           Frequently Asked Questions

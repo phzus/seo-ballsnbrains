@@ -1,3 +1,14 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import benefit01 from '../../assets/icons/benefit-01.svg';
+import benefit02 from '../../assets/icons/benefit-02.svg';
+import benefit03 from '../../assets/icons/benefit-03.svg';
+import benefit04 from '../../assets/icons/benefit-04.svg';
+import benefit05 from '../../assets/icons/benefit-05.svg';
+import benefit06 from '../../assets/icons/benefit-06.svg';
+import benefit07 from '../../assets/icons/benefit-07.svg';
 import card01 from '../../assets/ingredients/img-card-01-Tongkat Ali LJ100®.webp';
 import card02 from '../../assets/ingredients/img-card-02-Shilajit.webp';
 import card03 from '../../assets/ingredients/img-card-03-Zinc Glycinate.webp';
@@ -27,80 +38,93 @@ const ingredients = [
 ];
 
 const benefits = [
-  'cGMP Certified Facility',
-  'Hormone-Free',
-  'Third-Party Tested',
-  'Vegan',
-  'Non-GMO',
-  'Made in USA',
-  'No Fillers',
+  { icon: benefit01, label: 'cGMP Certified Facility' },
+  { icon: benefit02, label: 'Hormone-Free' },
+  { icon: benefit03, label: 'Third-Party Tested' },
+  { icon: benefit04, label: 'Vegan' },
+  { icon: benefit05, label: 'Non-GMO' },
+  { icon: benefit06, label: 'Made in USA' },
+  { icon: benefit07, label: 'No Fillers' },
 ];
 
 export default function IngredientsSection() {
   return (
-    <section id="ingredients" className="bg-bb-dark py-20 md:py-28 px-6">
+    <section id="ingredients" className="bg-bb-dark py-20 md:py-28 px-4 md:px-20">
       {/* Heading */}
-      <div className="max-w-[71.25rem] mx-auto mb-14 md:mb-20 text-center">
-        <p className="text-bb-gold text-[0.875rem] md:text-[1.125rem] font-bold leading-tight">
-          12 Clinical-Dose
-        </p>
-        <h2 className="text-white text-[2.25rem] md:text-[3.25rem] font-bold leading-tight mt-1">
-          Ingredients in 1 Cup
+      <div className="mb-14 md:mb-20 text-center">
+        <h2 className="text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
+          <span className="text-cofee-gradient">12 Clinical-Dose</span>
+          <br />
+          <span className="text-white">Ingredients in 1 Cup</span>
         </h2>
-        <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[40rem] mx-auto">
-          Industrial coffee floods your body with cortisol every morning.<br />
+        <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[32rem] mx-auto">
+          Industrial coffee floods your body with cortisol every morning.
           Cortisol suppresses testosterone. We fix that.
         </p>
       </div>
 
       {/* Ingredients grid */}
-      <div className="max-w-[71.25rem] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {ingredients.map((item, i) => (
             <div
               key={i}
-              className="relative rounded-2xl overflow-hidden flex flex-col aspect-square border border-bb-gold-dark/30"
+              className={`relative rounded-lg overflow-hidden flex flex-col items-center justify-center text-center md:aspect-square aspect-auto border border-[#2d2d2d] px-2 ${i === 9 || i === 10 ? 'md:px-6' : 'md:px-12'} py-4 md:py-6`}
               style={{
-                backgroundImage: `linear-gradient(180deg, rgba(10,9,8,0.15) 0%, rgba(10,9,8,0.55) 50%, rgba(10,9,8,0.96) 100%), url(${item.img})`,
+                backgroundImage: `url(${item.img})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             >
               {/* Number badge */}
-              <div className="absolute top-3 right-3 w-8 h-8 md:w-9 md:h-9 rounded-full bg-bb-gold flex items-center justify-center text-bb-dark text-[0.8125rem] md:text-[0.875rem] font-bold border border-bb-gold-dark/50 shadow-md">
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-bb-cream-warm flex items-center justify-center text-bb-dark text-[0.875rem] md:text-[1.4rem] font-normal">
                 {i + 1}
               </div>
 
-              {/* Content (bottom) */}
-              <div className="mt-auto p-4 md:p-5 flex flex-col gap-2">
-                <h3 className="text-bb-gold font-bold text-[1rem] md:text-[1.1875rem] leading-tight">
-                  {item.name}
-                </h3>
-                <p className="text-white/80 text-[0.6875rem] md:text-[0.78125rem] leading-snug">
-                  {item.claim}
-                </p>
-                <span className="self-start mt-1 text-white text-[0.6875rem] md:text-[0.75rem] font-bold tracking-wide bg-bb-dark/70 border border-bb-gold-dark/50 rounded-full px-3 py-1">
-                  {item.dose}
-                </span>
-              </div>
+              {/* Title */}
+              <h3 className="text-bb-cream-warm font-bold text-[1.125rem] md:text-[1.8rem] leading-tight mt-3 md:mt-4">
+                {item.name}
+              </h3>
+
+              {/* Description */}
+              <p className="text-white/85 text-[0.725rem] md:text-[1.1rem] leading-snug mt-2 md:mt-3">
+                {item.claim}
+              </p>
+
+              {/* Dose */}
+              <span className="mt-3 md:mt-4 text-bb-text-dark text-[0.875rem] md:text-[1rem] font-medium bg-white rounded-full px-6 md:px-6 py-1 md:py-1.5">
+                {item.dose}
+              </span>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Benefits scrolling ticker — full-width, quebra o px-6 da section */}
-      <div className="mt-16 -mx-6 overflow-hidden border-t border-b border-bb-separator py-5">
-        <div className="flex gap-10 whitespace-nowrap w-max" style={{ animation: 'marquee 30s linear infinite' }}>
-          {[...benefits, ...benefits, ...benefits].map((b, i) => (
-            <span
-              key={i}
-              className="text-white font-bold text-[1rem] md:text-[1.125rem] uppercase tracking-wide shrink-0"
-              style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
-            >
-              {b} <span className="text-bb-gold mx-3">✦</span>
-            </span>
+      {/* Benefits carousel — full-width mobile (quebra px-4), 85% no desktop, fade lateral */}
+      <div
+        className="mt-16 -mx-4 md:mx-auto md:w-[85%] benefits-marquee"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+        }}
+      >
+        <Swiper
+          modules={[Autoplay, FreeMode]}
+          slidesPerView="auto"
+          spaceBetween={32}
+          loop
+          freeMode={{ enabled: true, momentum: false }}
+          speed={4500}
+          autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false }}
+          allowTouchMove={false}
+        >
+          {benefits.map((b, i) => (
+            <SwiperSlide key={i} className="w-auto! flex items-center">
+              <div className="flex items-center gap-x-8">
+                <img src={b.icon} alt={b.label} className="h-6 w-auto" />
+                <span aria-hidden="true" className="w-[2px] h-6 bg-white/30" />
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </section>
   );

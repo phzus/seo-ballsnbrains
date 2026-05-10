@@ -2,7 +2,7 @@ import footerLogo from '../../assets/utils/footer-logo.svg';
 
 export default function Footer() {
   return (
-    <footer className="bg-bb-light border-t border-[#e6e6e6] py-10 md:py-14 px-6">
+    <footer className="bg-bb-light border-t border-[#e6e6e6] py-10 md:py-14 px-4">
       <div className="max-w-[71.25rem] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <img src={footerLogo} alt="Balls & Brains" className="h-10 object-contain" />
 

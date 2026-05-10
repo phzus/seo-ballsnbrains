@@ -4,6 +4,7 @@ import HeroSection from './components/HeroSection/HeroSection';
 import IngredientsSection from './components/IngredientsSection/IngredientsSection';
 import HowToMake from './components/HowToMake/HowToMake';
 import SocialProof from './components/SocialProof/SocialProof';
+import Results from './components/Results/Results';
 import Comparison from './components/Comparison/Comparison';
 import Reviews from './components/Reviews/Reviews';
 import Guarantee from './components/Guarantee/Guarantee';
@@ -19,6 +20,7 @@ export default function App() {
       <IngredientsSection />
       <HowToMake />
       <SocialProof />
+      <Results />
       <Comparison />
       <Reviews />
       <Guarantee />

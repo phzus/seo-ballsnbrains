@@ -2,7 +2,7 @@ import guaranteeStamp from '../../assets/utils/guarantee-stamp.webp';
 
 export default function Guarantee() {
   return (
-    <section className="bg-bb-dark py-14 md:py-20 border-t border-bb-separator px-6">
+    <section className="bg-bb-dark py-14 md:py-20 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-14">
           <div className="shrink-0">

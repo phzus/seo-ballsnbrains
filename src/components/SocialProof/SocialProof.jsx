@@ -44,7 +44,7 @@ function VideoCard({ src }) {
 
 export default function SocialProof() {
   return (
-    <section className="bg-bb-cream py-20 md:py-28 px-6">
+    <section className="bg-bb-cream py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16 flex flex-col items-center gap-4">

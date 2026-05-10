@@ -145,7 +145,8 @@
   --color-bb-green: #5fc26b;
   --color-bb-green-light: #7BD686;
   --color-bb-green-dark: #3fa44e;
-  --color-bb-cream: #f5efe1;
+  --color-bb-cream: #FDFDF3;
+  --color-bb-cream-warm: #f5d1a7;
   --color-bb-text-dim: #c6c6c6;
   --color-bb-text-muted: #d9d9d9;
   --color-bb-text-dark: #0d0c0c;
@@ -155,6 +156,47 @@
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-33.333%); }
+}
+
+/* Swiper marquee — força timing linear pra loop contínuo sem ease in/out */
+.benefits-marquee .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+/* Swiper Reviews — todos os slides com a altura do maior (stretch) */
+.reviews-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+.reviews-swiper .swiper-slide {
+  height: auto;
+}
+
+/* Swiper Reviews — pagination custom (fora do .reviews-swiper, vars vão direto no el externo) */
+.reviews-pagination {
+  --swiper-pagination-color: #dca331;
+  --swiper-pagination-bullet-inactive-color: #0d0c0c;
+  --swiper-pagination-bullet-inactive-opacity: 0.25;
+  --swiper-pagination-bullet-size: 0.5rem;
+}
+.reviews-pagination.swiper-pagination {
+  position: static;
+  width: auto;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.reviews-pagination .swiper-pagination-bullet {
+  margin: 0 !important;
+}
+.reviews-pagination .swiper-pagination-bullet-active {
+  background: #dca331 !important;
+  opacity: 1 !important;
+}
+
+/* Next button — gradient COFEE no hover, seta cream-warm */
+.reviews-next-btn:hover {
+  background: linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%);
 }
 
 *, *::before, *::after {
@@ -202,7 +244,7 @@ body {
     padding: 1rem 2rem;
     font-size: 1rem;
     text-align: center;
-    box-shadow: 0 0.25rem 5.05rem 0 rgba(89, 215, 70, 0.20);
+    box-shadow: 0 0.25rem 3.05rem 0 rgba(89, 215, 70, 0.20);
     transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
     white-space: nowrap;
     cursor: pointer;

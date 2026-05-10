@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="px-6 py-4 sticky top-0 z-50 border-b border-white/10 transition-colors duration-300"
+      className={`px-4 py-4 sticky top-0 z-50 border-b transition-colors duration-300 ${scrolled ? 'border-white/10' : 'border-transparent'}`}
       style={
         scrolled
           ? { background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }

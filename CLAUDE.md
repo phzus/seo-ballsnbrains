@@ -104,6 +104,7 @@ Componentes **existentes mas não montados** (podem entrar no redesign):
 - Tailwind utility classes — sem CSS custom a menos que necessário
 - Imagens: usar assets existentes em `src/assets/` ou solicitar novos ao Lucas
 - Responsivo: mobile-first (375px → 768px → 1440px)
+- **Padding lateral mobile:** todo container pai (`<section>`, `<nav>`, `<footer>`) usa `px-4` (16px). Não usar `px-6` em pai. Detalhes em [docs/DESIGN.md](docs/DESIGN.md).
 - Sem comentários óbvios no código
 - Não alterar o link de CTA sem alinhamento explícito
 - Sempre registrar decisões, fontes e erros corrigidos nas docs — informações críticas NÃO podem se perder entre sessões

@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import starIcon from '../../assets/icons/Star.svg';
 
 const TABS = ['TASTE', 'BENEFITS', 'CAFFEINE', 'TESTOSTERONE'];
@@ -75,6 +79,34 @@ const reviews = {
   ],
 };
 
+function NavButton({ direction, onClick }) {
+  const isPrev = direction === 'prev';
+  return (
+    <button
+      type="button"
+      aria-label={isPrev ? 'Previous review' : 'Next review'}
+      onClick={onClick}
+      className="reviews-next-btn shrink-0 w-12 h-12 rounded-full border-2 border-bb-gold text-bb-gold flex items-center justify-center transition-colors duration-200 cursor-pointer hover:text-bb-cream-warm hover:border-transparent"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        style={isPrev ? { transform: 'rotate(180deg)' } : undefined}
+      >
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </svg>
+    </button>
+  );
+}
+
 function StarRow() {
   return (
     <div className="flex gap-1">
@@ -87,9 +119,10 @@ function StarRow() {
 
 export default function Reviews() {
   const [active, setActive] = useState('TASTE');
+  const swiperRef = useRef(null);
 
   return (
-    <section id="reviews" className="bg-bb-cream py-20 md:py-28 px-6">
+    <section id="reviews" className="bg-bb-cream py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Header — centered */}
         <div className="mb-12 md:mb-16 text-center flex flex-col items-center gap-3">
@@ -109,29 +142,51 @@ export default function Reviews() {
           </h2>
         </div>
 
-        {/* Review cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-10 md:mb-12">
+        {/* Review carousel */}
+        <Swiper
+          key={active}
+          modules={[Autoplay, Pagination]}
+          pagination={{ el: '.reviews-pagination', clickable: true }}
+          loop
+          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          slidesPerView={1}
+          spaceBetween={20}
+          breakpoints={{ 768: { slidesPerView: 3, spaceBetween: 24 } }}
+          className="reviews-swiper"
+          onSwiper={(s) => { swiperRef.current = s; }}
+        >
           {reviews[active].map((r, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 md:p-8 flex flex-col gap-4 border border-[#e9e2d1]">
-              <StarRow />
-              <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">{r.name}</p>
-              <h3 className="text-bb-text-dark font-bold text-[1.375rem] md:text-[1.625rem] leading-tight">
-                {r.title}
-              </h3>
-              <p className="text-[#424242] text-[0.875rem] md:text-[0.9375rem] leading-relaxed flex-1">
-                {r.body}
-              </p>
-            </div>
+            <SwiperSlide key={i} className="h-auto! flex">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col gap-4 border border-[#e9e2d1] flex-1">
+                <StarRow />
+                <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">{r.name}</p>
+                <h3 className="text-bb-text-dark font-bold text-[1.375rem] md:text-[1.625rem] leading-tight">
+                  {r.title}
+                </h3>
+                <p className="text-[#424242] text-[0.875rem] md:text-[0.9375rem] leading-relaxed flex-1">
+                  {r.body}
+                </p>
+              </div>
+            </SwiperSlide>
           ))}
+        </Swiper>
+
+        {/* Controls abaixo: mobile = pagination esq + setas prev/next dir; desktop = só pagination centralizada */}
+        <div className="mt-6 mb-10 md:mb-4 flex items-center justify-between gap-4 md:justify-center">
+          <div className="reviews-pagination flex items-center gap-2" />
+          <div className="flex items-center gap-2 md:hidden">
+            <NavButton direction="prev" onClick={() => swiperRef.current?.slidePrev()} />
+            <NavButton direction="next" onClick={() => swiperRef.current?.slideNext()} />
+          </div>
         </div>
 
-        {/* Tabs at BOTTOM */}
-        <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
+        {/* Tabs at BOTTOM — 11px font, single line */}
+        <div className="flex gap-1.5 md:gap-2 justify-center">
           {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => setActive(tab)}
-              className={`px-6 py-3 rounded-full font-bold text-[0.8125rem] md:text-[0.9375rem] tracking-wide transition-all duration-200 border-2 cursor-pointer ${
+              className={`px-3 md:px-5 py-2 md:py-2.5 rounded-full font-bold text-[0.6875rem] tracking-wide whitespace-nowrap transition-all duration-200 border-2 cursor-pointer ${
                 active === tab
                   ? 'bg-bb-gold text-white border-bb-gold'
                   : 'bg-transparent text-bb-text-dark border-bb-gold/60 hover:border-bb-gold'
