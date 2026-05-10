@@ -58,7 +58,7 @@ export default function Navbar() {
           })}
         </div>
 
-        <a href={CTA_URL} className="btn-cta-gold">
+        <a href={CTA_URL} className="btn-cta-gold text-[0.875rem] md:text-[1rem]">
           Try It & Save 44%
         </a>
       </div>

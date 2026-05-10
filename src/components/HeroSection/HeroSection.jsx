@@ -28,7 +28,7 @@ export default function HeroSection() {
     <section
       className="bg-bb-dark w-full relative overflow-hidden px-6 flex"
       style={{
-        minHeight: 'calc(100vh - var(--alert-height, 0px))',
+        minHeight: isMobile ? undefined : 'calc(100vh - var(--alert-height, 0px))',
         marginTop: 'calc(-1 * var(--navbar-height, 0px))',
         paddingTop: 'var(--navbar-height, 0px)',
       }}
@@ -37,7 +37,7 @@ export default function HeroSection() {
         key={isMobile ? 'mobile' : 'desktop'}
         className={
           isMobile
-            ? 'absolute top-24 left-0 w-full h-auto z-0 pointer-events-none'
+            ? 'absolute top-22   left-0 w-full h-auto z-0 pointer-events-none'
             : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-auto min-w-full max-w-none object-cover z-0 pointer-events-none'
         }
         autoPlay
@@ -52,7 +52,7 @@ export default function HeroSection() {
         <source src={videoMp4} type="video/mp4" />
       </video>
 
-      <div className="relative z-10 max-w-[71.25rem] mx-auto w-full py-10 md:py-14 flex flex-col items-start justify-end md:justify-center gap-5">
+      <div className="relative z-10 max-w-[71.25rem] mx-auto w-full pt-68 pb-16 md:py-14 flex flex-col items-start justify-end md:justify-center gap-5">
         <span className="inline-flex items-center justify-center gap-2 bg-[rgba(32,32,32,0.80)] border border-bb-separator rounded-full px-4 md:px-8 py-1.5 text-white text-[0.8rem] md:text-[0.875rem] font-medium">
           <img src={checkIcon} alt="" className="w-3.5 h-3.5" />
           365-Days Guarantee.
@@ -68,13 +68,13 @@ export default function HeroSection() {
         </h1>
 
         <p
-          className="text-[1.25rem] leading-[160%] max-w-[27.5rem] mt-1"
+          className="text-[1.02rem] leading-[160%] max-w-[27.5rem] mt-1"
           style={{ color: '#C6C6C6' }}
         >
           12 clinical-dose ingredients packed into one daily testosterone mushroom coffee
         </p>
 
-        <div className="mt-3">
+        <div className="mt-4">
           <a
             href={CTA_URL}
             className="btn-cta btn-cta-lg md:text-[1.25rem]"

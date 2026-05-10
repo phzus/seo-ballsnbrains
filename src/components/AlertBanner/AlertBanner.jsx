@@ -26,7 +26,7 @@ export default function AlertBanner() {
       style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
     >
       <p
-        className="text-[#0a0908] text-[0.875rem] font-bold leading-none"
+        className="text-[#0a0908] text-[0.745rem] md:text-[0.875rem] font-bold leading-none"
         style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
       >
         MOTHER'S DAY SALE 🌷 35% OFF STARTER KIT + 5 FREE GIFTS + FREE U.S. SHIPPING
