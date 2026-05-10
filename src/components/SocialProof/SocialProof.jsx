@@ -45,7 +45,7 @@ function VideoCard({ src }) {
 export default function SocialProof() {
   return (
     <section className="bg-bb-cream py-20 md:py-28 px-6">
-      <div className="max-w-[1140px] mx-auto">
+      <div className="max-w-[71.25rem] mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16 flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
@@ -55,14 +55,14 @@ export default function SocialProof() {
               ))}
             </div>
             <span
-              className="text-bb-text-dark text-[12px] md:text-[13px] font-bold uppercase tracking-wide bg-bb-gold/30 border border-bb-gold/60 rounded-full px-3 py-1"
+              className="text-bb-text-dark text-[0.75rem] md:text-[0.8125rem] font-bold uppercase tracking-wide bg-bb-gold/30 border border-bb-gold/60 rounded-full px-3 py-1"
               style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
             >
               61,028 Reviews
             </span>
           </div>
 
-          <h2 className="text-bb-text-dark text-[32px] md:text-[55px] font-bold leading-tight">
+          <h2 className="text-bb-text-dark text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
             Don't Just Take Our Word For It
           </h2>
         </div>
@@ -72,8 +72,8 @@ export default function SocialProof() {
           <VideoCard src={video05} />
 
           <div className="bg-white rounded-2xl p-6 md:p-7 flex flex-col justify-center gap-4 shadow-sm">
-            <p className="text-[#666] text-[13px] md:text-[14px] font-medium">Adam Fa. — 35 Years</p>
-            <h3 className="text-bb-text-dark text-[22px] md:text-[28px] font-bold leading-tight">
+            <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">Adam Fa. — 35 Years</p>
+            <h3 className="text-bb-text-dark text-[1.375rem] md:text-[1.75rem] font-bold leading-tight">
               Balls & Brains changing my life...
             </h3>
             <div className="flex gap-1">
@@ -81,7 +81,7 @@ export default function SocialProof() {
                 <img key={i} src={starIcon} alt="★" className="w-4 h-4" />
               ))}
             </div>
-            <p className="text-[#424242] text-[14px] md:text-[15px] leading-relaxed">
+            <p className="text-[#424242] text-[0.875rem] md:text-[0.9375rem] leading-relaxed">
               "Love this coffee. Been telling everyone I know about it. Placebo or not, I feel less anxious, less stressed, and more focused than I have in years. And it actually tastes like coffee."
             </p>
           </div>

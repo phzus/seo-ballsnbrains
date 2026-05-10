@@ -161,11 +161,32 @@
   box-sizing: border-box;
 }
 
+/* Fluid root font-size — design system responsivo mobile.
+   Anchor: 390px (frame mobile do Figma). 1rem = 16px nessa largura.
+   Em qualquer outra tela mobile, escala proporcional ao viewport.
+   Acima de 768px (tablet/desktop), trava em 16px. */
+html {
+  font-size: calc((100vw / 390) * 16);
+}
+
+@media (min-width: 768px) {
+  html { font-size: 16px; }
+}
+
 body {
   font-family: 'Satoshi', system-ui, sans-serif;
   background-color: #0a0908;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Coffee gradient — design system token aplicado em texto */
+.text-cofee-gradient {
+  background: linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Primary green CTA button — exact Figma spec */
@@ -176,11 +197,11 @@ body {
   font-weight: 700;
   text-decoration: none;
   border: 1px solid #A6FFAD;
-  border-radius: 210px;
-  padding: 16px 32px;
-  font-size: 16px;
+  border-radius: 13.125rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
   text-align: center;
-  box-shadow: 0 4px 80.8px 0 rgba(89, 215, 70, 0.20);
+  box-shadow: 0 0.25rem 5.05rem 0 rgba(89, 215, 70, 0.20);
   transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
   white-space: nowrap;
   cursor: pointer;
@@ -188,18 +209,18 @@ body {
 }
 .btn-cta:hover {
   filter: brightness(1.08);
-  box-shadow: 0 4px 80.8px 0 rgba(89, 215, 70, 0.35);
+  box-shadow: 0 0.25rem 5.05rem 0 rgba(89, 215, 70, 0.35);
 }
 .btn-cta:active {
   transform: translateY(1px);
 }
 .btn-cta-sm {
-  padding: 10px 22px;
-  font-size: 14px;
+  padding: 0.625rem 1.375rem;
+  font-size: 0.875rem;
 }
 .btn-cta-lg {
-  padding: 18px 40px;
-  font-size: 18px;
+  padding: 1.125rem 2.5rem;
+  font-size: 1.125rem;
 }
 
 /* Gold gradient CTA — used in Navbar */
@@ -210,11 +231,11 @@ body {
   font-weight: 700;
   text-decoration: none;
   border: 1px solid rgba(255, 220, 150, 0.5);
-  border-radius: 210px;
-  padding: 12px 26px;
-  font-size: 18px;
+  border-radius: 13.125rem;
+  padding: 0.75rem 1.625rem;
+  font-size: 1rem;
   text-align: center;
-  box-shadow: 0 4px 24px 0 rgba(220, 163, 49, 0.25);
+  box-shadow: 0 0.25rem 1.5rem 0 rgba(220, 163, 49, 0.25);
   transition: filter 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
   cursor: pointer;
@@ -222,5 +243,5 @@ body {
 }
 .btn-cta-gold:hover {
   filter: brightness(1.06);
-  box-shadow: 0 4px 28px 0 rgba(220, 163, 49, 0.4);
+  box-shadow: 0 0.25rem 1.75rem 0 rgba(220, 163, 49, 0.4);
 }

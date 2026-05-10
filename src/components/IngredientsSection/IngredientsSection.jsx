@@ -40,21 +40,21 @@ export default function IngredientsSection() {
   return (
     <section id="ingredients" className="bg-bb-dark py-20 md:py-28 px-6">
       {/* Heading */}
-      <div className="max-w-[1140px] mx-auto mb-14 md:mb-20 text-center">
-        <p className="text-bb-gold text-[14px] md:text-[18px] font-bold italic leading-tight">
+      <div className="max-w-[71.25rem] mx-auto mb-14 md:mb-20 text-center">
+        <p className="text-bb-gold text-[0.875rem] md:text-[1.125rem] font-bold leading-tight">
           12 Clinical-Dose
         </p>
-        <h2 className="text-white text-[32px] md:text-[55px] font-bold leading-tight mt-1">
+        <h2 className="text-white text-[2.25rem] md:text-[3.25rem] font-bold leading-tight mt-1">
           Ingredients in 1 Cup
         </h2>
-        <p className="text-bb-text-dim text-[15px] md:text-[18px] leading-relaxed mt-4 max-w-[640px] mx-auto">
+        <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[40rem] mx-auto">
           Industrial coffee floods your body with cortisol every morning.<br />
           Cortisol suppresses testosterone. We fix that.
         </p>
       </div>
 
       {/* Ingredients grid */}
-      <div className="max-w-[1140px] mx-auto">
+      <div className="max-w-[71.25rem] mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
           {ingredients.map((item, i) => (
             <div
@@ -67,19 +67,19 @@ export default function IngredientsSection() {
               }}
             >
               {/* Number badge */}
-              <div className="absolute top-3 right-3 w-8 h-8 md:w-9 md:h-9 rounded-full bg-bb-gold flex items-center justify-center text-bb-dark text-[13px] md:text-[14px] font-bold border border-bb-gold-dark/50 shadow-md">
+              <div className="absolute top-3 right-3 w-8 h-8 md:w-9 md:h-9 rounded-full bg-bb-gold flex items-center justify-center text-bb-dark text-[0.8125rem] md:text-[0.875rem] font-bold border border-bb-gold-dark/50 shadow-md">
                 {i + 1}
               </div>
 
               {/* Content (bottom) */}
               <div className="mt-auto p-4 md:p-5 flex flex-col gap-2">
-                <h3 className="text-bb-gold font-bold text-[16px] md:text-[19px] leading-tight italic">
+                <h3 className="text-bb-gold font-bold text-[1rem] md:text-[1.1875rem] leading-tight">
                   {item.name}
                 </h3>
-                <p className="text-white/80 text-[11px] md:text-[12.5px] leading-snug">
+                <p className="text-white/80 text-[0.6875rem] md:text-[0.78125rem] leading-snug">
                   {item.claim}
                 </p>
-                <span className="self-start mt-1 text-white text-[11px] md:text-[12px] font-bold tracking-wide bg-bb-dark/70 border border-bb-gold-dark/50 rounded-full px-3 py-1">
+                <span className="self-start mt-1 text-white text-[0.6875rem] md:text-[0.75rem] font-bold tracking-wide bg-bb-dark/70 border border-bb-gold-dark/50 rounded-full px-3 py-1">
                   {item.dose}
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function IngredientsSection() {
           {[...benefits, ...benefits, ...benefits].map((b, i) => (
             <span
               key={i}
-              className="text-white font-bold text-[16px] md:text-[18px] uppercase tracking-wide shrink-0"
+              className="text-white font-bold text-[1rem] md:text-[1.125rem] uppercase tracking-wide shrink-0"
               style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
             >
               {b} <span className="text-bb-gold mx-3">✦</span>

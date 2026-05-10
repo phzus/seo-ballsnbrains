@@ -63,13 +63,13 @@ function Item({ q, a, defaultOpen = false }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left bg-[#14100c] border border-bb-separator rounded-2xl cursor-pointer hover:border-bb-gold-dark/60 transition-colors"
       >
-        <span className="text-white font-medium text-[14px] md:text-[16px] leading-snug">{q}</span>
-        <span className="text-bb-gold text-[18px] leading-none shrink-0">
+        <span className="text-white font-medium text-[0.875rem] md:text-[1rem] leading-snug">{q}</span>
+        <span className="text-bb-gold text-[1.125rem] leading-none shrink-0">
           {open ? '→' : '↓'}
         </span>
       </button>
       {open && (
-        <p className="text-bb-text-dim text-[13px] md:text-[15px] leading-relaxed px-5 md:px-6 pt-4 pb-2">{a}</p>
+        <p className="text-bb-text-dim text-[0.8125rem] md:text-[0.9375rem] leading-relaxed px-5 md:px-6 pt-4 pb-2">{a}</p>
       )}
     </div>
   );
@@ -82,8 +82,8 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="bg-bb-dark border-t border-bb-separator py-20 md:py-28 px-6">
-      <div className="max-w-[1140px] mx-auto">
-        <h2 className="text-white/15 text-[32px] md:text-[55px] font-bold leading-tight mb-12 md:mb-16 text-center">
+      <div className="max-w-[71.25rem] mx-auto">
+        <h2 className="text-white/15 text-[2.25rem] md:text-[3.25rem] font-bold leading-tight mb-12 md:mb-16 text-center">
           Frequently Asked Questions
         </h2>
 

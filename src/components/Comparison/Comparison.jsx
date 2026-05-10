@@ -18,7 +18,7 @@ const rows = [
 export default function Comparison() {
   return (
     <section className="bg-bb-cream py-20 md:py-28 px-6">
-      <div className="max-w-[1140px] mx-auto">
+      <div className="max-w-[71.25rem] mx-auto">
         {/* Top: products + guarantee stamp */}
         <div className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 mb-10 md:mb-12">
           {/* Guarantee stamp top-left */}
@@ -29,13 +29,13 @@ export default function Comparison() {
           />
 
           <div className="flex justify-center">
-            <img src={bbImg} alt="Balls & Brains" className="w-full max-w-[280px] md:max-w-[320px] object-contain" />
+            <img src={bbImg} alt="Balls & Brains" className="w-full max-w-[17.5rem] md:max-w-[20rem] object-contain" />
           </div>
 
           <img src={vsStamp} alt="VS" className="w-14 md:w-20 shrink-0" />
 
           <div className="flex justify-center bg-white/40 rounded-2xl p-4 md:p-6 border border-[#e6e6e6]">
-            <img src={othersImg} alt="Others" className="w-full max-w-[280px] md:max-w-[320px] object-contain" />
+            <img src={othersImg} alt="Others" className="w-full max-w-[17.5rem] md:max-w-[20rem] object-contain" />
           </div>
         </div>
 
@@ -48,7 +48,7 @@ export default function Comparison() {
             >
               {/* BB side — gold gradient pill */}
               <div
-                className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 text-white text-[13px] md:text-[15px] font-semibold"
+                className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 text-white text-[0.8125rem] md:text-[0.9375rem] font-semibold"
                 style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
               >
                 <span>{row.bb}</span>
@@ -59,7 +59,7 @@ export default function Comparison() {
               <div className="w-14 md:w-20" />
 
               {/* Others side — grey pill */}
-              <div className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 bg-[#f0f0f0] text-[#424242] text-[13px] md:text-[15px] font-medium">
+              <div className="rounded-full px-5 md:px-6 py-3 md:py-4 flex items-center justify-between gap-3 bg-[#f0f0f0] text-[#424242] text-[0.8125rem] md:text-[0.9375rem] font-medium">
                 <span>{row.others}</span>
                 <img src={xIcon} alt="✗" className="w-5 h-5 shrink-0" />
               </div>
@@ -72,7 +72,7 @@ export default function Comparison() {
           <a href={CTA_URL} className="btn-cta btn-cta-lg">
             Try It & Save 44%
           </a>
-          <p className="text-bb-text-dark/70 text-[14px] md:text-[15px] font-medium">
+          <p className="text-bb-text-dark/70 text-[0.875rem] md:text-[0.9375rem] font-medium">
             ✅ 365-Day Guarantee.
           </p>
         </div>

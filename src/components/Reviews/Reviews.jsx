@@ -90,7 +90,7 @@ export default function Reviews() {
 
   return (
     <section id="reviews" className="bg-bb-cream py-20 md:py-28 px-6">
-      <div className="max-w-[1140px] mx-auto">
+      <div className="max-w-[71.25rem] mx-auto">
         {/* Header — centered */}
         <div className="mb-12 md:mb-16 text-center flex flex-col items-center gap-3">
           <div className="flex gap-1">
@@ -99,12 +99,12 @@ export default function Reviews() {
             ))}
           </div>
           <p
-            className="text-bb-text-dark text-[12px] md:text-[14px] font-bold uppercase tracking-[0.18em]"
+            className="text-bb-text-dark text-[0.75rem] md:text-[0.875rem] font-bold uppercase tracking-[0.18em]"
             style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
           >
             Over 60,000 Five Star Reviews
           </p>
-          <h2 className="text-bb-text-dark text-[36px] md:text-[64px] font-bold leading-tight">
+          <h2 className="text-bb-text-dark text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
             Read Our Reviews
           </h2>
         </div>
@@ -114,11 +114,11 @@ export default function Reviews() {
           {reviews[active].map((r, i) => (
             <div key={i} className="bg-white rounded-2xl p-6 md:p-8 flex flex-col gap-4 border border-[#e9e2d1]">
               <StarRow />
-              <p className="text-[#666] text-[13px] md:text-[14px] font-medium">{r.name}</p>
-              <h3 className="text-bb-text-dark font-bold text-[22px] md:text-[26px] leading-tight">
+              <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">{r.name}</p>
+              <h3 className="text-bb-text-dark font-bold text-[1.375rem] md:text-[1.625rem] leading-tight">
                 {r.title}
               </h3>
-              <p className="text-[#424242] text-[14px] md:text-[15px] leading-relaxed flex-1">
+              <p className="text-[#424242] text-[0.875rem] md:text-[0.9375rem] leading-relaxed flex-1">
                 {r.body}
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function Reviews() {
             <button
               key={tab}
               onClick={() => setActive(tab)}
-              className={`px-6 py-3 rounded-full font-bold text-[13px] md:text-[15px] tracking-wide transition-all duration-200 border-2 cursor-pointer ${
+              className={`px-6 py-3 rounded-full font-bold text-[0.8125rem] md:text-[0.9375rem] tracking-wide transition-all duration-200 border-2 cursor-pointer ${
                 active === tab
                   ? 'bg-bb-gold text-white border-bb-gold'
                   : 'bg-transparent text-bb-text-dark border-bb-gold/60 hover:border-bb-gold'
