@@ -159,8 +159,18 @@
 }
 
 /* Swiper marquee — força timing linear pra loop contínuo sem ease in/out */
-.benefits-marquee .swiper-wrapper {
+.benefits-marquee .swiper-wrapper,
+.social-marquee .swiper-wrapper {
   transition-timing-function: linear !important;
+}
+
+/* Hover lift — efeito de subida sutil ao passar o mouse, aplicado em elementos interativos.
+   Não afeta touch (mobile não tem hover real). */
+.hover-lift {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
 }
 
 /* Swiper Reviews — todos os slides com a altura do maior (stretch) */
@@ -245,7 +255,7 @@ body {
     font-size: 1rem;
     text-align: center;
     box-shadow: 0 0.25rem 3.05rem 0 rgba(89, 215, 70, 0.20);
-    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, filter 0.3s ease;
     white-space: nowrap;
     cursor: pointer;
     font-family: 'Satoshi', system-ui, sans-serif;
@@ -253,9 +263,10 @@ body {
   .btn-cta:hover {
     filter: brightness(1.08);
     box-shadow: 0 0.25rem 5.05rem 0 rgba(89, 215, 70, 0.35);
+    transform: scale(1.05);
   }
   .btn-cta:active {
-    transform: translateY(1px);
+    transform: scale(1.05) translateY(1px);
   }
   .btn-cta-sm {
     padding: 0.625rem 1.375rem;
@@ -286,7 +297,7 @@ body {
     font-size: 1rem;
     text-align: center;
     box-shadow: 0 0.25rem 1.5rem 0 rgba(220, 163, 49, 0.25);
-    transition: filter 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
     cursor: pointer;
     font-family: 'Satoshi', system-ui, sans-serif;
@@ -294,5 +305,6 @@ body {
   .btn-cta-gold:hover {
     filter: brightness(1.06);
     box-shadow: 0 0.25rem 1.75rem 0 rgba(220, 163, 49, 0.4);
+    transform: scale(1.05);
   }
 }

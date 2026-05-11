@@ -66,7 +66,7 @@ function Item({ q, a, defaultOpen = false }) {
       >
         <span className="text-white font-medium text-[0.875rem] md:text-[1rem] leading-snug">{q}</span>
         <span className="text-bb-gold text-[1.125rem] leading-none shrink-0">
-          {open ? '→' : '↓'}
+          {open ? '↓' : '→'}
         </span>
       </button>
       {open && (

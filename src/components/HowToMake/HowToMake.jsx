@@ -43,19 +43,33 @@ function TextBlock2() {
   );
 }
 
-// Práticas de autoplay da Hero — programmatic play fallback + promise catch
-function useVideoAutoplay(ref) {
+// Controle de play/pause via IntersectionObserver — só toca quando a section está no viewport
+function useVideoOnVisible(videoRef, sectionRef) {
   useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-    const tryPlay = () => {
-      const p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(() => {});
-    };
-    if (video.readyState >= 2) tryPlay();
-    else video.addEventListener('loadeddata', tryPlay, { once: true });
-    return () => video.removeEventListener('loadeddata', tryPlay);
-  }, [ref]);
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          const p = video.play();
+          if (p && typeof p.catch === 'function') {
+            p.catch(() => {
+              // Autoplay bloqueado pelo browser — fica pausado até interação
+            });
+          }
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [videoRef, sectionRef]);
 }
 
 export default function HowToMake() {
@@ -66,8 +80,8 @@ export default function HowToMake() {
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
 
-  useVideoAutoplay(desktopVideoRef);
-  useVideoAutoplay(mobileVideoRef);
+  useVideoOnVisible(desktopVideoRef, sectionRef);
+  useVideoOnVisible(mobileVideoRef, sectionRef);
 
   // Trigger por POSIÇÃO de scroll dentro da section (px):
   //   Text 1: visível entre 500-1500px   (janela de 1000px)
@@ -106,7 +120,7 @@ export default function HowToMake() {
       className="bg-bb-dark relative md:h-[calc(4400px+100vh)]"
     >
       {/* ============ Mobile (texto → vídeo → texto, alternado) ============ */}
-      <div className="md:hidden flex flex-col gap-20">
+      <div className="md:hidden flex flex-col gap-20 md:gap-20">
         <FadeUp className="flex flex-col gap-5 px-4 pt-20">
           <TextBlock1 />
         </FadeUp>

@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import FadeUp from '../_shared/FadeUp';
 import video05 from '../../assets/videos/video-05.mp4';
@@ -33,6 +34,7 @@ const testimonials = [
   },
 ];
 
+// MediaSlot = bloco quadrado standalone (vídeo ou imagem placeholder)
 function MediaSlot({ media }) {
   const ref = useRef(null);
   const [playing, setPlaying] = useState(false);
@@ -47,7 +49,7 @@ function MediaSlot({ media }) {
   if (media.type === 'image') {
     return (
       <div
-        className="w-full aspect-square md:w-[50%] md:shrink-0 bg-bb-dark"
+        className="hover-lift w-full aspect-square bg-bb-dark rounded-2xl overflow-hidden"
         style={{
           backgroundImage: `url(${media.src})`,
           backgroundSize: 'cover',
@@ -59,7 +61,7 @@ function MediaSlot({ media }) {
 
   return (
     <div
-      className="relative w-full aspect-square md:w-[50%] md:shrink-0 bg-bb-dark cursor-pointer"
+      className="hover-lift relative w-full aspect-square bg-bb-dark rounded-2xl overflow-hidden cursor-pointer"
       onClick={togglePlay}
     >
       <video
@@ -81,7 +83,66 @@ function MediaSlot({ media }) {
   );
 }
 
+// TestimonialCard = bloco quadrado standalone com o texto do depoimento
+function TestimonialCard({ t }) {
+  return (
+    <div className="hover-lift w-full md:aspect-square aspect-[6/5] bg-white border border-black/10 rounded-2xl overflow-hidden p-5 md:p-6 flex flex-col gap-2 md:gap-3 justify-center">
+      <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">
+        {t.name} — {t.age}
+      </p>
+      <h3 className="text-bb-text-dark text-[1.8rem] md:text-[2.25rem] font-bold leading-tight">
+        {t.title}
+      </h3>
+      <div className="flex gap-1">
+        {Array.from({ length: 5 }).map((_, j) => (
+          <img key={j} src={starIcon} alt="★" className="w-4 h-4" />
+        ))}
+      </div>
+      <p className="text-[#424242] text-[0.8125rem] md:text-[0.875rem] leading-[15s0%]">
+        {t.body}
+      </p>
+    </div>
+  );
+}
+
 export default function SocialProof() {
+  // Detecta breakpoint sincronicamente pra evitar flash na primeira render
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(min-width: 768px)').matches;
+  });
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const handler = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // Pausa autoplay ao interagir, retoma 3s depois da última interação
+  const swiperRef = useRef(null);
+  const resumeTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    };
+  }, []);
+
+  const handleTouchStart = () => {
+    if (resumeTimerRef.current) {
+      clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => {
+      swiperRef.current?.autoplay?.start();
+    }, 3000);
+  };
+
   return (
     <section className="bg-bb-cream py-20 md:py-28 overflow-hidden">
       {/* Header — constrained */}
@@ -105,37 +166,54 @@ export default function SocialProof() {
         </h2>
       </FadeUp>
 
-      {/* Swiper full-width — 1.1 mobile (com peek), 2.5 desktop, slides centralizados */}
+      {/* Carrossel — desktop: slides ALTERNADOS (media, card, media, card, ...). Mobile: cada slide = media + card empilhados.
+          spaceBetween 12px entre slides, loop pra efeito infinito, full-width sem padding lateral.
+          key força remount ao trocar breakpoint (evita estado inconsistente do Swiper). */}
       <Swiper
-        slidesPerView={1.1}
-        centeredSlides
-        spaceBetween={32}
+        key={isDesktop ? 'desktop' : 'mobile'}
+        modules={[Autoplay]}
+        slidesPerView={isDesktop ? 3.5 : 1.25}
+        centeredSlides={!isDesktop}
+        spaceBetween={12}
+        slidesOffsetBefore={isDesktop ? 20 : 0}
+        slidesOffsetAfter={isDesktop ? 20 : 0}
         loop
-        breakpoints={{ 768: { slidesPerView: 2.5, spaceBetween: 32 } }}
+        loopAdditionalSlides={6}
+        speed={5000}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: false,
+          reverseDirection: true,
+        }}
+        allowTouchMove
+        onSwiper={(s) => { swiperRef.current = s; }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="social-marquee py-3!"
       >
-        {testimonials.map((t, i) => (
-          <SwiperSlide key={i} className="h-auto!">
-            <div className="bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row gap-5">
-              <MediaSlot media={t.media} />
-              <div className="w-full md:w-[50%] aspect-square p-6 md:p-10 flex flex-col gap-3 md:gap-4 justify-center">
-                <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">
-                  {t.name} — {t.age}
-                </p>
-                <h3 className="text-bb-text-dark text-[1.375rem] md:text-[1.75rem] font-bold leading-tight">
-                  {t.title}
-                </h3>
-                <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <img key={j} src={starIcon} alt="★" className="w-4 h-4" />
-                  ))}
-                </div>
-                <p className="text-[#424242] text-[0.875rem] md:text-[0.9375rem] leading-relaxed">
-                  {t.body}
-                </p>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+        {(() => {
+          // Duplica os testimonials 4x pra ter buffer enorme — resolve o bug do loop
+          // do Swiper que só funciona em uma direção quando há poucos slides únicos.
+          const buffered = Array.from({ length: 4 }).flatMap(() => testimonials);
+          return isDesktop
+            ? buffered.flatMap((t, i) => [
+                <SwiperSlide key={`${i}-media`} className="h-auto!">
+                  <MediaSlot media={t.media} />
+                </SwiperSlide>,
+                <SwiperSlide key={`${i}-card`} className="h-auto!">
+                  <TestimonialCard t={t} />
+                </SwiperSlide>,
+              ])
+            : buffered.map((t, i) => (
+                <SwiperSlide key={i} className="h-auto!">
+                  <div className="flex flex-col gap-3">
+                    <MediaSlot media={t.media} />
+                    <TestimonialCard t={t} />
+                  </div>
+                </SwiperSlide>
+              ));
+        })()}
       </Swiper>
     </section>
   );
