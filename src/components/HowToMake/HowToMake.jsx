@@ -70,16 +70,17 @@ export default function HowToMake() {
   useVideoAutoplay(mobileVideoRef);
 
   // Trigger por POSIÇÃO de scroll dentro da section (px):
-  //   Text 1: visível entre 500-3000px   (janela de 2500px — extended pra equalizar percepção com text 2)
-  //   Text 2: visível entre 3300-5300px  (gap de 300px após text 1 sair, janela de 2000px)
+  //   Text 1: visível entre 500-1500px   (janela de 1000px)
+  //   Text 2: visível entre 2600-4400px  (janela de 1800px, gap de 1100px)
+  // Ambos fitam dentro do sticky range da section (4400px+100vh).
   // Transição de opacidade é TEMPO-baseada (1s).
   useEffect(() => {
     const handleScroll = () => {
       const rect = sectionRef.current?.getBoundingClientRect();
       if (!rect) return;
       const scrollInSection = Math.max(0, -rect.top);
-      setText1Visible(scrollInSection >= 500 && scrollInSection < 3000);
-      setText2Visible(scrollInSection >= 3300 && scrollInSection < 5300);
+      setText1Visible(scrollInSection >= 500 && scrollInSection < 1500);
+      setText2Visible(scrollInSection >= 2600 && scrollInSection < 4400);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -102,7 +103,7 @@ export default function HowToMake() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="bg-bb-dark relative md:h-[calc(4000px+100vh)]"
+      className="bg-bb-dark relative md:h-[calc(4400px+100vh)]"
     >
       {/* ============ Mobile (texto → vídeo → texto, alternado) ============ */}
       <div className="md:hidden flex flex-col gap-20">

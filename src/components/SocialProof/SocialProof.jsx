@@ -115,9 +115,9 @@ export default function SocialProof() {
       >
         {testimonials.map((t, i) => (
           <SwiperSlide key={i} className="h-auto!">
-            <div className="bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row md:items-stretch h-full gap-5">
+            <div className="bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row gap-5">
               <MediaSlot media={t.media} />
-              <div className="p-6 md:p-10 flex flex-col gap-3 md:gap-4 justify-center flex-1">
+              <div className="w-full md:w-[50%] aspect-square p-6 md:p-10 flex flex-col gap-3 md:gap-4 justify-center">
                 <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">
                   {t.name} — {t.age}
                 </p>
