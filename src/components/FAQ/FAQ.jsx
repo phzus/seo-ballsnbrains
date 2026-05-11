@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import FadeUp from '../_shared/FadeUp';
 
 const faqs = [
   {
@@ -83,16 +84,24 @@ export default function FAQ() {
   return (
     <section id="faq" className="bg-bb-dark py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
-        <h2 className="text-white/15 text-[2.25rem] md:text-[3.25rem] font-bold leading-tight mb-12 md:mb-16 text-center">
+        <FadeUp as="h2" className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight mb-12 md:mb-16 text-center">
           Frequently Asked Questions
-        </h2>
+        </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           <div className="flex flex-col gap-3 md:gap-4">
-            {left.map((f, i) => <Item key={i} {...f} defaultOpen={i === 0} />)}
+            {left.map((f, i) => (
+              <FadeUp key={i} delay={i * 0.03}>
+                <Item {...f} defaultOpen={i === 0} />
+              </FadeUp>
+            ))}
           </div>
           <div className="flex flex-col gap-3 md:gap-4">
-            {right.map((f, i) => <Item key={i} {...f} />)}
+            {right.map((f, i) => (
+              <FadeUp key={i} delay={i * 0.03}>
+                <Item {...f} />
+              </FadeUp>
+            ))}
           </div>
         </div>
       </div>

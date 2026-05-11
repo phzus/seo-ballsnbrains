@@ -110,11 +110,7 @@ export default function HeroSection() {
         </p>
 
         <div className="mt-4">
-          <a
-            href={CTA_URL}
-            className="btn-cta btn-cta-lg md:text-[1.25rem]"
-            style={{ paddingLeft: '5.625rem', paddingRight: '5.625rem' }}
-          >
+          <a href={CTA_URL} className="btn-cta btn-cta-lg">
             Try It & Save 44%
           </a>
         </div>

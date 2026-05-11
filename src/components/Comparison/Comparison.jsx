@@ -1,3 +1,4 @@
+import FadeUp from '../_shared/FadeUp';
 import checkIcon from '../../assets/icons/check-compartive.svg';
 import xIcon from '../../assets/icons/x-compartive.svg';
 import vsStamp from '../../assets/icons/vs-stamp.svg';
@@ -20,7 +21,7 @@ export default function Comparison() {
     <section className="bg-bb-dark py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Top: products + guarantee stamp */}
-        <div className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 mb-10 md:mb-12">
+        <FadeUp className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 mb-10 md:mb-12">
           {/* Guarantee stamp top-left */}
           <img
             src={guaranteeStamp}
@@ -37,13 +38,14 @@ export default function Comparison() {
           <div className="flex justify-center bg-white/40 rounded-2xl p-4 md:p-6 border border-[#e6e6e6]">
             <img src={othersImg} alt="Others" className="w-full max-w-[17.5rem] md:max-w-[20rem] object-contain" />
           </div>
-        </div>
+        </FadeUp>
 
         {/* Comparison rows */}
         <div className="flex flex-col gap-2 md:gap-3">
           {rows.map((row, i) => (
-            <div
+            <FadeUp
               key={i}
+              delay={i * 0.06}
               className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-4 md:gap-8"
             >
               {/* BB side — gold gradient pill */}
@@ -63,7 +65,7 @@ export default function Comparison() {
                 <span>{row.others}</span>
                 <img src={xIcon} alt="✗" className="w-5 h-5 shrink-0" />
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
 

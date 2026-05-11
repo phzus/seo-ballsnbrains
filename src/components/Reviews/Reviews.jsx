@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import FadeUp from '../_shared/FadeUp';
 import starIcon from '../../assets/icons/Star.svg';
 
 const TABS = ['TASTE', 'BENEFITS', 'CAFFEINE', 'TESTOSTERONE'];
@@ -125,7 +126,7 @@ export default function Reviews() {
     <section id="reviews" className="bg-bb-cream py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Header — centered */}
-        <div className="mb-12 md:mb-16 text-center flex flex-col items-center gap-3">
+        <FadeUp className="mb-12 md:mb-16 text-center flex flex-col items-center gap-3">
           <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <img key={i} src={starIcon} alt="★" className="w-5 h-5" />
@@ -137,10 +138,10 @@ export default function Reviews() {
           >
             Over 60,000 Five Star Reviews
           </p>
-          <h2 className="text-bb-text-dark text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
+          <h2 className="text-bb-text-dark text-[2rem] md:text-[3.25rem] font-bold leading-tight">
             Read Our Reviews
           </h2>
-        </div>
+        </FadeUp>
 
         {/* Review carousel */}
         <Swiper

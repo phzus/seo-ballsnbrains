@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
+import FadeUp from '../_shared/FadeUp';
 import benefit01 from '../../assets/icons/benefit-01.svg';
 import benefit02 from '../../assets/icons/benefit-02.svg';
 import benefit03 from '../../assets/icons/benefit-03.svg';
@@ -51,8 +52,8 @@ export default function IngredientsSection() {
   return (
     <section id="ingredients" className="bg-bb-dark py-20 md:py-28 px-4 md:px-20">
       {/* Heading */}
-      <div className="mb-14 md:mb-20 text-center">
-        <h2 className="text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
+      <FadeUp className="mb-14 md:mb-20 text-center">
+        <h2 className="text-[2rem] md:text-[3.25rem] font-bold leading-tight">
           <span className="text-cofee-gradient">12 Clinical-Dose</span>
           <br />
           <span className="text-white">Ingredients in 1 Cup</span>
@@ -61,13 +62,14 @@ export default function IngredientsSection() {
           Industrial coffee floods your body with cortisol every morning.
           Cortisol suppresses testosterone. We fix that.
         </p>
-      </div>
+      </FadeUp>
 
       {/* Ingredients grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {ingredients.map((item, i) => (
-            <div
+            <FadeUp
               key={i}
+              delay={(i % 4) * 0.05}
               className={`relative rounded-lg overflow-hidden flex flex-col items-center justify-center text-center md:aspect-square aspect-auto border border-[#2d2d2d] px-2 ${i === 9 || i === 10 ? 'md:px-6' : 'md:px-12'} py-4 md:py-6`}
               style={{
                 backgroundImage: `url(${item.img})`,
@@ -94,7 +96,7 @@ export default function IngredientsSection() {
               <span className="mt-3 md:mt-4 text-bb-text-dark text-[0.875rem] md:text-[1rem] font-medium bg-white rounded-full px-6 md:px-6 py-1 md:py-1.5">
                 {item.dose}
               </span>
-            </div>
+            </FadeUp>
           ))}
         </div>
 

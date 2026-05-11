@@ -1,3 +1,4 @@
+import FadeUp from '../_shared/FadeUp';
 import resultDay7 from '../../assets/images/img-results-day7.webp';
 import resultDay30 from '../../assets/images/img-results-day30.webp';
 import resultDay90 from '../../assets/images/img-results-day90.webp';
@@ -41,21 +42,20 @@ export default function Results() {
   return (
     <section className="bg-bb-dark px-4 py-20 md:py-28">
       <div className="max-w-[71.25rem] mx-auto">
-        <div className="mb-14 md:mb-20 text-center">
-          <h2 className="text-white text-[2.25rem] md:text-[3.25rem] font-bold leading-tight">
-            Here's What Happens<br />
-            Inside <span className="text-bb-gold">Your Body</span>
+        <FadeUp className="mb-14 md:mb-20 text-center">
+          <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight max-w-[15ch] mx-auto">
+            Here's What Happens Inside <span className="text-bb-gold">Your Body</span>
           </h2>
-          <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[37.5rem] mx-auto">
+          <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[30rem] mx-auto">
             Each ingredient works on its own timeline. Here's what to expect as they build up in your system.
           </p>
-        </div>
+        </FadeUp>
 
         <div className="flex flex-col gap-14 md:gap-20">
           {results.map((r, idx) => {
             const reverse = idx % 2 === 1;
             return (
-              <div
+              <FadeUp
                 key={r.day}
                 className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 ${reverse ? 'md:flex-row-reverse' : ''}`}
               >
@@ -80,7 +80,7 @@ export default function Results() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </FadeUp>
             );
           })}
         </div>

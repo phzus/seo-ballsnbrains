@@ -261,9 +261,16 @@ body {
     padding: 0.625rem 1.375rem;
     font-size: 0.875rem;
   }
+  /* CTA padrão da landing — usado na Hero, Comparison, Results e demais sections.
+     Único diferente é o .btn-cta-gold da Navbar. */
   .btn-cta-lg {
-    padding: 1.125rem 2.5rem;
+    padding: 1.125rem 5rem;
     font-size: 1.125rem;
+  }
+  @media (min-width: 768px) {
+    .btn-cta-lg {
+      font-size: 1.25rem;
+    }
   }
 
   /* Gold gradient CTA — used in Navbar */
