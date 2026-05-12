@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap');
-
 @import "tailwindcss";
+
+/* Bricolage Grotesque carregado via <link rel="preload"> em index.html (não-bloqueante) */
 
 /* Satoshi */
 @font-face {

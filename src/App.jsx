@@ -1,19 +1,23 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// Above-the-fold — carregados no bundle inicial (sem lazy) pra não atrasar FCP
 import AlertBanner from './components/AlertBanner/AlertBanner';
 import Navbar from './components/Navbar/Navbar';
 import HeroSection from './components/HeroSection/HeroSection';
-import IngredientsSection from './components/IngredientsSection/IngredientsSection';
-import HowToMake from './components/HowToMake/HowToMake';
-import SocialProof from './components/SocialProof/SocialProof';
-import Results from './components/Results/Results';
-import Comparison from './components/Comparison/Comparison';
-import Reviews from './components/Reviews/Reviews';
-import Guarantee from './components/Guarantee/Guarantee';
-import FAQ from './components/FAQ/FAQ';
-import Footer from './components/Footer/Footer';
+
+// Below-the-fold — code split via React.lazy. Cada chunk só baixa quando o usuário
+// scrolla (ou imediatamente em background — depende do navegador).
+const IngredientsSection = lazy(() => import('./components/IngredientsSection/IngredientsSection'));
+const HowToMake = lazy(() => import('./components/HowToMake/HowToMake'));
+const SocialProof = lazy(() => import('./components/SocialProof/SocialProof'));
+const Results = lazy(() => import('./components/Results/Results'));
+const Comparison = lazy(() => import('./components/Comparison/Comparison'));
+const Reviews = lazy(() => import('./components/Reviews/Reviews'));
+const Guarantee = lazy(() => import('./components/Guarantee/Guarantee'));
+const FAQ = lazy(() => import('./components/FAQ/FAQ'));
+const Footer = lazy(() => import('./components/Footer/Footer'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,15 +54,19 @@ export default function App() {
       <AlertBanner />
       <Navbar />
       <HeroSection />
-      <IngredientsSection />
-      <HowToMake />
-      <SocialProof />
-      <Results />
-      <Comparison />
-      <Reviews />
-      <Guarantee />
-      <FAQ />
-      <Footer />
+      {/* Suspense com fallback null — componentes abaixo da fold não precisam
+          mostrar nada enquanto o chunk não chega (o usuário ainda nem rolou pra cá). */}
+      <Suspense fallback={null}>
+        <IngredientsSection />
+        <HowToMake />
+        <SocialProof />
+        <Results />
+        <Comparison />
+        <Reviews />
+        <Guarantee />
+        <FAQ />
+        <Footer />
+      </Suspense>
     </div>
   );
 }

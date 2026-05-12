@@ -10,20 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Carregar apenas a família/weights necessários com font-display swap -->
+    <!-- Bricolage Grotesque — carregamento NÃO bloqueante (preload as style + onload swap) -->
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap"
       as="style"
-      onload="
-        this.onload = null;
-        this.rel = 'stylesheet';
-      "
+      onload="this.onload=null;this.rel='stylesheet';"
     />
     <noscript
       ><link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap"
     /></noscript>
     <title>Balls N' Brains</title>
     <!-- Meta tags SEO -->
@@ -40,6 +37,7 @@
     <script
       type="text/javascript"
       src="https://lp.ballsnbrains.com/pretrack.js"
+      defer
     ></script>
     <!-- Meta Pixel Code -->
     <script>
