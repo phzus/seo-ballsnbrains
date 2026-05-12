@@ -1,30 +1,21 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// Above-the-fold — carregados no bundle inicial (sem lazy) pra não atrasar FCP
 import AlertBanner from './components/AlertBanner/AlertBanner';
 import Navbar from './components/Navbar/Navbar';
 import HeroSection from './components/HeroSection/HeroSection';
-
-// Below-the-fold — code split via React.lazy. Cada chunk só baixa quando o usuário
-// scrolla (ou imediatamente em background — depende do navegador).
-const IngredientsSection = lazy(() => import('./components/IngredientsSection/IngredientsSection'));
-const HowToMake = lazy(() => import('./components/HowToMake/HowToMake'));
-const SocialProof = lazy(() => import('./components/SocialProof/SocialProof'));
-const Results = lazy(() => import('./components/Results/Results'));
-const Comparison = lazy(() => import('./components/Comparison/Comparison'));
-const Reviews = lazy(() => import('./components/Reviews/Reviews'));
-const Guarantee = lazy(() => import('./components/Guarantee/Guarantee'));
-const FAQ = lazy(() => import('./components/FAQ/FAQ'));
-const Footer = lazy(() => import('./components/Footer/Footer'));
+import IngredientsSection from './components/IngredientsSection/IngredientsSection';
+import HowToMake from './components/HowToMake/HowToMake';
+import SocialProof from './components/SocialProof/SocialProof';
+import Results from './components/Results/Results';
+import Comparison from './components/Comparison/Comparison';
+import Reviews from './components/Reviews/Reviews';
+import Guarantee from './components/Guarantee/Guarantee';
+import FAQ from './components/FAQ/FAQ';
+import Footer from './components/Footer/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Placeholder reservando altura aproximada da section pra evitar CLS quando o chunk lazy chega
-const Placeholder = ({ minHeight }) => (
-  <div aria-hidden="true" style={{ minHeight }} />
-);
 
 // Smooth scroll global via Lenis, sincronizado com GSAP ScrollTrigger
 function useSmoothScroll() {
@@ -59,36 +50,15 @@ export default function App() {
       <AlertBanner />
       <Navbar />
       <HeroSection />
-      {/* Suspense por componente, cada um com placeholder de altura aproximada
-          pra que o slot da section já fique reservado no DOM e a chegada do chunk
-          não cause layout shift (CLS). */}
-      <Suspense fallback={<Placeholder minHeight="1600px" />}>
-        <IngredientsSection />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="5200px" />}>
-        <HowToMake />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="800px" />}>
-        <SocialProof />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="1900px" />}>
-        <Results />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="1000px" />}>
-        <Comparison />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="700px" />}>
-        <Reviews />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="400px" />}>
-        <Guarantee />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="1500px" />}>
-        <FAQ />
-      </Suspense>
-      <Suspense fallback={<Placeholder minHeight="200px" />}>
-        <Footer />
-      </Suspense>
+      <IngredientsSection />
+      <HowToMake />
+      <SocialProof />
+      <Results />
+      <Comparison />
+      <Reviews />
+      <Guarantee />
+      <FAQ />
+      <Footer />
     </div>
   );
 }
