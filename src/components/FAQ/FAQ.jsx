@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FadeUp from '../_shared/FadeUp';
+import faqArrow from '../../assets/icons/faq-arrow.svg';
 
 const faqs = [
   {
@@ -56,8 +57,8 @@ const faqs = [
   },
 ];
 
-function Item({ q, a, defaultOpen = false }) {
-  const [open, setOpen] = useState(defaultOpen);
+function Item({ q, a }) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col">
       <button
@@ -65,9 +66,12 @@ function Item({ q, a, defaultOpen = false }) {
         className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left bg-[#14100c] border border-bb-separator rounded-2xl cursor-pointer hover:border-bb-gold-dark/60 transition-colors"
       >
         <span className="text-white font-medium text-[0.875rem] md:text-[1rem] leading-snug">{q}</span>
-        <span className="text-bb-gold text-[1.125rem] leading-none shrink-0">
-          {open ? '↓' : '→'}
-        </span>
+        <img
+          src={faqArrow}
+          alt=""
+          aria-hidden="true"
+          className={`shrink-0 w-4 h-4 transition-transform duration-300 ${open ? 'rotate-90' : ''}`}
+        />
       </button>
       {open && (
         <p className="text-bb-text-dim text-[0.8125rem] md:text-[0.9375rem] leading-relaxed px-5 md:px-6 pt-4 pb-2">{a}</p>
@@ -92,7 +96,7 @@ export default function FAQ() {
           <div className="flex flex-col gap-3 md:gap-4">
             {left.map((f, i) => (
               <FadeUp key={i} delay={i * 0.03}>
-                <Item {...f} defaultOpen={i === 0} />
+                <Item {...f} />
               </FadeUp>
             ))}
           </div>

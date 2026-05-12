@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import sequenceVideo from '../../assets/videos/scroll-sequence.mp4';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import sequenceVideo from '../../assets/videos/scroll-sequence-scrub.mp4';
 import logoBadge from '../../assets/utils/footer-logo.svg';
-import FadeUp from '../_shared/FadeUp';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function LogoBadge() {
   return (
@@ -43,51 +46,57 @@ function TextBlock2() {
   );
 }
 
-// Controle de play/pause via IntersectionObserver — só toca quando a section está no viewport
-function useVideoOnVisible(videoRef, sectionRef) {
+// Scroll-driven video scrubbing — currentTime do vídeo segue o progresso de scroll da section.
+// Vídeo é encodado com keyframe em cada frame (all-intra) + 60fps motion-interpolated pra seek smooth.
+function useScrollScrubVideo(videoRef, sectionRef) {
   useEffect(() => {
-    const video = videoRef.current;
     const section = sectionRef.current;
-    if (!video || !section) return;
+    const video = videoRef.current;
+    if (!section || !video) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          const p = video.play();
-          if (p && typeof p.catch === 'function') {
-            p.catch(() => {
-              // Autoplay bloqueado pelo browser — fica pausado até interação
-            });
-          }
-        } else {
-          video.pause();
+    let duration = 0;
+    const ensureDuration = () => {
+      if (video.duration && Number.isFinite(video.duration) && video.duration > 0) {
+        duration = video.duration;
+      }
+    };
+
+    ensureDuration();
+    const onMeta = () => ensureDuration();
+    if (!duration) video.addEventListener('loadedmetadata', onMeta);
+
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.8,
+      onUpdate: (self) => {
+        if (duration > 0) {
+          video.currentTime = duration * self.progress;
         }
       },
-      { threshold: 0 }
-    );
+    });
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      trigger.kill();
+      video.removeEventListener('loadedmetadata', onMeta);
+    };
   }, [videoRef, sectionRef]);
 }
 
 export default function HowToMake() {
   const sectionRef = useRef(null);
-  const desktopVideoRef = useRef(null);
-  const mobileVideoRef = useRef(null);
+  const videoRef = useRef(null);
 
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
 
-  useVideoOnVisible(desktopVideoRef, sectionRef);
-  useVideoOnVisible(mobileVideoRef, sectionRef);
+  useScrollScrubVideo(videoRef, sectionRef);
 
   // Trigger por POSIÇÃO de scroll dentro da section (px):
   //   Text 1: visível entre 500-1500px   (janela de 1000px)
   //   Text 2: visível entre 2600-4400px  (janela de 1800px, gap de 1100px)
-  // Ambos fitam dentro do sticky range da section (4400px+100vh).
-  // Transição de opacidade é TEMPO-baseada (1s).
+  // Mesmos triggers em mobile e desktop — só o layout muda.
   useEffect(() => {
     const handleScroll = () => {
       const rect = sectionRef.current?.getBoundingClientRect();
@@ -101,63 +110,28 @@ export default function HowToMake() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const videoProps = {
-    src: sequenceVideo,
-    autoPlay: true,
-    loop: true,
-    muted: true,
-    playsInline: true,
-    preload: 'auto',
-    disablePictureInPicture: true,
-    disableRemotePlayback: true,
-    'aria-hidden': true,
-  };
-
   return (
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="bg-bb-dark relative md:h-[calc(4400px+100vh)]"
+      className="bg-bb-dark relative h-[calc(4400px+100vh)]"
     >
-      {/* ============ Mobile (texto → vídeo → texto, alternado) ============ */}
-      <div className="md:hidden flex flex-col gap-20 md:gap-20">
-        <FadeUp className="flex flex-col gap-5 px-4 pt-20">
-          <TextBlock1 />
-        </FadeUp>
-
-        {/* Vídeo grande, centralizado, extravasa a viewport horizontalmente
-            (clipado pelo overflow-hidden do pai → sem scroll lateral na página) */}
-        <div className="relative h-[50vh] overflow-hidden">
-          <video
-            {...videoProps}
-            ref={mobileVideoRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-full object-cover"
-          />
-          {/* Fade vertical sutil → dissolve no bg-bb-dark em cima e embaixo */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                'linear-gradient(180deg, #0a0908 0%, transparent 12%, transparent 88%, #0a0908 100%)',
-            }}
-          />
-        </div>
-
-        <FadeUp className="flex flex-col gap-5 px-4 pb-20">
-          <TextBlock2 />
-        </FadeUp>
-      </div>
-
-      {/* ============ Desktop ============ */}
-      <div className="hidden md:block sticky top-0 h-screen overflow-hidden md:mb-60 mb-0">
-        <div className="grid grid-cols-2 h-full">
-          {/* Esquerda — vídeo, conteúdo levemente puxado pra direita do frame */}
-          <div className="relative overflow-hidden h-full">
+      {/* Sticky pin — conteúdo fica fixo enquanto a section rola */}
+      <div className="sticky top-14 md:-top-0 h-screen overflow-hidden">
+        {/* Layout: vídeo em CIMA no mobile, à ESQUERDA no desktop. Textos do outro lado. */}
+        <div className="flex flex-col md:flex-row h-full">
+          {/* Vídeo container */}
+          <div className="relative overflow-hidden flex-1">
             <video
-              {...videoProps}
-              ref={desktopVideoRef}
-              className="absolute inset-0 w-full h-full object-cover object-[35%_center]"
+              ref={videoRef}
+              src={sequenceVideo}
+              muted
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              disableRemotePlayback
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover md:object-[35%_center]"
             />
             {/* Fade vertical sutil → dissolve no bg-bb-dark em cima e embaixo */}
             <div
@@ -170,10 +144,10 @@ export default function HowToMake() {
             />
           </div>
 
-          {/* Direita — textos absolutos sobrepostos, opacity + leve slide-up controlados por scroll */}
-          <div className="relative">
+          {/* Texto container — textos absolutos sobrepostos, controlados por scroll */}
+          <div className="relative flex-1">
             <motion.div
-              className="absolute inset-0 flex items-center px-12 lg:px-16"
+              className="absolute inset-0 flex items-center px-4 md:px-12 lg:px-16"
               initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
               animate={{
                 opacity: text1Visible ? 1 : 0,
@@ -183,13 +157,13 @@ export default function HowToMake() {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               style={{ pointerEvents: text1Visible ? 'auto' : 'none', zIndex: text1Visible ? 2 : 1 }}
             >
-              <div className="flex flex-col gap-5 max-w-[40rem]">
+              <div className="flex flex-col gap-3 md:gap-5 max-w-[40rem]">
                 <TextBlock1 />
               </div>
             </motion.div>
 
             <motion.div
-              className="absolute inset-0 flex items-center px-12 lg:px-16"
+              className="absolute inset-0 flex items-center px-4 md:px-12 lg:px-16"
               initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
               animate={{
                 opacity: text2Visible ? 1 : 0,
@@ -199,7 +173,7 @@ export default function HowToMake() {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               style={{ pointerEvents: text2Visible ? 'auto' : 'none', zIndex: text2Visible ? 2 : 1 }}
             >
-              <div className="flex flex-col gap-5 max-w-[40rem]">
+              <div className="flex flex-col gap-3 md:gap-5 max-w-[40rem]">
                 <TextBlock2 />
               </div>
             </motion.div>
