@@ -64,7 +64,7 @@ export default function HeroSection() {
         key={isMobile ? 'mobile' : 'desktop'}
         className={
           isMobile
-            ? 'absolute top-22 left-0 w-full h-auto z-0 pointer-events-none'
+            ? 'absolute top-18 -left-18 min-w-[118%] z-0 pointer-events-none'
             : 'absolute top-12 left-1/2 -translate-x-1/2 h-full w-auto min-w-full max-w-none object-cover object-bottom z-0 pointer-events-none'
         }
         autoPlay
@@ -87,7 +87,7 @@ export default function HeroSection() {
         className="hidden md:block absolute inset-x-0 bottom-0 h-40 z-5 pointer-events-none bg-linear-to-t from-bb-dark to-transparent"
       />
 
-      <div className="relative z-10 max-w-[71.25rem] mx-auto w-full pt-68 pb-16 md:pt-4 md:pb-14 flex flex-col items-start justify-end md:justify-center gap-5">
+      <div className="relative z-10 max-w-[71.25rem] mx-auto w-full pt-72 pb-16 md:pt-4 md:pb-14 flex flex-col items-start justify-end md:justify-center gap-5">
         <span className="inline-flex items-center justify-center gap-2 bg-[rgba(32,32,32,0.80)] border border-bb-separator rounded-full px-4 md:px-8 py-1.5 text-white text-[0.8rem] md:text-[0.875rem] font-medium">
           <img src={checkIcon} alt="" className="w-3.5 h-3.5" />
           365-Days Guarantee.
