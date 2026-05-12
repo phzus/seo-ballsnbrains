@@ -21,6 +21,11 @@ const Footer = lazy(() => import('./components/Footer/Footer'));
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Placeholder reservando altura aproximada da section pra evitar CLS quando o chunk lazy chega
+const Placeholder = ({ minHeight }) => (
+  <div aria-hidden="true" style={{ minHeight }} />
+);
+
 // Smooth scroll global via Lenis, sincronizado com GSAP ScrollTrigger
 function useSmoothScroll() {
   useEffect(() => {
@@ -54,17 +59,34 @@ export default function App() {
       <AlertBanner />
       <Navbar />
       <HeroSection />
-      {/* Suspense com fallback null — componentes abaixo da fold não precisam
-          mostrar nada enquanto o chunk não chega (o usuário ainda nem rolou pra cá). */}
-      <Suspense fallback={null}>
+      {/* Suspense por componente, cada um com placeholder de altura aproximada
+          pra que o slot da section já fique reservado no DOM e a chegada do chunk
+          não cause layout shift (CLS). */}
+      <Suspense fallback={<Placeholder minHeight="1600px" />}>
         <IngredientsSection />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="5200px" />}>
         <HowToMake />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="800px" />}>
         <SocialProof />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="1900px" />}>
         <Results />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="1000px" />}>
         <Comparison />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="700px" />}>
         <Reviews />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="400px" />}>
         <Guarantee />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="1500px" />}>
         <FAQ />
+      </Suspense>
+      <Suspense fallback={<Placeholder minHeight="200px" />}>
         <Footer />
       </Suspense>
     </div>
