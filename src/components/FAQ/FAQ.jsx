@@ -88,7 +88,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="bg-bb-dark py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
-        <FadeUp as="h2" className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight mb-12 md:mb-16 text-center">
+        <FadeUp as="h2" className="text-white text-[1.75rem] md:text-[3rem] font-bold leading-tight mb-12 md:mb-16 text-center">
           Frequently Asked Questions
         </FadeUp>
 

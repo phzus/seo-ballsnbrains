@@ -53,7 +53,7 @@ export default function IngredientsSection() {
     <section id="ingredients" className="bg-bb-dark py-20 md:py-28 px-4 md:px-20">
       {/* Heading */}
       <FadeUp className="mb-14 md:mb-20 text-center">
-        <h2 className="text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+        <h2 className="text-[1.75rem] md:text-[3rem] font-bold leading-tight">
           <span className="text-bb-gold">12 Clinical-Dose</span>
           <br />
           <span className="text-white">Ingredients in 1 Cup</span>
@@ -78,7 +78,7 @@ export default function IngredientsSection() {
               }}
             >
               {/* Title */}
-              <h3 className="text-white font-bold text-[1.125rem] md:text-[1.8rem] leading-tight">
+              <h3 className="text-white font-bold text-[0.875rem] md:text-[1.55rem] leading-tight">
                 {item.name}
               </h3>
 

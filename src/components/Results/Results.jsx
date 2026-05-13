@@ -43,7 +43,7 @@ export default function Results() {
     <section className="bg-bb-dark px-4 py-20 md:py-28">
       <div className="max-w-[71.25rem] mx-auto">
         <FadeUp className="mb-14 md:mb-20 text-center">
-          <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight max-w-[15ch] mx-auto">
+          <h2 className="text-white text-[1.75rem] md:text-[3rem] font-bold leading-tight max-w-[15ch] mx-auto">
             Here's What Happens Inside <span className="text-bb-gold">Your Body</span>
           </h2>
           <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.125rem] leading-relaxed mt-4 max-w-[30rem] mx-auto">
@@ -68,7 +68,7 @@ export default function Results() {
                   />
                 </div>
                 <div className="flex-1 flex flex-col gap-5">
-                  <h3 className="text-bb-gold text-[2.25rem] md:text-[3rem] font-bold leading-none">
+                  <h3 className="text-bb-gold text-[2rem] md:text-[2.75rem] font-bold leading-none">
                     {r.day}
                   </h3>
                   <ul className="flex flex-col gap-3 text-bb-text-dim text-[0.875rem] md:text-[1rem] leading-relaxed">

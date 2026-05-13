@@ -138,7 +138,7 @@ export default function Reviews() {
           >
             Over 60,000 Five Star Reviews
           </p>
-          <h2 className="text-bb-text-dark text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+          <h2 className="text-bb-text-dark text-[1.75rem] md:text-[3rem] font-bold leading-tight">
             Read Our Reviews
           </h2>
         </FadeUp>

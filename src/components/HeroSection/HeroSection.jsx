@@ -94,10 +94,10 @@ export default function HeroSection() {
         </span>
 
         <h1 className="text-white leading-[1.05] max-w-[40rem]">
-          <span className="block text-[2.3rem] md:text-[3.125rem] font-bold mt-4">
+          <span className="block text-[2.05rem] md:text-[2.875rem] font-bold mt-4">
             Your Entire<br />Testosterone Stack.
           </span>
-          <span className="block text-bb-gold text-[1.85rem] md:text-[2.5rem] font-regular mt-4">
+          <span className="block text-bb-gold text-[1.6rem] md:text-[2.25rem] font-regular mt-4">
             One Scoop. One Coffee.
           </span>
         </h1>

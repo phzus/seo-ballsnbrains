@@ -81,7 +81,7 @@ function TestimonialCard({ t }) {
       <p className="text-[#666] text-[0.8125rem] md:text-[0.875rem] font-medium">
         {t.name} — {t.age}
       </p>
-      <h3 className="text-bb-text-dark text-[1.8rem] md:text-[2.25rem] font-bold leading-tight">
+      <h3 className="text-bb-text-dark text-[1.55rem] md:text-[2rem] font-bold leading-tight">
         {t.title}
       </h3>
       <div className="flex gap-1">
@@ -152,7 +152,7 @@ export default function SocialProof() {
           </span>
         </div>
 
-        <h2 className="text-bb-text-dark text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+        <h2 className="text-bb-text-dark text-[1.75rem] md:text-[3rem] font-bold leading-tight">
           Don't Just Take Our Word For It
         </h2>
       </FadeUp>

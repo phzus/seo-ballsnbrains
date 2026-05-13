@@ -19,7 +19,7 @@ function TextBlock1() {
   return (
     <>
       <TextBadge>Ready in 30 seconds</TextBadge>
-      <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+      <h2 className="text-white text-[1.75rem] md:text-[3rem] font-bold leading-tight">
         Tastes like <span className="text-bb-gold font-bold">coffee.</span>
       </h2>
       <div className="text-bb-text-dim text-[1rem] md:text-[1.4375rem] leading-relaxed space-y-4 font-medium">
@@ -35,7 +35,7 @@ function TextBlock2() {
   return (
     <>
       <TextBadge>Increase your testosterone</TextBadge>
-      <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+      <h2 className="text-white text-[1.75rem] md:text-[3rem] font-bold leading-tight">
         Works like a <span className="text-bb-gold font-bold">protocol.</span>
       </h2>
       <div className="text-bb-text-dim text-[1rem] md:text-[1.4375rem] leading-relaxed space-y-4 font-medium">

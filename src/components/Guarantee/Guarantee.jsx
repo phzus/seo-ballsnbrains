@@ -16,7 +16,7 @@ export default function Guarantee() {
           </div>
 
           <div className="flex flex-col gap-3 text-center md:text-left max-w-[40rem]">
-            <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight">
+            <h2 className="text-white text-[1.75rem] md:text-[3rem] font-bold leading-tight">
               Money-Back Guarantee
             </h2>
             <p className="text-bb-text-dim text-[0.875rem] md:text-[1rem] leading-relaxed">
