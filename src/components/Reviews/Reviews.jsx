@@ -134,7 +134,7 @@ export default function Reviews() {
           </div>
           <p
             className="text-bb-text-dark text-[0.75rem] md:text-[0.875rem] font-bold uppercase tracking-[0.18em]"
-            style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+            style={{ fontFamily: "'Montserrat', system-ui, sans-serif" }}
           >
             Over 60,000 Five Star Reviews
           </p>
@@ -192,7 +192,7 @@ export default function Reviews() {
                   ? 'bg-bb-gold text-white border-bb-gold'
                   : 'bg-transparent text-bb-text-dark border-bb-gold/60 hover:border-bb-gold'
               }`}
-              style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+              style={{ fontFamily: "'Montserrat', system-ui, sans-serif" }}
             >
               {tab}
             </button>

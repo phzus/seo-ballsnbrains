@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import AlertBanner from './components/AlertBanner/AlertBanner';
 import Navbar from './components/Navbar/Navbar';
 import HeroSection from './components/HeroSection/HeroSection';
 import IngredientsSection from './components/IngredientsSection/IngredientsSection';
@@ -47,7 +46,6 @@ export default function App() {
 
   return (
     <div>
-      <AlertBanner />
       <Navbar />
       <HeroSection />
       <IngredientsSection />

@@ -88,7 +88,7 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 max-w-[71.25rem] mx-auto w-full pt-72 pb-16 md:pt-4 md:pb-14 flex flex-col items-start justify-end md:justify-center gap-5">
-        <span className="inline-flex items-center justify-center gap-2 bg-[rgba(32,32,32,0.80)] border border-bb-separator rounded-full px-4 md:px-8 py-1.5 text-white text-[0.8rem] md:text-[0.875rem] font-medium">
+        <span className="inline-flex items-center justify-center gap-2 bg-[rgba(32,32,32,0.80)] border border-bb-separator rounded-full px-4 md:px-8 py-2 text-white text-[0.8rem] md:text-[0.875rem] font-medium">
           <img src={checkIcon} alt="" className="w-3.5 h-3.5" />
           365-Days Guarantee.
         </span>
@@ -97,7 +97,7 @@ export default function HeroSection() {
           <span className="block text-[2.3rem] md:text-[3.125rem] font-bold mt-4">
             Your Entire<br />Testosterone Stack.
           </span>
-          <span className="block text-cofee-gradient text-[1.85rem] md:text-[2.5rem] font-regular mt-4">
+          <span className="block text-bb-gold text-[1.85rem] md:text-[2.5rem] font-regular mt-4">
             One Scoop. One Coffee.
           </span>
         </h1>

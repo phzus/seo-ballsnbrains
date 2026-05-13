@@ -54,7 +54,7 @@ export default function IngredientsSection() {
       {/* Heading */}
       <FadeUp className="mb-14 md:mb-20 text-center">
         <h2 className="text-[2rem] md:text-[3.25rem] font-bold leading-tight">
-          <span className="text-cofee-gradient">12 Clinical-Dose</span>
+          <span className="text-bb-gold">12 Clinical-Dose</span>
           <br />
           <span className="text-white">Ingredients in 1 Cup</span>
         </h2>

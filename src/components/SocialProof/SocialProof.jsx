@@ -146,7 +146,7 @@ export default function SocialProof() {
           </div>
           <span
             className="text-bb-text-dark text-[0.75rem] md:text-[0.8125rem] font-bold uppercase tracking-wide bg-bb-gold/30 border border-bb-gold/60 rounded-full px-3 py-1"
-            style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+            style={{ fontFamily: "'Montserrat', system-ui, sans-serif" }}
           >
             61,028 Reviews
           </span>

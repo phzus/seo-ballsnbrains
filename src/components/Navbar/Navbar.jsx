@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../../assets/utils/logo-font-light.svg';
 
-const CTA_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
-
 export default function Navbar() {
   const navRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
@@ -57,10 +55,6 @@ export default function Navbar() {
             );
           })}
         </div>
-
-        <a href={CTA_URL} className="btn-cta-gold text-[0.875rem] md:text-[1rem]">
-          Try It & Save 44%
-        </a>
       </div>
     </nav>
   );

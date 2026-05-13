@@ -3,22 +3,22 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sequenceVideo from '../../assets/videos/scroll-sequence-scrub.mp4';
-import logoBadge from '../../assets/utils/footer-logo.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function LogoBadge() {
+// Badge de texto — pill escuro com borda sutil, texto branco uppercase
+function TextBadge({ children }) {
   return (
-    <div className="inline-flex items-center gap-2 bg-bb-gold rounded-lg px-3 py-2 self-start">
-      <img src={logoBadge} alt="B&B" className="h-5 w-auto" />
-    </div>
+    <span className="inline-flex items-center self-start rounded-full bg-[rgba(32,32,32,0.80)] border border-bb-separator px-5 py-2.5 text-white text-[0.75rem] md:text-[0.875rem] font-medium uppercase tracking-wide">
+      {children}
+    </span>
   );
 }
 
 function TextBlock1() {
   return (
     <>
-      <LogoBadge />
+      <TextBadge>Ready in 30 seconds</TextBadge>
       <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight">
         Tastes like <span className="text-bb-gold font-bold">coffee.</span>
       </h2>
@@ -34,7 +34,7 @@ function TextBlock1() {
 function TextBlock2() {
   return (
     <>
-      <LogoBadge />
+      <TextBadge>Increase your testosterone</TextBadge>
       <h2 className="text-white text-[2rem] md:text-[3.25rem] font-bold leading-tight">
         Works like a <span className="text-bb-gold font-bold">protocol.</span>
       </h2>

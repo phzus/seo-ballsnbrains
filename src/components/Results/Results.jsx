@@ -64,7 +64,7 @@ export default function Results() {
                     src={r.img}
                     alt={r.day}
                     loading="lazy"
-                    className="w-full max-w-[31.25rem] mx-auto rounded-2xl object-cover aspect-[4/3] border border-bb-gold-dark/40"
+                    className="w-full max-w-[31.25rem] mx-auto rounded-2xl object-cover aspect-[4/3] border border-bb-gold/50"
                   />
                 </div>
                 <div className="flex-1 flex flex-col gap-5">

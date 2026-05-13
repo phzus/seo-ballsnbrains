@@ -27,7 +27,7 @@ export default function AlertBanner() {
     >
       <p
         className="text-[#0a0908] text-[0.745rem] md:text-[0.875rem] font-bold leading-none"
-        style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+        style={{ fontFamily: "'Montserrat', system-ui, sans-serif" }}
       >
         MOTHER'S DAY SALE 🌷 35% OFF STARTER KIT + 5 FREE GIFTS + FREE U.S. SHIPPING
       </p>
