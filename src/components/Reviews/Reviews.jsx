@@ -123,7 +123,7 @@ export default function Reviews() {
   const swiperRef = useRef(null);
 
   return (
-    <section id="reviews" className="bg-bb-cream py-20 md:py-28 px-4">
+    <section id="reviews" className="bg-white py-20 md:py-28 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         {/* Header — centered */}
         <FadeUp className="mb-12 md:mb-16 text-center flex flex-col items-center gap-3">

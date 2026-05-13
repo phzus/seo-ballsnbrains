@@ -77,13 +77,8 @@ export default function IngredientsSection() {
                 backgroundPosition: 'center',
               }}
             >
-              {/* Number badge */}
-              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-bb-cream-warm flex items-center justify-center text-bb-dark text-[0.875rem] md:text-[1.4rem] font-normal">
-                {i + 1}
-              </div>
-
               {/* Title */}
-              <h3 className="text-bb-cream-warm font-bold text-[1.125rem] md:text-[1.8rem] leading-tight mt-3 md:mt-4">
+              <h3 className="text-white font-bold text-[1.125rem] md:text-[1.8rem] leading-tight">
                 {item.name}
               </h3>
 

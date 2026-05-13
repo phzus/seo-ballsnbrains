@@ -3,7 +3,7 @@ import guaranteeStamp from '../../assets/utils/guarantee-stamp.webp';
 
 export default function Guarantee() {
   return (
-    <section className="bg-bb-dark py-14 md:py-20 px-4">
+    <section className="bg-[#14100C] py-14 md:py-20 px-4">
       <div className="max-w-[71.25rem] mx-auto">
         <FadeUp className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14">
           <div className="shrink-0">

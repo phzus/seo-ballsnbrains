@@ -2,7 +2,6 @@ import FadeUp from '../_shared/FadeUp';
 import checkIcon from '../../assets/icons/check-compartive.svg';
 import xIcon from '../../assets/icons/x-compartive.svg';
 import vsStamp from '../../assets/icons/vs-stamp.svg';
-import guaranteeStamp from '../../assets/icons/satisfaction-guarantee-stamp.svg';
 import bbImg from '../../assets/images/img-ballsnbrains-comparative.webp';
 import othersImg from '../../assets/images/img-others-comparative.webp';
 
@@ -23,16 +22,7 @@ export default function Comparison() {
         {/* Parent container — relative pra os overlays absolutos (selo + VS).
             Grid 1-col mobile, 2-col desktop. Gap 16px entre filhos. */}
         <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Overlay 1: Selo 365-day — translate -50% -50% pra ficar "overhang" no anchor.
-              Desktop: top-0 left-0 (canto superior esquerdo, 75% pra fora).
-              Mobile: top-1/2 left-0 (esquerda centralizado verticalmente, metade pra fora). */}
-          <img
-            src={guaranteeStamp}
-            alt="100% Satisfaction Guarantee"
-            className="absolute top-[30%] md:top-0 left-8 md:left-0 -translate-x-1/2 -translate-y-1/2 w-20 md:w-28 object-contain z-10 pointer-events-none"
-          />
-
-          {/* Overlay 2: VS — mobile totalmente centralizado, desktop 180px do topo.
+          {/* Overlay: VS — mobile totalmente centralizado, desktop 180px do topo.
               translate -50% -50% nos dois pra elemento centralizar no anchor (efeito "overhang") */}
           <img
             src={vsStamp}

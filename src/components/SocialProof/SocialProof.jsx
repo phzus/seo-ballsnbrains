@@ -5,7 +5,6 @@ import 'swiper/css';
 import FadeUp from '../_shared/FadeUp';
 import video05 from '../../assets/videos/video-05.mp4';
 import video06 from '../../assets/videos/video-06.mp4';
-import placeholderImg from '../../assets/images/img-results-day30.webp';
 import playIcon from '../../assets/icons/play-button.svg';
 import starIcon from '../../assets/icons/Star.svg';
 
@@ -16,14 +15,6 @@ const testimonials = [
     title: 'Balls & Brains changing my life...',
     body: '"Love this coffee. Been telling everyone I know about it. Placebo or not, I feel less anxious, less stressed, and more focused than I have in years. And it actually tastes like coffee."',
     media: { type: 'video', src: video05 },
-  },
-  {
-    // TODO: substituir copy quando vier do cliente; vídeo deste slot ainda não chegou (placeholder image)
-    name: 'Brian L.',
-    age: '42 Years',
-    title: "Best supplement I've ever taken",
-    body: '"Tried every adaptogen on the market. Most are garbage. This one actually does what it claims. Cortisol down, T up, focus locked in. It\'s become my morning ritual."',
-    media: { type: 'image', src: placeholderImg },
   },
   {
     name: 'Carl R.',
