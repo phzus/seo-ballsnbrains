@@ -65,6 +65,22 @@ function useScrollScrubVideo(videoRef, sectionRef) {
     const onMeta = () => ensureDuration();
     if (!duration) video.addEventListener('loadedmetadata', onMeta);
 
+    // iOS Safari fix: vídeo aparece preto até alguém dar play. Força o primeiro
+    // frame a renderizar com play()→pause() (funciona porque está muted).
+    const showFirstFrame = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.then(() => {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(() => {
+          try { video.currentTime = 0.001; } catch (e) {}
+        });
+      }
+    };
+    if (video.readyState >= 2) showFirstFrame();
+    else video.addEventListener('loadeddata', showFirstFrame, { once: true });
+
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
@@ -127,6 +143,7 @@ export default function HowToMake() {
               src={sequenceVideo}
               muted
               playsInline
+              webkit-playsinline="true"
               preload="auto"
               disablePictureInPicture
               disableRemotePlayback

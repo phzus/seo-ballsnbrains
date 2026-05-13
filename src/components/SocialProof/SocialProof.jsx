@@ -30,6 +30,36 @@ function MediaSlot({ media }) {
   const ref = useRef(null);
   const [playing, setPlaying] = useState(false);
 
+  // iOS Safari fix: <video> aparece preto antes do primeiro play. Truque:
+  // muta, dá play() pra iOS aceitar (muted autoplay é permitido), pausa em 0,
+  // desmuta. Resultado: primeiro frame visível e áudio funciona ao tocar.
+  useEffect(() => {
+    if (media.type !== 'video') return;
+    const video = ref.current;
+    if (!video) return;
+
+    const showFirstFrame = () => {
+      if (playing) return;
+      video.muted = true;
+      const p = video.play();
+      if (p !== undefined) {
+        p.then(() => {
+          video.pause();
+          video.currentTime = 0;
+          video.muted = false;
+        }).catch(() => {
+          try { video.currentTime = 0.001; } catch (e) {}
+          video.muted = false;
+        });
+      }
+    };
+
+    if (video.readyState >= 2) showFirstFrame();
+    else video.addEventListener('loadeddata', showFirstFrame, { once: true });
+
+    return () => video.removeEventListener('loadeddata', showFirstFrame);
+  }, [media.type, playing]);
+
   function togglePlay() {
     if (!ref.current) return;
     if (playing) ref.current.pause();
@@ -60,7 +90,8 @@ function MediaSlot({ media }) {
         src={media.src}
         className="w-full h-full object-cover"
         playsInline
-        preload="metadata"
+        webkit-playsinline="true"
+        preload="auto"
         onEnded={() => setPlaying(false)}
       />
       {!playing && (
@@ -184,9 +215,9 @@ export default function SocialProof() {
         className="social-marquee py-3!"
       >
         {(() => {
-          // Duplica os testimonials 4x pra ter buffer enorme — resolve o bug do loop
-          // do Swiper que só funciona em uma direção quando há poucos slides únicos.
-          const buffered = Array.from({ length: 4 }).flatMap(() => testimonials);
+          // Duplica os testimonials 2x — buffer mínimo pro loop do Swiper funcionar
+          // nas duas direções, mas com menos <video> no DOM (iOS Safari sofre com muitos).
+          const buffered = Array.from({ length: 2 }).flatMap(() => testimonials);
           return isDesktop
             ? buffered.flatMap((t, i) => [
                 <SwiperSlide key={`${i}-media`} className="h-auto!">

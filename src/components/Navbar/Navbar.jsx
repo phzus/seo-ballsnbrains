@@ -10,6 +10,8 @@ const NAV_LINKS = [
   { href: '#faq', label: 'FAQ' },
 ];
 
+const CTA_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
+
 export default function Navbar() {
   const navRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
@@ -133,6 +135,17 @@ export default function Navbar() {
                     {link.label}
                   </motion.a>
                 ))}
+
+                <motion.a
+                  href={CTA_URL}
+                  onClick={() => setMenuOpen(false)}
+                  className="btn-cta mt-6 text-center"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + NAV_LINKS.length * 0.06, duration: 0.3 }}
+                >
+                  Try It & Save 44%
+                </motion.a>
               </nav>
             </motion.aside>
           </>
