@@ -147,7 +147,7 @@ export default function HowToMake() {
           {/* Texto container — textos absolutos sobrepostos, controlados por scroll */}
           <div className="relative flex-1">
             <motion.div
-              className="absolute inset-0 flex items-center px-4 md:px-12 lg:px-16"
+              className="absolute inset-0 flex items-start md:items-center px-4 md:px-12 lg:px-16"
               initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
               animate={{
                 opacity: text1Visible ? 1 : 0,
@@ -163,7 +163,7 @@ export default function HowToMake() {
             </motion.div>
 
             <motion.div
-              className="absolute inset-0 flex items-center px-4 md:px-12 lg:px-16"
+              className="absolute inset-0 flex items-start md:items-center px-4 md:px-12 lg:px-16"
               initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
               animate={{
                 opacity: text2Visible ? 1 : 0,
