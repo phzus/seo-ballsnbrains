@@ -5,6 +5,8 @@ import 'swiper/css';
 import FadeUp from '../_shared/FadeUp';
 import video05 from '../../assets/videos/video-05.mp4';
 import video06 from '../../assets/videos/video-06.mp4';
+import poster05 from '../../assets/images/poster-video-05.webp';
+import poster06 from '../../assets/images/poster-video-06.webp';
 import playIcon from '../../assets/icons/play-button.svg';
 import starIcon from '../../assets/icons/Star.svg';
 
@@ -14,14 +16,14 @@ const testimonials = [
     age: '35 Years',
     title: 'Balls & Brains changing my life...',
     body: '"Love this coffee. Been telling everyone I know about it. Placebo or not, I feel less anxious, less stressed, and more focused than I have in years. And it actually tastes like coffee."',
-    media: { type: 'video', src: video05 },
+    media: { type: 'video', src: video05, poster: poster05 },
   },
   {
     name: 'Carl R.',
     age: '38 Years',
     title: 'Finally something that works',
     body: '"My wife noticed before I did. More energy, better sleep, no afternoon crash. The fact that it tastes like real coffee is the cherry on top."',
-    media: { type: 'video', src: video06 },
+    media: { type: 'video', src: video06, poster: poster06 },
   },
 ];
 
@@ -84,10 +86,16 @@ function MediaSlot({ media }) {
     <div
       className="hover-lift relative w-full aspect-square bg-bb-dark rounded-2xl overflow-hidden cursor-pointer"
       onClick={togglePlay}
+      style={
+        media.poster
+          ? { backgroundImage: `url(${media.poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          : undefined
+      }
     >
       <video
         ref={ref}
         src={media.src}
+        poster={media.poster}
         className="w-full h-full object-cover"
         playsInline
         webkit-playsinline="true"
