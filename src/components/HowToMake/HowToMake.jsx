@@ -169,7 +169,7 @@ export default function HowToMake() {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               style={{ pointerEvents: text1Visible ? 'auto' : 'none', zIndex: text1Visible ? 2 : 1 }}
             >
-              <div className="flex flex-col gap-3 md:gap-5 max-w-[40rem]">
+              <div className="flex flex-col gap-5 md:gap-5 max-w-[40rem]">
                 <TextBlock1 />
               </div>
             </motion.div>
@@ -185,7 +185,7 @@ export default function HowToMake() {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               style={{ pointerEvents: text2Visible ? 'auto' : 'none', zIndex: text2Visible ? 2 : 1 }}
             >
-              <div className="flex flex-col gap-3 md:gap-5 max-w-[40rem]">
+              <div className="flex flex-col gap-5 md:gap-5 max-w-[40rem]">
                 <TextBlock2 />
               </div>
             </motion.div>
