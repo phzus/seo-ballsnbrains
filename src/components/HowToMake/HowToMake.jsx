@@ -1,21 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Sequência de imagens (jeito Apple) — substitui vídeo MP4 com scrub.
-// iOS Safari não decodifica vídeo com seek rápido de forma confiável; trocar src
-// de <img> é universalmente suportado e roda smooth em qualquer dispositivo.
-// import.meta.glob eager: Vite bundla todos os frames com hash, ordenados por nome.
-const frameModules = import.meta.glob('../../assets/frames/scroll-sequence/*.webp', {
-  eager: true,
-  import: 'default',
-});
-const FRAMES = Object.keys(frameModules)
-  .sort()
-  .map((k) => frameModules[k]);
+import loopVideo from '../../assets/videos/how-to-make-loop.mp4';
 
 // Badge de texto — pill escuro com borda sutil, texto branco uppercase
 function TextBadge({ children }) {
@@ -57,58 +42,37 @@ function TextBlock2() {
   );
 }
 
-// Scroll-driven image sequence — troca o src de um <img> conforme o progresso de scroll.
-// Substitui o vídeo MP4 anterior porque iOS Safari não suporta seek confiável.
-// Frames são pré-carregados em memória (Image objects) pra evitar flash/loading.
-function useScrollScrubFrames(imgRef, sectionRef) {
+// Play/pause baseado em visibilidade — vídeo só roda quando está na tela.
+// Economiza bateria e CPU. Funciona pareado com loop pra ter background contínuo.
+function useVisibilityPlayback(videoRef) {
   useEffect(() => {
-    const section = sectionRef.current;
-    const img = imgRef.current;
-    if (!section || !img || FRAMES.length === 0) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    // Pré-carrega todos os frames em memória — quando trocar img.src,
-    // o browser usa o cache em vez de fazer nova requisição.
-    const preloaded = FRAMES.map((src) => {
-      const i = new Image();
-      i.src = src;
-      return i;
-    });
-
-    let currentFrame = -1;
-    const setFrame = (index) => {
-      const clamped = Math.max(0, Math.min(FRAMES.length - 1, index));
-      if (clamped === currentFrame) return;
-      currentFrame = clamped;
-      img.src = preloaded[clamped].src;
-    };
-
-    setFrame(0);
-
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.5,
-      onUpdate: (self) => {
-        const idx = Math.round(self.progress * (FRAMES.length - 1));
-        setFrame(idx);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
       },
-    });
+      { threshold: 0.1 }
+    );
 
-    return () => {
-      trigger.kill();
-    };
-  }, [imgRef, sectionRef]);
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [videoRef]);
 }
 
 export default function HowToMake() {
   const sectionRef = useRef(null);
-  const imgRef = useRef(null);
+  const videoRef = useRef(null);
 
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
 
-  useScrollScrubFrames(imgRef, sectionRef);
+  useVisibilityPlayback(videoRef);
 
   // Trigger por POSIÇÃO de scroll dentro da section (px):
   //   Text 1: visível entre 500-1500px   (janela de 1000px)
@@ -137,11 +101,19 @@ export default function HowToMake() {
       <div className="sticky top-14 md:-top-0 h-screen overflow-hidden">
         {/* Layout: vídeo em CIMA no mobile, à ESQUERDA no desktop. Textos do outro lado. */}
         <div className="flex flex-col md:flex-row h-full">
-          {/* Frame container — sequência de imagens controlada por scroll */}
+          {/* Vídeo loop — autoplay quando visível, pausa quando sai da tela */}
           <div className="relative overflow-hidden flex-1">
-            <img
-              ref={imgRef}
-              alt=""
+            <video
+              ref={videoRef}
+              src={loopVideo}
+              muted
+              loop
+              playsInline
+              webkit-playsinline="true"
+              preload="auto"
+              autoPlay
+              disablePictureInPicture
+              disableRemotePlayback
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover md:object-[35%_center]"
             />
