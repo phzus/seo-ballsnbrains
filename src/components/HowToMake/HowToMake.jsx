@@ -2,9 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import sequenceVideo from '../../assets/videos/scroll-sequence-scrub.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Sequência de imagens (jeito Apple) — substitui vídeo MP4 com scrub.
+// iOS Safari não decodifica vídeo com seek rápido de forma confiável; trocar src
+// de <img> é universalmente suportado e roda smooth em qualquer dispositivo.
+// import.meta.glob eager: Vite bundla todos os frames com hash, ordenados por nome.
+const frameModules = import.meta.glob('../../assets/frames/scroll-sequence/*.webp', {
+  eager: true,
+  import: 'default',
+});
+const FRAMES = Object.keys(frameModules)
+  .sort()
+  .map((k) => frameModules[k]);
 
 // Badge de texto — pill escuro com borda sutil, texto branco uppercase
 function TextBadge({ children }) {
@@ -46,68 +57,58 @@ function TextBlock2() {
   );
 }
 
-// Scroll-driven video scrubbing — currentTime do vídeo segue o progresso de scroll da section.
-// Vídeo é encodado com keyframe em cada frame (all-intra) + 60fps motion-interpolated pra seek smooth.
-function useScrollScrubVideo(videoRef, sectionRef) {
+// Scroll-driven image sequence — troca o src de um <img> conforme o progresso de scroll.
+// Substitui o vídeo MP4 anterior porque iOS Safari não suporta seek confiável.
+// Frames são pré-carregados em memória (Image objects) pra evitar flash/loading.
+function useScrollScrubFrames(imgRef, sectionRef) {
   useEffect(() => {
     const section = sectionRef.current;
-    const video = videoRef.current;
-    if (!section || !video) return;
+    const img = imgRef.current;
+    if (!section || !img || FRAMES.length === 0) return;
 
-    let duration = 0;
-    const ensureDuration = () => {
-      if (video.duration && Number.isFinite(video.duration) && video.duration > 0) {
-        duration = video.duration;
-      }
+    // Pré-carrega todos os frames em memória — quando trocar img.src,
+    // o browser usa o cache em vez de fazer nova requisição.
+    const preloaded = FRAMES.map((src) => {
+      const i = new Image();
+      i.src = src;
+      return i;
+    });
+
+    let currentFrame = -1;
+    const setFrame = (index) => {
+      const clamped = Math.max(0, Math.min(FRAMES.length - 1, index));
+      if (clamped === currentFrame) return;
+      currentFrame = clamped;
+      img.src = preloaded[clamped].src;
     };
 
-    ensureDuration();
-    const onMeta = () => ensureDuration();
-    if (!duration) video.addEventListener('loadedmetadata', onMeta);
-
-    // iOS Safari fix: vídeo aparece preto até alguém dar play. Força o primeiro
-    // frame a renderizar com play()→pause() (funciona porque está muted).
-    const showFirstFrame = () => {
-      const p = video.play();
-      if (p !== undefined) {
-        p.then(() => {
-          video.pause();
-          video.currentTime = 0;
-        }).catch(() => {
-          try { video.currentTime = 0.001; } catch (e) {}
-        });
-      }
-    };
-    if (video.readyState >= 2) showFirstFrame();
-    else video.addEventListener('loadeddata', showFirstFrame, { once: true });
+    setFrame(0);
 
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.8,
+      scrub: 0.5,
       onUpdate: (self) => {
-        if (duration > 0) {
-          video.currentTime = duration * self.progress;
-        }
+        const idx = Math.round(self.progress * (FRAMES.length - 1));
+        setFrame(idx);
       },
     });
 
     return () => {
       trigger.kill();
-      video.removeEventListener('loadedmetadata', onMeta);
     };
-  }, [videoRef, sectionRef]);
+  }, [imgRef, sectionRef]);
 }
 
 export default function HowToMake() {
   const sectionRef = useRef(null);
-  const videoRef = useRef(null);
+  const imgRef = useRef(null);
 
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
 
-  useScrollScrubVideo(videoRef, sectionRef);
+  useScrollScrubFrames(imgRef, sectionRef);
 
   // Trigger por POSIÇÃO de scroll dentro da section (px):
   //   Text 1: visível entre 500-1500px   (janela de 1000px)
@@ -136,17 +137,11 @@ export default function HowToMake() {
       <div className="sticky top-14 md:-top-0 h-screen overflow-hidden">
         {/* Layout: vídeo em CIMA no mobile, à ESQUERDA no desktop. Textos do outro lado. */}
         <div className="flex flex-col md:flex-row h-full">
-          {/* Vídeo container */}
+          {/* Frame container — sequência de imagens controlada por scroll */}
           <div className="relative overflow-hidden flex-1">
-            <video
-              ref={videoRef}
-              src={sequenceVideo}
-              muted
-              playsInline
-              webkit-playsinline="true"
-              preload="auto"
-              disablePictureInPicture
-              disableRemotePlayback
+            <img
+              ref={imgRef}
+              alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover md:object-[35%_center]"
             />
