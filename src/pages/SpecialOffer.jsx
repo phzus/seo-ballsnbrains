@@ -84,7 +84,7 @@ export default function SpecialOffer() {
           </div>
 
           <div>
-            <h1 className="text-[1.5rem] md:text-[2.5rem] font-bold leading-[1.1] mb-5 md:mb-6">
+            <h1 className="text-[1.5rem] md:text-[2.725rem] font-bold leading-[1.1] mb-5 md:mb-8">
               Lock in your <span className="text-cofee-gradient">Balls&Brains</span> Lifetime
               Discount Now!
             </h1>
@@ -116,7 +116,7 @@ export default function SpecialOffer() {
               </div>
 
               <div className="p-5 md:p-7">
-                <div className="flex items-center gap-4 md:gap-6 mb-5">
+                <div className="flex items-center gap-4 md:gap-6 mb-8">
                   <ul className="flex-1 space-y-1 md:space-y-1.5">
                     {benefits.map((b) => (
                       <li key={b} className="flex items-start gap-2.5">
@@ -133,17 +133,23 @@ export default function SpecialOffer() {
                       Delivered every 90 days
                     </p>
                     <p className="flex items-baseline justify-end gap-2">
-                      <span className="line-through text-white/40 text-[1.25rem] font-medium">
+                      <span className="line-through text-[#e54848] text-[1.25rem] font-medium">
                         $147
                       </span>
-                      <span className="text-bb-gold-mid text-[2.5rem] md:text-[3.5rem] font-black leading-none">
+                      <span
+                        className="text-[2.5rem] md:text-[5.5rem] font-black leading-none bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage:
+                            'radial-gradient(143.34% 70.77% at 37.69% -10.12%, #FED9A5 0%, #D09439 100%)',
+                        }}
+                      >
                         $58
                       </span>
                     </p>
                   </div>
                 </div>
 
-                <a href={CTA_LINK} className="btn-cta btn-cta-lg w-full block">
+                <a href={CTA_LINK} className="btn-cta btn-cta-lg w-full block text-[2.5rem] md:text-[1.5rem] py-6 font-black leading-none text-center">
                   Update My Order Now
                 </a>
 
