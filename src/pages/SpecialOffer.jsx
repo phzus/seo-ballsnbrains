@@ -192,7 +192,7 @@ export default function SpecialOffer() {
                   Update My Order Now
                 </a>
 
-                <p className="text-center text-white/60 text-[0.67rem] md:[0.875rem] mt-4 font-medium">
+                <p className="text-center text-white/60 text-[0.67rem] md:text-[0.875rem] mt-4 font-medium">
                   365 Day Money-Back Guarantee &nbsp;·&nbsp; Pause or Cancel Anytime
                 </p>
               </div>
