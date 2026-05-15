@@ -40,7 +40,7 @@ export default function SpecialOffer() {
   const [activeImg, setActiveImg] = useState(0);
 
   return (
-    <div className="min-h-screen bg-bb-dark text-white">
+    <div className="min-h-screen bg-bb-dark text-white overflow-x-hidden">
       <div
         className="w-full flex items-center justify-center text-center px-4 py-2.5"
         style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
@@ -55,14 +55,22 @@ export default function SpecialOffer() {
 
       <main className="px-4 md:px-8 py-4 md:py-14">
         <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-          <div className="flex gap-2 md:gap-4">
-            <div className="flex flex-col gap-2 md:gap-3 w-14 md:w-[5.5rem] flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 min-w-0">
+            <div className="order-1 md:order-2 w-full aspect-square rounded-xl overflow-hidden bg-[#14100c] border border-bb-separator">
+              <img
+                src={gallery[activeImg]}
+                alt="Balls & Brains Primal Coffee"
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="order-2 md:order-1 flex flex-row md:flex-col gap-2 md:gap-3 overflow-x-auto md:overflow-visible md:w-[5.5rem] md:shrink-0 -mx-1 px-1 md:mx-0 md:px-0">
               {gallery.map((img, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setActiveImg(i)}
-                  className={`aspect-square rounded-md md:rounded-lg overflow-hidden border-2 transition-colors ${
+                  className={`w-16 h-16 md:w-full md:h-auto md:aspect-square shrink-0 rounded-md md:rounded-lg overflow-hidden border-2 transition-colors ${
                     activeImg === i
                       ? 'border-bb-gold-mid'
                       : 'border-bb-separator hover:border-white/40'
@@ -72,14 +80,6 @@ export default function SpecialOffer() {
                   <img src={img} alt="" className="w-full h-full object-cover bg-[#14100c]" />
                 </button>
               ))}
-            </div>
-
-            <div className="flex-1 aspect-square rounded-xl overflow-hidden bg-[#14100c] border border-bb-separator">
-              <img
-                src={gallery[activeImg]}
-                alt="Balls & Brains Primal Coffee"
-                className="w-full h-full object-contain"
-              />
             </div>
           </div>
 
@@ -116,8 +116,8 @@ export default function SpecialOffer() {
               </div>
 
               <div className="p-5 md:p-7">
-                <div className="flex items-center gap-4 md:gap-6 mb-8">
-                  <ul className="flex-1 space-y-1 md:space-y-1.5">
+                <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-6 mb-6 md:mb-8 min-w-0">
+                  <ul className="flex-1 min-w-0 space-y-1 md:space-y-1.5">
                     {benefits.map((b) => (
                       <li key={b} className="flex items-start gap-2.5">
                         <CheckGold className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -126,18 +126,18 @@ export default function SpecialOffer() {
                     ))}
                   </ul>
 
-                  <div className="text-right shrink-0">
-                    <p className="text-white/55 text-[0.8125rem] uppercase tracking-widest font-bold mb-1.5 leading-tight">
+                  <div className="text-center md:text-right md:shrink-0">
+                    <p className="text-white/55 text-[0.8125rem] uppercase tracking-widest font-bold mb-2 md:mb-3 leading-tight">
                       3-Month Supply
                       <br />
                       Delivered every 90 days
                     </p>
-                    <p className="flex items-baseline justify-end gap-2">
-                      <span className="line-through text-[#e54848] text-[1.25rem] font-medium">
+                    <p className="flex items-baseline justify-center md:justify-end gap-2">
+                      <span className="line-through text-[#e54848] text-[1.5rem] md:text-[1.8rem] font-medium">
                         $147
                       </span>
                       <span
-                        className="text-[2.5rem] md:text-[5.5rem] font-black leading-none bg-clip-text text-transparent"
+                        className="text-[3rem] md:text-[5.5rem] font-black leading-none bg-clip-text text-transparent"
                         style={{
                           backgroundImage:
                             'radial-gradient(143.34% 70.77% at 37.69% -10.12%, #FED9A5 0%, #D09439 100%)',
