@@ -1,9 +1,50 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import primalPouch from '../assets/products/primal-coffee-pouch.png';
 import starIcon from '../assets/icons/Star.svg';
 
 const CTA_LINK = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
+
+const COUNTDOWN_STORAGE_KEY = 'bb-special-offer-deadline';
+const COUNTDOWN_DURATION_MS = 18 * 60 * 60 * 1000;
+
+function pad(n) {
+  return String(n).padStart(2, '0');
+}
+
+function formatCountdown(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  return `${pad(Math.floor(total / 3600))}:${pad(Math.floor((total % 3600) / 60))}:${pad(total % 60)}`;
+}
+
+function Countdown() {
+  const [remaining, setRemaining] = useState(() => {
+    if (typeof window === 'undefined') return COUNTDOWN_DURATION_MS;
+    const now = Date.now();
+    const stored = window.localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+    let deadline = stored ? parseInt(stored, 10) : 0;
+    if (!deadline || Number.isNaN(deadline) || deadline <= now) {
+      deadline = now + COUNTDOWN_DURATION_MS;
+      window.localStorage.setItem(COUNTDOWN_STORAGE_KEY, String(deadline));
+    }
+    return deadline - now;
+  });
+
+  useEffect(() => {
+    const tick = () => {
+      const stored = window.localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+      if (!stored) return;
+      const deadline = parseInt(stored, 10);
+      setRemaining(Math.max(0, deadline - Date.now()));
+    };
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCountdown(remaining)}</span>
+  );
+}
 
 const gallery = [primalPouch, primalPouch, primalPouch, primalPouch];
 
@@ -46,10 +87,10 @@ export default function SpecialOffer() {
         style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
       >
         <p
-          className="text-bb-dark text-[0.875rem] font-bold leading-none tracking-[0.2em] uppercase"
+          className="text-bb-dark text-[0.875rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
           style={{ fontFamily: "'Satoshi', system-ui, sans-serif" }}
         >
-          Limited-Time Offer
+          <Countdown />
         </p>
       </div>
 
