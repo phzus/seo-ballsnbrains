@@ -83,11 +83,11 @@ export default function SpecialOffer() {
   return (
     <div className="min-h-screen w-full max-w-full bg-bb-dark text-white overflow-x-hidden">
       <div
-        className="w-full flex items-center justify-center text-center px-4 py-2.5"
+        className="w-full flex items-center justify-center text-center px-6 py-2.5"
         style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
       >
         <p
-          className="text-bb-dark text-[0.875rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
+          className="text-bb-dark text-[1rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
           style={{ fontFamily: "'Satoshi', system-ui, sans-serif" }}
         >
           Limited time <span className="opacity-60 mx-1">|</span> <Countdown />
@@ -167,8 +167,8 @@ export default function SpecialOffer() {
                     ))}
                   </ul>
 
-                  <div className="text-center md:text-right md:shrink-0">
-                    <p className="text-white/55 text-[0.75rem] md:text-[0.875rem] uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
+                  <div className="text-center md:text-right md:shrink-0 md:max-w-[18rem]">
+                    <p className="text-white/55 text-[0.75rem] md:text-[0.875rem] md:max-w-56 uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
                       3-Month Supply Delivered every 90 days
                     </p>
                     <p className="flex items-baseline justify-start md:justify-end gap-2">
@@ -192,7 +192,7 @@ export default function SpecialOffer() {
                   Update My Order Now
                 </a>
 
-                <p className="text-center text-white/60 text-[0.875rem] mt-4 font-medium">
+                <p className="text-center text-white/60 text-[0.425rem] md:text-[0.875] t-4 font-medium">
                   365 Day Money-Back Guarantee &nbsp;·&nbsp; Pause or Cancel Anytime
                 </p>
               </div>
