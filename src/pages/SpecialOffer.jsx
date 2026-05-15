@@ -81,7 +81,7 @@ export default function SpecialOffer() {
   const [activeImg, setActiveImg] = useState(0);
 
   return (
-    <div className="min-h-screen bg-bb-dark text-white overflow-x-hidden">
+    <div className="min-h-screen w-full max-w-full bg-bb-dark text-white overflow-x-hidden">
       <div
         className="w-full flex items-center justify-center text-center px-4 py-2.5"
         style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
@@ -94,10 +94,10 @@ export default function SpecialOffer() {
         </p>
       </div>
 
-      <main className="px-4 md:px-8 py-4 md:py-14">
-        <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-          <div className="flex flex-col md:flex-row gap-3 md:gap-4 min-w-0">
-            <div className="order-1 md:order-2 w-full aspect-square rounded-xl overflow-hidden bg-[#14100c] border border-bb-separator">
+      <main className="px-4 md:px-8 py-4 md:py-14 max-w-full overflow-x-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-start max-w-full">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 min-w-0 max-w-full">
+            <div className="order-1 md:order-2 w-full max-w-full aspect-square rounded-xl overflow-hidden bg-[#14100c] border border-bb-separator">
               <img
                 src={gallery[activeImg]}
                 alt="Balls & Brains Primal Coffee"
@@ -124,9 +124,9 @@ export default function SpecialOffer() {
             </div>
           </div>
 
-          <div>
-            <h1 className="text-[1.5rem] md:text-[2.725rem] font-bold leading-[1.1] mb-5 md:mb-8">
-              Lock in your <span className="text-cofee-gradient">Balls&Brains</span> Lifetime
+          <div className="min-w-0 max-w-full">
+            <h1 className="text-[1.25rem] md:text-[2.725rem] font-bold leading-[1.15] mb-5 md:mb-8 break-words">
+              Lock in your <span className="text-cofee-gradient">Balls&amp;Brains</span> Lifetime
               Discount Now!
             </h1>
 
@@ -135,22 +135,22 @@ export default function SpecialOffer() {
               style={{ background: 'rgba(255, 255, 255, 0.03)' }}
             >
               <div className="grid grid-cols-2 border-b border-bb-gold-mid/30">
-                <div className="px-3 md:px-4 py-3 md:py-4 text-center">
-                  <p className="text-white/55 text-[0.875rem] uppercase tracking-widest font-medium mb-1">
+                <div className="px-2 md:px-4 py-3 md:py-4 text-center min-w-0">
+                  <p className="text-white/55 text-[0.625rem] md:text-[0.875rem] uppercase tracking-wider md:tracking-widest font-medium mb-1 whitespace-nowrap">
                     You Ordered
                   </p>
-                  <p className="text-white text-[1rem] md:text-[1.25rem] font-bold">
+                  <p className="text-white text-[0.875rem] md:text-[1.25rem] font-bold whitespace-nowrap">
                     1-Month Supply
                   </p>
                 </div>
                 <div
-                  className="px-3 md:px-4 py-3 md:py-4 text-center border-l border-bb-gold-mid/30"
+                  className="px-2 md:px-4 py-3 md:py-4 text-center border-l border-bb-gold-mid/30 min-w-0"
                   style={{ background: 'rgba(207, 153, 71, 0.05)' }}
                 >
-                  <p className="text-bb-gold-mid text-[0.875rem] uppercase tracking-widest font-medium mb-1">
+                  <p className="text-bb-gold-mid text-[0.625rem] md:text-[0.875rem] uppercase tracking-wider md:tracking-widest font-medium mb-1 whitespace-nowrap">
                     Get 2 More Months &amp;
                   </p>
-                  <p className="text-bb-green-light text-[1rem] md:text-[1.25rem] font-bold">
+                  <p className="text-bb-green-light text-[0.875rem] md:text-[1.25rem] font-bold whitespace-nowrap">
                     Save $89
                   </p>
                 </div>
