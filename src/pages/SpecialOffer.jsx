@@ -162,13 +162,13 @@ export default function SpecialOffer() {
                     {benefits.map((b) => (
                       <li key={b} className="flex items-start gap-2.5">
                         <CheckGold className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                        <span className="text-white text-[1rem] leading-snug">{b}</span>
+                        <span className="text-white text-[1rem] md:text-[0.875rem] leading-snug">{b}</span>
                       </li>
                     ))}
                   </ul>
 
                   <div className="text-center md:text-right md:shrink-0">
-                    <p className="text-white/55 text-[0.75rem] uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
+                    <p className="text-white/55 text-[0.75rem] md:text-[0.875rem] uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
                       3-Month Supply Delivered every 90 days
                     </p>
                     <p className="flex items-baseline justify-start md:justify-end gap-2">
