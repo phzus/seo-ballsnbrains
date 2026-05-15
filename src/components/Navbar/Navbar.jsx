@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { href: '#faq', label: 'FAQ' },
 ];
 
-const CTA_URL = '/special-offer';
+const CTA_URL = '#/special-offer';
 
 export default function Navbar() {
   const navRef = useRef(null);
