@@ -84,10 +84,10 @@ export default function SpecialOffer() {
     <div className="min-h-screen w-full max-w-full bg-bb-dark text-white overflow-x-hidden">
       <div
         className="w-full flex items-center justify-center text-center px-6 py-2.5"
-        style={{ background: 'linear-gradient(90deg, #cf9947 0%, #7d5d2c 100%)' }}
+        style={{ background: 'linear-gradient(90deg, #dc2626 0%, #991b1b 100%)' }}
       >
         <p
-          className="text-bb-dark text-[1rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
+          className="text-white text-[1rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
           style={{ fontFamily: "'Satoshi', system-ui, sans-serif" }}
         >
           Limited time <span className="opacity-60 mx-1">|</span> <Countdown />
