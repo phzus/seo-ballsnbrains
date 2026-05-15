@@ -46,7 +46,7 @@ function Countdown() {
   );
 }
 
-const gallery = [primalPouch, primalPouch, primalPouch, primalPouch];
+const gallery = [primalPouch, primalPouch, primalPouch, primalPouch, primalPouch];
 
 const benefits = [
   'Lifetime 43% discount locked in',
@@ -105,13 +105,13 @@ export default function SpecialOffer() {
               />
             </div>
 
-            <div className="order-2 md:order-1 flex flex-row md:flex-col gap-2 md:gap-3 overflow-x-auto md:overflow-visible md:w-[5.5rem] md:shrink-0 -mx-1 px-1 md:mx-0 md:px-0">
+            <div className="order-2 md:order-1 grid grid-cols-5 gap-2 md:flex md:flex-col md:gap-3 md:w-[5.5rem] md:shrink-0 w-full">
               {gallery.map((img, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setActiveImg(i)}
-                  className={`w-16 h-16 md:w-full md:h-auto md:aspect-square shrink-0 rounded-md md:rounded-lg overflow-hidden border-2 transition-colors ${
+                  className={`w-full aspect-square rounded-md md:rounded-lg overflow-hidden border-2 transition-colors ${
                     activeImg === i
                       ? 'border-bb-gold-mid'
                       : 'border-bb-separator hover:border-white/40'
@@ -125,7 +125,7 @@ export default function SpecialOffer() {
           </div>
 
           <div className="min-w-0 max-w-full">
-            <h1 className="text-[1.25rem] md:text-[2.725rem] font-bold leading-[1.15] mb-5 md:mb-8 break-words">
+            <h1 className="text-[1.6rem] md:text-[2.725rem] font-bold leading-[1.15] mb-5 md:mb-8 break-words">
               Lock in your <span className="text-cofee-gradient">Balls&amp;Brains</span> Lifetime
               Discount Now!
             </h1>
@@ -168,17 +168,15 @@ export default function SpecialOffer() {
                   </ul>
 
                   <div className="text-center md:text-right md:shrink-0">
-                    <p className="text-white/55 text-[0.8125rem] uppercase tracking-widest font-bold mb-2 md:mb-3 leading-tight">
-                      3-Month Supply
-                      <br />
-                      Delivered every 90 days
+                    <p className="text-white/55 text-[0.75rem] uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
+                      3-Month Supply Delivered every 90 days
                     </p>
-                    <p className="flex items-baseline justify-center md:justify-end gap-2">
+                    <p className="flex items-baseline justify-start md:justify-end gap-2">
                       <span className="line-through text-[#e54848] text-[1.5rem] md:text-[1.8rem] font-medium">
                         $147
                       </span>
                       <span
-                        className="text-[3rem] md:text-[5.5rem] font-black leading-none bg-clip-text text-transparent"
+                        className="text-[6rem] md:text-[5.5rem] font-black leading-none bg-clip-text text-transparent"
                         style={{
                           backgroundImage:
                             'radial-gradient(143.34% 70.77% at 37.69% -10.12%, #FED9A5 0%, #D09439 100%)',
@@ -190,7 +188,7 @@ export default function SpecialOffer() {
                   </div>
                 </div>
 
-                <a href={CTA_LINK} className="btn-cta btn-cta-lg w-full block text-[2.5rem] md:text-[1.5rem] py-6 font-black leading-none text-center">
+                <a href={CTA_LINK} className="btn-cta btn-cta-lg w-full block text-[1.2rem] md:text-[1.5rem] py-6 font-black leading-none text-center px-0">
                   Update My Order Now
                 </a>
 
