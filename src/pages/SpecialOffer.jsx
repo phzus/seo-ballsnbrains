@@ -90,7 +90,7 @@ export default function SpecialOffer() {
           className="text-bb-dark text-[0.875rem] font-bold leading-none tracking-[0.2em] uppercase whitespace-nowrap"
           style={{ fontFamily: "'Satoshi', system-ui, sans-serif" }}
         >
-          <Countdown />
+          Limited time <span className="opacity-60 mx-1">|</span> <Countdown />
         </p>
       </div>
 
@@ -125,7 +125,7 @@ export default function SpecialOffer() {
           </div>
 
           <div className="min-w-0 max-w-full">
-            <h1 className="text-[1.6rem] md:text-[2.725rem] font-bold leading-[1.15] mb-5 md:mb-8 break-words">
+            <h1 className="text-[1.6rem] md:text-[2.725rem] font-bold leading-[1.15] mb-5 md:mb-7 break-words">
               Lock in your <span className="text-cofee-gradient">Balls&amp;Brains</span> Lifetime
               Discount Now!
             </h1>
