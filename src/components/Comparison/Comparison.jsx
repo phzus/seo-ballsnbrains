@@ -5,7 +5,7 @@ import vsStamp from '../../assets/icons/vs-stamp.svg';
 import bbImg from '../../assets/images/img-ballsnbrains-comparative.webp';
 import othersImg from '../../assets/images/img-others-comparative.webp';
 
-const CTA_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
+const CTA_URL = '/special-offer';
 
 const rows = [
   { bb: 'Works with your morning coffee ritual', others: 'Pills you forget to take by Wednesday' },

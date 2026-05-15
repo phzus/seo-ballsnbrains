@@ -70,7 +70,7 @@ export default function IngredientsSection() {
             <FadeUp
               key={i}
               delay={(i % 4) * 0.05}
-              className={`relative rounded-lg overflow-hidden flex flex-col items-center justify-center text-center md:aspect-square aspect-auto border border-[#2d2d2d] px-2 ${i === 9 || i === 10 ? 'md:px-6' : 'md:px-12'} py-4 md:py-6`}
+              className={`relative rounded-lg overflow-hidden flex flex-col items-center justify-center text-center md:aspect-square aspect-auto border border-[#2d2d2d] px-2 ${i === 9 || i === 10 ? 'md:px-6' : 'md:px-12'} py-6`}
               style={{
                 backgroundImage: `url(${item.img})`,
                 backgroundSize: 'cover',
@@ -78,12 +78,12 @@ export default function IngredientsSection() {
               }}
             >
               {/* Title */}
-              <h3 className="text-white font-bold text-[0.875rem] md:text-[1.55rem] leading-tight">
+              <h3 className="text-white font-bold text-[1rem] md:text-[1.55rem] leading-tight">
                 {item.name}
               </h3>
 
               {/* Description */}
-              <p className="text-white/85 text-[0.725rem] md:text-[1.1rem] leading-snug mt-2 md:mt-3">
+              <p className="text-white/85 text-[0.76rem] md:text-[1.1rem] leading-snug mt-2 md:mt-3">
                 {item.claim}
               </p>
 

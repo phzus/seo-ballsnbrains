@@ -7,7 +7,7 @@ import heroMobileWebm from '../../assets/videos/hero-mobile.webm';
 import heroMobilePoster from '../../assets/videos/hero-mobile-poster.webp';
 import checkIcon from '../../assets/icons/check.svg';
 
-const CTA_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
+const CTA_URL = '/special-offer';
 
 export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
