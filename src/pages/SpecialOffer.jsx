@@ -167,7 +167,7 @@ export default function SpecialOffer() {
                     ))}
                   </ul>
 
-                  <div className="text-center md:text-right md:shrink-0 md:max-w-[18rem]">
+                  <div className="text-center md:text-right md:shrink-0">
                     <p className="text-white/55 text-[0.75rem] md:text-[0.875rem] md:max-w-56 uppercase tracking-widest font-bold mb-4 md:mb-6 leading-tight">
                       3-Month Supply Delivered every 90 days
                     </p>
@@ -192,7 +192,7 @@ export default function SpecialOffer() {
                   Update My Order Now
                 </a>
 
-                <p className="text-center text-white/60 text-[0.425rem] md:text-[0.875] t-4 font-medium">
+                <p className="text-center text-white/60 text-[0.67rem] md:[0.875rem] mt-4 font-medium">
                   365 Day Money-Back Guarantee &nbsp;·&nbsp; Pause or Cancel Anytime
                 </p>
               </div>
