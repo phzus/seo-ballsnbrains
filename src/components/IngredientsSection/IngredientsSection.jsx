@@ -72,7 +72,7 @@ export default function IngredientsSection() {
               delay={(i % 4) * 0.05}
               className={`relative rounded-lg overflow-hidden flex flex-col items-center justify-center text-center md:aspect-square aspect-auto border border-[#2d2d2d] px-2 ${i === 9 || i === 10 ? 'md:px-6' : 'md:px-12'} py-6`}
               style={{
-                backgroundImage: `url(${item.img})`,
+                backgroundImage: `url("${item.img}")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
