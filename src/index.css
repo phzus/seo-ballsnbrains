@@ -239,6 +239,15 @@ h1, h2, h3, h4, h5, h6 {
     color: transparent;
   }
 
+  /* Gold gradient claro — títulos da PDP (#FED9A5 → #D09439) */
+  .text-gold-gradient {
+    background: linear-gradient(90deg, #FED9A5 0%, #D09439 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
   /* Primary CTA button — gold radial gradient com glow */
   .btn-cta {
     display: inline-block;

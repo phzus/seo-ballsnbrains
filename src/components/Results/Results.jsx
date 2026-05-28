@@ -3,7 +3,7 @@ import resultDay7 from '../../assets/images/img-results-day7.webp';
 import resultDay30 from '../../assets/images/img-results-day30.webp';
 import resultDay90 from '../../assets/images/img-results-day90.webp';
 
-const CTA_URL = '#/special-offer';
+const CTA_URL = '#/testosterone-coffee';
 
 const results = [
   {
