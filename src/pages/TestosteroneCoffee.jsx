@@ -608,7 +608,7 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <FadeUp>
+          <FadeUp className="order-first md:order-none">
             <img src={imgOptimize} alt="Man training in the gym" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
@@ -645,7 +645,7 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <FadeUp>
+          <FadeUp className="order-first md:order-none">
             <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
@@ -731,7 +731,7 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <FadeUp>
+          <FadeUp className="order-first md:order-none">
             <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
@@ -803,7 +803,7 @@ export default function TestosteroneCoffee() {
           </div>
 
           {/* Capa do vídeo do founder (vídeo em si pendente). Play personalizado sobre a capa. */}
-          <FadeUp className="relative w-full rounded-2xl overflow-hidden">
+          <FadeUp className="relative w-full rounded-2xl overflow-hidden order-first md:order-none">
             <img src={imgFounderCover} alt="Dr. Michael Bennett — message from our founder" className="w-full h-auto" />
             <button type="button" aria-label="Play founder video" className="absolute inset-0 flex items-center justify-center group cursor-pointer">
               <img src={playVideo} alt="" className="w-20 h-20 transition-transform duration-300 group-hover:scale-110" />
@@ -876,7 +876,7 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <FadeUp>
+          <FadeUp className="order-first md:order-none">
             <img src={imgCheaper} alt="Balls & Brains coffee preparation" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
