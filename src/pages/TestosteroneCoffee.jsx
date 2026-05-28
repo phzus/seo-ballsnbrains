@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+import FadeUp from '../components/_shared/FadeUp';
 import bbSymbol from '../assets/utils/bb-symbol.svg';
 import starIcon from '../assets/icons/Star.svg';
 import checkGold from '../assets/icons/check-gold.svg';
@@ -312,6 +314,24 @@ export default function TestosteroneCoffee() {
   const [qty, setQty] = useState(2);
   const [activeImg, setActiveImg] = useState(0);
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    let frame;
+    const raf = (time) => {
+      lenis.raf(time);
+      frame = requestAnimationFrame(raf);
+    };
+    frame = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+    };
+  }, []);
+
   const plan = PLANS[qty];
   const offer = plan[mode];
   const checkoutUrl = CHECKOUT[mode][qty];
@@ -554,11 +574,11 @@ export default function TestosteroneCoffee() {
       <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-white">Optimize</span>
               <br />
               <span className="text-gold-gradient">Testosterone Naturally</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
@@ -588,7 +608,9 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <img src={imgOptimize} alt="Man training in the gym" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgOptimize} alt="Man training in the gym" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
         </div>
       </section>
 
@@ -597,11 +619,11 @@ export default function TestosteroneCoffee() {
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
             <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 1</p>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-bb-text-dark">Clean Energy Without</span>
               <br />
               <span className="text-gold-gradient">Cortisol Spike</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
@@ -623,20 +645,24 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
         </div>
       </section>
 
       {/* LEVEL 2 — Rebalance The Hormonal Seesaw (escuro, imagem à esquerda) */}
       <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <img src={imgSeesaw} alt="Hormonal seesaw — cortisol versus testosterone" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgSeesaw} alt="Hormonal seesaw — cortisol versus testosterone" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
 
           <div>
             <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 2</p>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-gold-gradient">Rebalance</span> <span className="text-white">The Hormonal Seesaw</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
@@ -678,10 +704,10 @@ export default function TestosteroneCoffee() {
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
             <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 3</p>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-bb-text-dark">Block </span>
               <span className="text-gold-gradient">Testosterone-to-Estrogen Conversion</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
@@ -705,20 +731,24 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
         </div>
       </section>
 
       {/* BONUS — Cognitive Enhancement Stack (claro, imagem à esquerda) */}
       <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <img src={imgCognitive} alt="Cognitive enhancement — mushrooms, coffee and neurons" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgCognitive} alt="Cognitive enhancement — mushrooms, coffee and neurons" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
 
           <div>
             <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Bonus</p>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight text-gold-gradient">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight text-gold-gradient">
               Cognitive Enhancement Stack
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <p className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed mb-5">
@@ -747,9 +777,9 @@ export default function TestosteroneCoffee() {
       <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-gold-gradient">Tired of Reading?</span> <span className="text-white">Here&apos;s a Message From Our Founder</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
@@ -773,35 +803,35 @@ export default function TestosteroneCoffee() {
           </div>
 
           {/* Capa do vídeo do founder (vídeo em si pendente). Play personalizado sobre a capa. */}
-          <div className="relative w-full rounded-2xl overflow-hidden">
+          <FadeUp className="relative w-full rounded-2xl overflow-hidden">
             <img src={imgFounderCover} alt="Dr. Michael Bennett — message from our founder" className="w-full h-auto" />
             <button type="button" aria-label="Play founder video" className="absolute inset-0 flex items-center justify-center group cursor-pointer">
               <img src={playVideo} alt="" className="w-20 h-20 transition-transform duration-300 group-hover:scale-110" />
             </button>
-          </div>
+          </FadeUp>
         </div>
       </section>
 
       {/* Beneficial Against Multiple Health Issues (full-width, 60px das bordas) */}
       <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
         <div>
-          <h2 className="text-[1.875rem] md:text-[3rem] font-bold! leading-tight tracking-tight text-center">
+          <FadeUp as="h2" className="text-[1.875rem] md:text-[3rem] font-bold! leading-tight tracking-tight text-center">
             <span className="text-white">Beneficial Against Multiple </span>
             <span className="text-gold-gradient">Health Issues</span>
-          </h2>
+          </FadeUp>
           <p className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-12 md:mb-16">
             With the help of functional medicine doctors and hormone specialists, we developed Balls &amp; Brains to target the most common issues men face from declining testosterone:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {HEALTH_ISSUES.map(([title, body], i) => (
-              <div key={title} className="flex items-start gap-4 rounded-2xl border border-bb-separator bg-[#121212] p-5 md:p-6">
+              <FadeUp key={title} delay={(i % 3) * 0.08} className="flex items-start gap-4 rounded-2xl border border-bb-separator bg-[#121212] p-5 md:p-6">
                 <img src={NUMBERS[i]} alt="" aria-hidden="true" className="w-12 h-12 shrink-0" />
                 <div>
                   <h3 className="text-white font-bold! text-[1.0625rem] leading-tight mb-2">{title}</h3>
                   <p className="text-bb-gold/80 text-[0.875rem] leading-relaxed">{body}</p>
                 </div>
-              </div>
+              </FadeUp>
             ))}
           </div>
         </div>
@@ -811,9 +841,9 @@ export default function TestosteroneCoffee() {
       <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
-            <h2 className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
+            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
               <span className="text-gold-gradient">25 Times Cheaper</span> <span className="text-white">Than Separate Supplements</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
             <p className="text-white/60 text-[0.9375rem] leading-relaxed">
@@ -846,7 +876,9 @@ export default function TestosteroneCoffee() {
             </div>
           </div>
 
-          <img src={imgCheaper} alt="Balls & Brains coffee preparation" className="w-full h-auto rounded-2xl" />
+          <FadeUp>
+            <img src={imgCheaper} alt="Balls & Brains coffee preparation" className="w-full h-auto rounded-2xl" />
+          </FadeUp>
         </div>
       </section>
 
@@ -854,12 +886,12 @@ export default function TestosteroneCoffee() {
       <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
-            <h2 className="text-[2.625rem] md:text-[3.625rem] font-bold! leading-[1.05] tracking-tight">
+            <FadeUp as="h2" className="text-[2.625rem] md:text-[3.625rem] font-bold! leading-[1.05] tracking-tight">
               <span className="text-bb-text-dark">Real </span>
               <span className="text-gold-gradient">Results,</span>
               <br />
               <span className="text-bb-text-dark">Real People</span>
-            </h2>
+            </FadeUp>
             <span className="block w-16 h-0.5 mt-5 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
             <p className="text-bb-text-dark/70 text-[0.9375rem] md:text-[1rem] leading-relaxed max-w-[28rem]">
               We conducted a pilot study where{' '}
@@ -869,11 +901,11 @@ export default function TestosteroneCoffee() {
           </div>
 
           <div className="space-y-6">
-            {RESULTS_STATS.map(([icon, text]) => (
-              <div key={text} className="flex items-center gap-4">
+            {RESULTS_STATS.map(([icon, text], i) => (
+              <FadeUp key={text} delay={i * 0.08} className="flex items-center gap-4">
                 <img src={icon} alt="" aria-hidden="true" className="w-16 h-16 shrink-0" />
                 <p className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">{text}</p>
-              </div>
+              </FadeUp>
             ))}
           </div>
         </div>
@@ -882,11 +914,11 @@ export default function TestosteroneCoffee() {
       {/* What Makes Balls & Brains Better? (escuro, tabela comparativa full-width) */}
       <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
         <div>
-          <h2 className="text-[1.875rem] md:text-[2.75rem] font-bold! leading-tight tracking-tight text-center mb-10 md:mb-14">
+          <FadeUp as="h2" className="text-[1.875rem] md:text-[2.75rem] font-bold! leading-tight tracking-tight text-center mb-10 md:mb-14">
             <span className="text-white">What Makes </span>
             <span className="text-gold-gradient">Balls &amp; Brains</span>
             <span className="text-white"> Better?</span>
-          </h2>
+          </FadeUp>
 
           <div className="overflow-x-auto">
             <div className="grid grid-cols-[minmax(9rem,1.1fr)_minmax(max-content,0.7fr)_minmax(max-content,1fr)_minmax(max-content,1.05fr)_minmax(max-content,1.05fr)]">
