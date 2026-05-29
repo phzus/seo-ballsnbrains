@@ -581,6 +581,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
               <p>
                 Modern years of stress, poor sleep, and high-cortisol coffee habits have disrupted your body’s{' '}
@@ -606,6 +607,7 @@ export default function TestosteroneCoffee() {
                 <span className="text-bb-gold">measurable testosterone increases</span> within 8 weeks
               </p>
             </div>
+            </FadeUp>
           </div>
 
           <FadeUp className="order-first md:order-none">
@@ -626,6 +628,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
               <p>
                 <strong className="text-bb-text-dark font-semibold">The Problem:</strong> Regular coffee contains 200–300mg of caffeine that spikes cortisol by 20–30% within minutes. This cortisol surge directly{' '}
@@ -643,6 +646,7 @@ export default function TestosteroneCoffee() {
                 <span className="text-bb-gold-mid font-semibold">sustained cognitive performance</span> without raising cortisol levels.
               </p>
             </div>
+            </FadeUp>
           </div>
 
           <FadeUp className="order-first md:order-none">
@@ -665,6 +669,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
               <p><strong className="text-white font-semibold">The Problem:</strong> Your hormones exist on a biological seesaw. When cortisol goes up, testosterone MUST come down. Chronic stress and coffee keep cortisol elevated 24/7, crushing testosterone into the dirt.</p>
               <p><strong className="text-white font-semibold">The Solution:</strong> Balls &amp; Brains Testosterone Coffee attacks both sides of the seesaw simultaneously:</p>
@@ -695,6 +700,7 @@ export default function TestosteroneCoffee() {
                 <strong className="font-bold">The Result:</strong> Cortisol DOWN, Testosterone UP — the seesaw rebalances for the first time in years.
               </p>
             </div>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -710,6 +716,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
               <p><strong className="text-bb-text-dark font-semibold">The Problem:</strong> When testosterone is low, an enzyme called <strong className="text-bb-text-dark font-semibold">aromatase</strong> activates and converts your remaining testosterone into estrogen. This causes man boobs, belly fat, mood swings, and further testosterone suppression.</p>
               <p><strong className="text-bb-text-dark font-semibold">The Solution:</strong> Balls &amp; Brains Testosterone Coffee includes natural aromatase inhibitors:</p>
@@ -729,6 +736,7 @@ export default function TestosteroneCoffee() {
                 The Result: You KEEP the testosterone your body produces instead of watching it convert into the female hormone.
               </p>
             </div>
+            </FadeUp>
           </div>
 
           <FadeUp className="order-first md:order-none">
@@ -751,6 +759,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <p className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed mb-5">
               While optimizing your hormones, Balls &amp; Brains also enhances brain performance:
             </p>
@@ -769,6 +778,7 @@ export default function TestosteroneCoffee() {
                 The Result: Razor-sharp mental clarity, sustained focus, and cognitive performance that lasts all day.
               </p>
             </div>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -782,6 +792,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
               <p>I&apos;m Dr. Michael Bennett, MD, specialist in Sports Medicine &amp; Men&apos;s Hormonal Health at Mass General Hospital</p>
               <p>and I&apos;m the founder of <strong className="text-bb-gold font-semibold">Balls &amp; Brains.</strong></p>
@@ -800,6 +811,7 @@ export default function TestosteroneCoffee() {
             </ul>
 
             <p className="text-white/60 text-[0.9375rem]">Watch to find out more.</p>
+            </FadeUp>
           </div>
 
           {/* Capa do vídeo do founder (vídeo em si pendente). Play personalizado sobre a capa. */}
@@ -819,18 +831,16 @@ export default function TestosteroneCoffee() {
             <span className="text-white">Beneficial Against Multiple </span>
             <span className="text-gold-gradient">Health Issues</span>
           </FadeUp>
-          <p className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-12 md:mb-16">
+          <FadeUp as="p" delay={0.1} className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-12 md:mb-16">
             With the help of functional medicine doctors and hormone specialists, we developed Balls &amp; Brains to target the most common issues men face from declining testosterone:
-          </p>
+          </FadeUp>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {HEALTH_ISSUES.map(([title, body], i) => (
-              <FadeUp key={title} delay={(i % 3) * 0.08} className="flex items-start gap-4 rounded-2xl border border-bb-separator bg-[#121212] p-5 md:p-6">
+              <FadeUp key={title} delay={(i % 3) * 0.08} className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5 rounded-2xl border border-bb-separator bg-[#121212] p-5 md:p-6">
                 <img src={NUMBERS[i]} alt="" aria-hidden="true" className="w-12 h-12 shrink-0" />
-                <div>
-                  <h3 className="text-white font-bold! text-[1.0625rem] leading-tight mb-2">{title}</h3>
-                  <p className="text-bb-gold/80 text-[0.875rem] leading-relaxed">{body}</p>
-                </div>
+                <h3 className="text-white font-bold! text-[1.0625rem] leading-tight">{title}</h3>
+                <p className="col-span-2 text-bb-gold/80 text-[0.75rem] md:text-[0.875rem] leading-relaxed">{body}</p>
               </FadeUp>
             ))}
           </div>
@@ -846,6 +856,7 @@ export default function TestosteroneCoffee() {
             </FadeUp>
             <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
 
+            <FadeUp delay={0.1}>
             <p className="text-white/60 text-[0.9375rem] leading-relaxed">
               Balls &amp; Brains combines testosterone optimization, cognitive enhancement, stress reduction, and clean energy in one product. Conventionally...
             </p>
@@ -874,6 +885,7 @@ export default function TestosteroneCoffee() {
               <p>Plus you&apos;d be choking down 10+ pills every morning instead of enjoying one delicious cup of coffee.</p>
               <p>{'Our sale ends soon, so click "add to cart" to get your Balls & Brains Testosterone Coffee before inventory runs out.'}</p>
             </div>
+            </FadeUp>
           </div>
 
           <FadeUp className="order-first md:order-none">
@@ -893,11 +905,11 @@ export default function TestosteroneCoffee() {
               <span className="text-bb-text-dark">Real People</span>
             </FadeUp>
             <span className="block w-16 h-0.5 mt-5 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-            <p className="text-bb-text-dark/70 text-[0.9375rem] md:text-[1rem] leading-relaxed max-w-[28rem]">
+            <FadeUp as="p" delay={0.1} className="text-bb-text-dark/70 text-[0.9375rem] md:text-[1rem] leading-relaxed max-w-[28rem]">
               We conducted a pilot study where{' '}
               <span className="text-bb-gold-mid font-medium">287 men aged 35–60 with confirmed low testosterone</span>{' '}
               (under 450 ng/dL.) used Balls &amp; Brains for 8–12 weeks. Here are the results:
-            </p>
+            </FadeUp>
           </div>
 
           <div className="space-y-6">
