@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import primalPouch from '../assets/products/primal-coffee-pouch.png';
+import gallery01 from '../assets/products/gallery-01.png';
+import gallery02 from '../assets/products/gallery-02.png';
+import gallery03 from '../assets/products/gallery-03.png';
+import gallery04 from '../assets/products/gallery-04.png';
+import gallery05 from '../assets/products/gallery-05.png';
 import starIcon from '../assets/icons/Star.svg';
 
 const CTA_LINK = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
@@ -46,7 +50,7 @@ function Countdown() {
   );
 }
 
-const gallery = [primalPouch, primalPouch, primalPouch, primalPouch, primalPouch];
+const gallery = [gallery01, gallery02, gallery03, gallery04, gallery05];
 
 const benefits = [
   'Lifetime 43% discount locked in',
