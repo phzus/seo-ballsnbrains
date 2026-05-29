@@ -71,31 +71,53 @@ export default function HowToMake() {
 
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
+  const [pinPx, setPinPx] = useState(3800);
+  const thresholdsRef = useRef({ t1Start: 500, t1End: 1700, t2Start: 2600, t2End: 3800 });
 
   useVisibilityPlayback(videoRef);
 
-  // Trigger por POSIÇÃO de scroll dentro da section (px):
-  //   Text 1: visível entre 500-1500px   (janela de 1000px)
-  //   Text 2: visível entre 2600-4400px  (janela de 1800px, gap de 1100px)
-  // Mesmos triggers em mobile e desktop — só o layout muda.
+  // Distância de pin (px) baseada em janelas IGUAIS por texto + gap.
+  // Menor no mobile que no desktop pra encurtar o tempo de scroll travado.
   useEffect(() => {
+    const computeThresholds = () => {
+      const isMobile = window.innerWidth < 768;
+      const t = isMobile
+        ? { lead: 300, win: 750, gap: 600 }
+        : { lead: 500, win: 1200, gap: 900 };
+      const t1End = t.lead + t.win;
+      const t2Start = t1End + t.gap;
+      const t2End = t2Start + t.win;
+      thresholdsRef.current = { t1Start: t.lead, t1End, t2Start, t2End };
+      setPinPx(t2End);
+    };
     const handleScroll = () => {
       const rect = sectionRef.current?.getBoundingClientRect();
       if (!rect) return;
-      const scrollInSection = Math.max(0, -rect.top);
-      setText1Visible(scrollInSection >= 500 && scrollInSection < 1500);
-      setText2Visible(scrollInSection >= 2600 && scrollInSection < 4400);
+      const s = Math.max(0, -rect.top);
+      const { t1Start, t1End, t2Start, t2End } = thresholdsRef.current;
+      setText1Visible(s >= t1Start && s < t1End);
+      setText2Visible(s >= t2Start && s < t2End);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleResize = () => {
+      computeThresholds();
+      handleScroll();
+    };
+    computeThresholds();
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="bg-bb-dark relative h-[calc(4400px+100vh)]"
+      className="bg-bb-dark relative"
+      style={{ height: `calc(${pinPx}px + 100vh)` }}
     >
       {/* Sticky pin — conteúdo fica fixo enquanto a section rola */}
       <div className="sticky top-14 md:-top-0 h-screen overflow-hidden">
