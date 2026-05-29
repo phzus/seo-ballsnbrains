@@ -24,6 +24,7 @@ function useSmoothScroll() {
       smoothWheel: true,
     });
 
+    window.__lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
     const tickerFn = (time) => lenis.raf(time * 1000);
@@ -33,6 +34,7 @@ function useSmoothScroll() {
     return () => {
       gsap.ticker.remove(tickerFn);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 }

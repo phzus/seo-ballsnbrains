@@ -35,7 +35,7 @@ const ingredients = [
   { img: card09, name: 'L-Theanine', dose: '100 mg', claim: 'Combined with caffeine, improved attention accuracy and reduced mental fatigue.' },
   { img: card10, name: 'Chaga', dose: '500 mg', claim: 'Rich in polysaccharides with demonstrated antioxidant and immunomodulatory properties.' },
   { img: card11, name: 'Caffeine', dose: '100 mg', claim: 'Significantly improved attention, processing speed, and accuracy across 13 studies.' },
-  { img: card12, name: 'Organic Arabica Coffee', dose: '50 mg', claim: 'The base. Smooth flavor profile, low acidity. The ritual stays the same.' },
+  { img: card12, name: 'Organic Arabica Coffee', dose: '1,000 mg', claim: 'The base. Smooth flavor profile, low acidity. The ritual stays the same.' },
 ];
 
 const benefits = [

@@ -52,6 +52,20 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    const el = document.querySelector(href);
+    if (!el) return;
+    const offset = -((navRef.current?.offsetHeight ?? 0) + 8);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(el, { offset });
+    } else {
+      const top = el.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <nav
@@ -72,6 +86,7 @@ export default function Navbar() {
               <a
                 key={i}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-white hover:text-bb-gold text-[1rem] font-normal no-underline transition-colors"
               >
                 {link.label}
@@ -126,7 +141,7 @@ export default function Navbar() {
                   <motion.a
                     key={i}
                     href={link.href}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="text-white text-[1.125rem] font-medium py-3 border-b border-white/5 hover:text-bb-gold transition-colors"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
