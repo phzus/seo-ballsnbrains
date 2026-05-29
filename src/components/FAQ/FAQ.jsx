@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FadeUp from '../_shared/FadeUp';
 import faqArrow from '../../assets/icons/faq-arrow.svg';
 
-const faqs = [
+export const faqs = [
   {
     q: 'What is Balls and Brains?',
     a: 'Balls and Brains is the first testosterone-optimizing mushroom coffee specifically designed for men over 30. It combines premium Colombian coffee (100mg caffeine) with clinical doses of 11 functional ingredients — including Tongkat Ali, Ashwagandha, Lion\'s Mane, and adaptogens — to naturally support testosterone while providing sustained energy for 6–8 hours. It replaces both your morning coffee AND your supplement stack with one delicious ritual.',

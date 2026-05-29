@@ -39,6 +39,8 @@ import imgCognitive from '../assets/sections/cognitive.png';
 import imgFounderCover from '../assets/sections/founder-cover.png';
 import imgCheaper from '../assets/sections/cheaper.png';
 import playVideo from '../assets/icons/play-video.svg';
+import footerLogo from '../assets/utils/footer-logo.svg';
+import { faqs as FAQ_ALL } from '../components/FAQ/FAQ';
 
 const GALLERY = [gallery01, gallery02, gallery03, gallery04, gallery05];
 const PRESS = [pressGq, pressForbes, pressMens];
@@ -117,6 +119,44 @@ const CHECKOUT = {
     'https://links.ballsnbrains.com/go/3-mushroom-coffe-tmc-onetime-adv8-mlk3sac9/?referrer=Organic',
   ],
 };
+
+// Popup de upsell (abre ao clicar no carrinho). Variante por modo. Links verbatim do bundle live.
+const CART_POPUP = {
+  sub: {
+    subtitlePrice: '$69!',
+    price: '$69',
+    old: '$138',
+    perPouch: '$34.50',
+    discount: ['50%', 'OFF'],
+    cta: 'YES! Get 2 Kits for $69',
+    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-subscribe-adv7-mkw8bv65/?referrer=Organic',
+  },
+  one: {
+    subtitlePrice: '$89!',
+    price: '$89',
+    old: '$138',
+    perPouch: '$44.50',
+    discount: ['36%', 'OFF'],
+    cta: 'YES! Get 2 Kits for $89',
+    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-onetime-adv7-mkw8b3xn',
+  },
+};
+
+const REVIEW_DIST = [
+  [5, 1643],
+  [4, 148],
+  [3, 37],
+  [2, 11],
+  [1, 8],
+];
+const REVIEW_TOTAL = 1847;
+const PDP_REVIEWS = [
+  { initials: 'MD', name: 'Mike_Denver', stars: 5, title: 'Works, but be realistic with expectations', helpful: 142, body: "Writing this after 10 weeks so hopefully this helps someone decide. I'm a 42-year-old software engineer so yeah, desk job = terrible posture, high stress, too much coffee.\nPROS:" },
+  { initials: 'JM', name: 'Jennifer_M', stars: 5, title: "Bought this for my husband and he's a different person", helpful: 89, body: 'My husband is 46 and has been struggling with low energy and low sex drive for 2+ years. He tried testosterone pills, nothing worked. I found this and convinced him to try it.\nWeek 1: He stopped complaining about being tired all the time. Week 3: He initiated intimacy for the first time in months (and everything worked great!). Week 8: He looks leaner, more energized, and honestly more confident.' },
+  { initials: 'JJ', name: 'Jess_J', stars: 5, title: 'Skeptical engineer approved', helpful: 67, body: 'I research EVERYTHING before buying. Read all the studies on Tongkat Ali, Ashwagandha, Fadogia. The doses in this check out—these are actual clinical doses, not pixie dust.\nBeen using for 12 weeks. Testosterone went from 410 to 695. Libido is back. Energy is sustained all day. Recovery from workouts is way faster.' },
+  { initials: 'GC', name: 'George_C', stars: 4, title: 'Good product, slightly expensive', helpful: 53, body: 'Works as advertised. Energy is great, focus is sharp, libido improved noticeably. Lost about 12 pounds of belly fat in 8 weeks without changing my diet.\nOnly giving 4 stars because $50/month feels steep compared to regular coffee. But then again, I was spending $40/month on separate Tongkat Ali and Ashwagandha anyway, so it actually saves money.' },
+  { initials: 'GJ', name: 'Gabriel_J', stars: 5, title: 'Avoided TRT thanks to this', helpful: 201, body: 'My endocrinologist wanted me on testosterone replacement at age 44. I was at 335 ng/dL. I asked if I could try natural optimization first. He said fine, retest in 3 months.\nBought the 3-month supply. Drank it every morning. Tracked everything.' },
+];
 
 const PLANS = [
   {
@@ -309,10 +349,133 @@ function CompareCell({ cell }) {
   );
 }
 
+function FaqItem({ q, a, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-4 bg-black/[0.04] rounded-xl px-5 md:px-6 py-5 text-left cursor-pointer"
+      >
+        <span className="text-bb-text-dark font-semibold text-[0.9375rem] md:text-[1.0625rem]">{q}</span>
+        <span className="text-bb-gold-mid text-2xl leading-none shrink-0 w-5 text-center">{open ? '–' : '+'}</span>
+      </button>
+      {open && (
+        <p className="text-bb-text-dark/55 text-[0.875rem] md:text-[0.9375rem] leading-relaxed px-5 md:px-6 pt-4 pb-1">{a}</p>
+      )}
+    </div>
+  );
+}
+
+function ReviewStars({ n }) {
+  return (
+    <div className="flex gap-0.5">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <img key={i} src={starIcon} alt="" aria-hidden="true" className={`w-3.5 h-3.5 ${i < n ? '' : 'opacity-20'}`} />
+      ))}
+    </div>
+  );
+}
+
+function CartUpsellPopup({ mode, fallbackUrl, onClose }) {
+  const cfg = CART_POPUP[mode] ?? CART_POPUP.one;
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-5 bg-black/75 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-sm bg-[#0f0f0f] rounded-2xl overflow-hidden border border-[#c49b43]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="h-[3px] w-full" style={{ background: 'linear-gradient(90deg, transparent, #c49b43, transparent)' }} />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#c49b43]/10 border border-[#c49b43]/30 flex items-center justify-center text-[#c49b43] hover:bg-[#c49b43]/20 transition-colors cursor-pointer"
+        >
+          <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+
+        <div className="bg-[#1a1400] border-b border-[#c49b43]/30 px-6 pt-5 pb-4 text-center">
+          <span className="inline-flex items-center gap-1.5 bg-[#c49b43]/10 border border-[#c49b43]/35 text-[#c49b43] text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full mb-2.5">
+            ⚡ Flash Offer
+          </span>
+          <p className="text-2xl font-black text-white tracking-wide mb-1">WAIT! DON&apos;T MISS OUT</p>
+          <p className="text-sm text-white/60">
+            Upgrade to <span className="text-[#c49b43] font-black">2 Kits</span> and pay only{' '}
+            <span className="text-[#c49b43] font-black">{cfg.subtitlePrice}</span>
+          </p>
+        </div>
+
+        <div className="px-6 pt-5 pb-4">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="relative shrink-0">
+              <div className="w-20 h-20 rounded-xl bg-[#c49b43]/[0.07] border border-[#c49b43]/20 overflow-hidden">
+                <img src={kit2} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+              </div>
+              <div className="absolute -top-2 -right-2 bg-[#c49b43] text-[#0f0f0f] text-[8px] font-black w-8 h-8 rounded-full flex flex-col items-center justify-center leading-tight">
+                <span>{cfg.discount[0]}</span>
+                <span>{cfg.discount[1]}</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-[9px] font-bold tracking-widest uppercase text-[#c49b43]/65 mb-1.5">2 Pouches · 60-Day Supply</p>
+              <div className="flex items-end gap-2 mb-1">
+                <span className="text-[38px] font-black text-[#c49b43] leading-none">{cfg.price}</span>
+                <span className="text-white/40 line-through mb-1.5">{cfg.old}</span>
+              </div>
+              <p className="text-white/70 text-sm font-semibold">{cfg.perPouch} per pouch</p>
+            </div>
+          </div>
+
+          <ul className="space-y-2 mb-4">
+            {['Double your results — 2x the support', '60-Day Money Back Guarantee', 'Free Shipping included'].map((b) => (
+              <li key={b} className="flex items-center gap-2.5 text-white/85 text-sm">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 text-[#c49b43]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <p className="text-[10px] text-white/25 italic text-center">*For best results, consistent daily use for 60+ days is recommended.</p>
+        </div>
+
+        <div className="px-6 pb-6 space-y-2">
+          <a
+            href={cfg.purchaseLink}
+            className="flex items-center justify-center gap-2 w-full py-4 bg-[#c49b43] hover:bg-[#d4aa52] text-[#0f0f0f] font-black text-sm rounded-xl transition-all hover:-translate-y-0.5 active:scale-[0.98] no-underline"
+          >
+            <CartIcon className="w-4 h-4" />
+            {cfg.cta}
+          </a>
+          <a
+            href={fallbackUrl}
+            className="block w-full py-2 text-white/30 hover:text-white/55 font-medium text-xs text-center underline underline-offset-2 no-underline"
+          >
+            No thanks, I only want 1 kit at full price
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TestosteroneCoffee() {
   const [mode, setMode] = useState('sub');
   const [qty, setQty] = useState(2);
   const [activeImg, setActiveImg] = useState(0);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = popupOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [popupOpen]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -360,9 +523,14 @@ export default function TestosteroneCoffee() {
           <span className="text-bb-gold/80 text-[0.8125rem] font-medium tracking-[0.3em] uppercase">
             Testosterone Coffee
           </span>
-          <div className="flex items-center text-white/80">
+          <button
+            type="button"
+            onClick={() => setPopupOpen(true)}
+            aria-label="Cart"
+            className="flex items-center text-white/80 hover:text-white transition-colors cursor-pointer"
+          >
             <CartIcon className="w-5 h-5" />
-          </div>
+          </button>
         </div>
       </nav>
 
@@ -968,6 +1136,102 @@ export default function TestosteroneCoffee() {
           </div>
         </div>
       </section>
+
+      {/* FAQ — Questions Answered (claro) */}
+      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <FadeUp as="p" className="text-center text-bb-gold-mid text-[0.8125rem] font-bold tracking-[0.35em] mb-3">[ F.A.Q ]</FadeUp>
+          <FadeUp as="h2" className="text-center text-[2rem] md:text-[3rem] font-bold! leading-tight tracking-tight mb-10 md:mb-14">Questions Answered</FadeUp>
+          <div className="space-y-3">
+            {FAQ_ALL.map((f, i) => (
+              <FadeUp key={f.q} delay={Math.min(i, 4) * 0.04}>
+                <FaqItem q={f.q} a={f.a} defaultOpen={i === 0} />
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews (escuro) */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <FadeUp className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-center pb-8 border-b border-bb-separator">
+            <div>
+              <p className="text-[3.5rem] font-black leading-none text-white">4.8</p>
+              <div className="flex gap-1 my-2">{[0, 1, 2, 3, 4].map((i) => <img key={i} src={starIcon} alt="" aria-hidden="true" className="w-5 h-5" />)}</div>
+              <p className="text-white/50 text-sm">Based on 1,847 reviews</p>
+            </div>
+            <div className="space-y-1.5">
+              {REVIEW_DIST.map(([star, count]) => (
+                <div key={star} className="flex items-center gap-2 text-[0.75rem]">
+                  <span className="text-white/70 flex items-center gap-1 w-7 shrink-0">{star}<img src={starIcon} alt="" aria-hidden="true" className="w-2.5 h-2.5" /></span>
+                  <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full bg-bb-gold-mid" style={{ width: `${((count / REVIEW_TOTAL) * 100).toFixed(1)}%` }} />
+                  </div>
+                  <span className="text-white/50 w-10 text-right shrink-0">{count}</span>
+                </div>
+              ))}
+            </div>
+            <div className="text-center md:text-right">
+              <p className="text-[3.25rem] font-black leading-none text-white">96%</p>
+              <p className="text-white/50 text-sm mt-2">would recommend these products</p>
+            </div>
+          </FadeUp>
+
+          <div className="flex items-center justify-between gap-4 py-6 flex-wrap">
+            <button type="button" className="border border-bb-gold-mid/60 text-bb-gold-mid rounded-md px-4 py-2 text-sm font-medium cursor-pointer hover:bg-bb-gold-mid/10 transition-colors">Filters</button>
+            <p className="text-white/50 text-sm">1,092 reviews · Sort: Most Recent</p>
+            <a href="#" className="btn-cta-gold text-[0.875rem]">Write a Review</a>
+          </div>
+
+          <div>
+            {PDP_REVIEWS.map((r, i) => (
+              <FadeUp key={r.name} delay={Math.min(i, 4) * 0.05} className="grid grid-cols-1 md:grid-cols-[210px_1fr] gap-3 md:gap-8 py-7 border-b border-bb-separator">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-9 h-9 rounded-full bg-bb-gold-mid/15 text-bb-gold-mid text-[0.6875rem] font-bold flex items-center justify-center shrink-0">{r.initials}</span>
+                    <span className="text-white font-semibold text-sm">{r.name}</span>
+                  </div>
+                  <p className="text-white/35 text-[0.625rem] uppercase tracking-[0.18em] mt-3 mb-1.5">Reviewing</p>
+                  <div className="flex items-center gap-2">
+                    <img src={kit1} alt="" aria-hidden="true" className="w-8 h-8 rounded object-contain bg-black/40 shrink-0" />
+                    <span className="text-white/60 text-xs leading-tight">Balls &amp; Brains™<br />Testosterone Coffee</span>
+                  </div>
+                  <p className="text-bb-green-light text-xs mt-2.5">✓ I recommend this product</p>
+                </div>
+                <div>
+                  <ReviewStars n={r.stars} />
+                  <p className="text-white font-bold text-[1.0625rem] mt-2 mb-2">{r.title}</p>
+                  <p className="text-white/60 text-[0.875rem] leading-relaxed whitespace-pre-line">{r.body}</p>
+                  <p className="text-bb-gold-mid font-bold text-sm mt-2 cursor-pointer">Read More</p>
+                  <p className="text-white/35 text-xs mt-3 flex items-center gap-3">
+                    Was this helpful? <span>👍 {r.helpful}</span> <span>👎 0</span>
+                  </p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-bb-dark border-t border-white/10 px-4 py-12 md:py-16 text-center">
+        <div className="max-w-[60rem] mx-auto flex flex-col items-center gap-5">
+          <img src={footerLogo} alt="Balls & Brains" className="h-9 md:h-11 object-contain" />
+          <p className="text-white text-[0.9375rem] md:text-[1.0625rem]">
+            Still have questions? Email us at{' '}
+            <a href="mailto:support@ballsnbrains.com" className="text-bb-gold-mid hover:underline">support@ballsnbrains.com</a>
+          </p>
+          <p className="text-white/40 text-[0.8125rem]">© 2026 Balls and Brains.</p>
+          <p className="text-white/25 text-[0.625rem] md:text-[0.75rem] leading-relaxed">
+            All rights reserved. Not evaluated by FDA. Not intended to diagnose, treat, cure, or prevent disease. Consult physician. We recommend baseline testosterone testing. This site is not part of the Facebook website or Meta Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a registered trademark of FACEBOOK, Inc.
+          </p>
+        </div>
+      </footer>
+
+      {popupOpen && (
+        <CartUpsellPopup mode={mode} fallbackUrl={CHECKOUT.one[0]} onClose={() => setPopupOpen(false)} />
+      )}
     </div>
   );
 }
