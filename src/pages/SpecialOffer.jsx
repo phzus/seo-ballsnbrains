@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import gallery01 from '../assets/products/gallery-01.png';
-import gallery02 from '../assets/products/gallery-02.png';
-import gallery03 from '../assets/products/gallery-03.png';
-import gallery04 from '../assets/products/gallery-04.png';
-import gallery05 from '../assets/products/gallery-05.png';
+import gallery01 from '../assets/products/gallery-01.webp';
+import gallery02 from '../assets/products/gallery-02.webp';
+import gallery03 from '../assets/products/gallery-03.webp';
+import gallery04 from '../assets/products/gallery-04.webp';
+import gallery05 from '../assets/products/gallery-05.webp';
 import starIcon from '../assets/icons/Star.svg';
 
 const CTA_LINK = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
@@ -105,6 +105,10 @@ export default function SpecialOffer() {
               <img
                 src={gallery[activeImg]}
                 alt="Balls & Brains Primal Coffee"
+                width={400}
+                height={400}
+                fetchpriority="high"
+                decoding="async"
                 className="w-full h-full object-contain"
               />
             </div>
@@ -122,7 +126,7 @@ export default function SpecialOffer() {
                   }`}
                   aria-label={`View image ${i + 1}`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover bg-[#14100c]" />
+                  <img src={img} alt="" width={400} height={400} loading="lazy" decoding="async" className="w-full h-full object-cover bg-[#14100c]" />
                 </button>
               ))}
             </div>

@@ -7,15 +7,15 @@ import checkGold from '../assets/icons/check-gold.svg';
 import kit1 from '../assets/products/1kit.webp';
 import kit2 from '../assets/products/2kits.webp';
 import kit3 from '../assets/products/3kits.webp';
-import gallery01 from '../assets/products/gallery-01.png';
-import gallery02 from '../assets/products/gallery-02.png';
-import gallery03 from '../assets/products/gallery-03.png';
-import gallery04 from '../assets/products/gallery-04.png';
-import gallery05 from '../assets/products/gallery-05.png';
-import bonusManhood from '../assets/bonuses/manhood.png';
-import bonusBoost from '../assets/bonuses/boost.png';
-import bonusBed from '../assets/bonuses/bed.png';
-import bonusEnergy from '../assets/bonuses/energy.png';
+import gallery01 from '../assets/products/gallery-01.webp';
+import gallery02 from '../assets/products/gallery-02.webp';
+import gallery03 from '../assets/products/gallery-03.webp';
+import gallery04 from '../assets/products/gallery-04.webp';
+import gallery05 from '../assets/products/gallery-05.webp';
+import bonusManhood from '../assets/bonuses/manhood.webp';
+import bonusBoost from '../assets/bonuses/boost.webp';
+import bonusBed from '../assets/bonuses/bed.webp';
+import bonusEnergy from '../assets/bonuses/energy.webp';
 import pressGq from '../assets/press/gq.svg';
 import pressForbes from '../assets/press/forbes.svg';
 import pressMens from '../assets/press/mens-health.svg';
@@ -31,13 +31,13 @@ import pct2 from '../assets/stats/pct-2.svg';
 import pct3 from '../assets/stats/pct-3.svg';
 import pct4 from '../assets/stats/pct-4.svg';
 import pct5 from '../assets/stats/pct-5.svg';
-import imgOptimize from '../assets/sections/optimize.png';
-import imgCleanEnergy from '../assets/sections/clean-energy.png';
-import imgSeesaw from '../assets/sections/seesaw.png';
-import imgBlockConversion from '../assets/sections/block-conversion.png';
-import imgCognitive from '../assets/sections/cognitive.png';
-import imgFounderCover from '../assets/sections/founder-cover.png';
-import imgCheaper from '../assets/sections/cheaper.png';
+import imgOptimize from '../assets/sections/optimize.webp';
+import imgCleanEnergy from '../assets/sections/clean-energy.webp';
+import imgSeesaw from '../assets/sections/seesaw.webp';
+import imgBlockConversion from '../assets/sections/block-conversion.webp';
+import imgCognitive from '../assets/sections/cognitive.webp';
+import imgFounderCover from '../assets/sections/founder-cover.webp';
+import imgCheaper from '../assets/sections/cheaper.webp';
 import playVideo from '../assets/icons/play-video.svg';
 import footerLogo from '../assets/utils/footer-logo.svg';
 import { faqs as FAQ_ALL } from '../components/FAQ/FAQ';
@@ -539,7 +539,7 @@ export default function TestosteroneCoffee() {
           {/* LEFT — gallery + benefits */}
           <div className="flex flex-col gap-4">
             <div className="w-full aspect-square rounded-2xl overflow-hidden bg-black border border-bb-separator">
-              <img src={GALLERY[activeImg]} alt="Balls & Brains Testosterone Coffee" className="w-full h-full object-contain" />
+              <img src={GALLERY[activeImg]} alt="Balls & Brains Testosterone Coffee" width={400} height={400} fetchpriority="high" decoding="async" className="w-full h-full object-contain" />
             </div>
 
             <div className="grid grid-cols-5 gap-2.5">
@@ -553,7 +553,7 @@ export default function TestosteroneCoffee() {
                   }`}
                   aria-label={`View image ${i + 1}`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-contain" />
+                  <img src={img} alt="" width={400} height={400} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                 </button>
               ))}
             </div>
@@ -680,7 +680,7 @@ export default function TestosteroneCoffee() {
               {BONUSES.map((b) => (
                 <div key={b.name} className="text-center">
                   <div className="w-12 h-12 mx-auto mb-1.5 overflow-hidden">
-                    <img src={b.img} alt={b.name} className="w-full h-full object-contain" />
+                    <img src={b.img} alt={b.name} width={148} height={147} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-white/70 text-[0.625rem] leading-tight">{b.name}</p>
                 </div>
@@ -779,7 +779,7 @@ export default function TestosteroneCoffee() {
           </div>
 
           <FadeUp className="order-first md:order-none">
-            <img src={imgOptimize} alt="Man training in the gym" className="w-full h-auto rounded-2xl" />
+            <img src={imgOptimize} alt="Man training in the gym" width={476} height={543} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
       </section>
@@ -818,7 +818,7 @@ export default function TestosteroneCoffee() {
           </div>
 
           <FadeUp className="order-first md:order-none">
-            <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" className="w-full h-auto rounded-2xl" />
+            <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" width={476} height={543} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
       </section>
@@ -827,7 +827,7 @@ export default function TestosteroneCoffee() {
       <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <FadeUp>
-            <img src={imgSeesaw} alt="Hormonal seesaw — cortisol versus testosterone" className="w-full h-auto rounded-2xl" />
+            <img src={imgSeesaw} alt="Hormonal seesaw — cortisol versus testosterone" width={476} height={643} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
 
           <div>
@@ -908,7 +908,7 @@ export default function TestosteroneCoffee() {
           </div>
 
           <FadeUp className="order-first md:order-none">
-            <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" className="w-full h-auto rounded-2xl" />
+            <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" width={476} height={527} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
       </section>
@@ -917,7 +917,7 @@ export default function TestosteroneCoffee() {
       <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <FadeUp>
-            <img src={imgCognitive} alt="Cognitive enhancement — mushrooms, coffee and neurons" className="w-full h-auto rounded-2xl" />
+            <img src={imgCognitive} alt="Cognitive enhancement — mushrooms, coffee and neurons" width={476} height={503} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
 
           <div>
@@ -984,7 +984,7 @@ export default function TestosteroneCoffee() {
 
           {/* Capa do vídeo do founder (vídeo em si pendente). Play personalizado sobre a capa. */}
           <FadeUp className="relative w-full rounded-2xl overflow-hidden order-first md:order-none">
-            <img src={imgFounderCover} alt="Dr. Michael Bennett — message from our founder" className="w-full h-auto" />
+            <img src={imgFounderCover} alt="Dr. Michael Bennett — message from our founder" width={476} height={522} loading="lazy" decoding="async" className="w-full h-auto" />
             <button type="button" aria-label="Play founder video" className="absolute inset-0 flex items-center justify-center group cursor-pointer">
               <img src={playVideo} alt="" className="w-20 h-20 transition-transform duration-300 group-hover:scale-110" />
             </button>
@@ -1057,7 +1057,7 @@ export default function TestosteroneCoffee() {
           </div>
 
           <FadeUp className="order-first md:order-none">
-            <img src={imgCheaper} alt="Balls & Brains coffee preparation" className="w-full h-auto rounded-2xl" />
+            <img src={imgCheaper} alt="Balls & Brains coffee preparation" width={476} height={594} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
           </FadeUp>
         </div>
       </section>
