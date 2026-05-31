@@ -8,7 +8,8 @@ import checkGold from '../assets/icons/check-gold.svg';
 import pressGq from '../assets/press/gq.svg';
 import pressForbes from '../assets/press/forbes.svg';
 import pressMens from '../assets/press/mens-health.svg';
-import heroPouch from '../assets/primal/hero-pouch.webp';
+import galleryMain from '../assets/products/gallery-01.webp';
+import kit2 from '../assets/products/2kits.webp';
 import galleryTrust from '../assets/primal/gallery-trust.webp';
 import galleryStronger from '../assets/primal/gallery-stronger.webp';
 import galleryUgc from '../assets/primal/gallery-ugc.webp';
@@ -16,7 +17,7 @@ import galleryActives from '../assets/primal/gallery-actives.webp';
 import pack1 from '../assets/primal/pack-1.webp';
 import pack3 from '../assets/primal/pack-3.webp';
 import pack5 from '../assets/primal/pack-5.webp';
-import guarantee365 from '../assets/primal/guarantee-365.webp';
+import guaranteeStamp from '../assets/utils/guarantee-stamp.webp';
 import suppTongkat from '../assets/primal/supp-tongkat.webp';
 import suppShilajit from '../assets/primal/supp-shilajit.webp';
 import suppAshwagandha from '../assets/primal/supp-ashwagandha.webp';
@@ -32,7 +33,30 @@ import suppChaga from '../assets/primal/supp-chaga.webp';
 // Todos apontam pro CTA canônico do projeto até o cliente passar os links corretos. Ver docs/OPEN-QUESTIONS.
 const CHECKOUT_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
 
-const GALLERY = [heroPouch, galleryTrust, galleryStronger, galleryUgc, galleryActives];
+// Popup de upsell (abre ao clicar na sacola do navbar) — idêntico ao backlog.
+// ⚠️ Conteúdo herdado do produto antigo (kit, preços, links, "60-Day"); atualizar p/ Primal quando definido.
+const CART_POPUP = {
+  sub: {
+    subtitlePrice: '$69!',
+    price: '$69',
+    old: '$138',
+    perPouch: '$34.50',
+    discount: ['50%', 'OFF'],
+    cta: 'YES! Get 2 Kits for $69',
+    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-subscribe-adv7-mkw8bv65/?referrer=Organic',
+  },
+  one: {
+    subtitlePrice: '$89!',
+    price: '$89',
+    old: '$138',
+    perPouch: '$44.50',
+    discount: ['36%', 'OFF'],
+    cta: 'YES! Get 2 Kits for $89',
+    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-onetime-adv7-mkw8b3xn',
+  },
+};
+
+const GALLERY = [galleryMain, galleryTrust, galleryStronger, galleryUgc, galleryActives];
 
 const HERO_BENEFITS = [
   'Supports healthy testosterone',
@@ -240,7 +264,7 @@ function TrustIcon({ name, className = 'w-11 h-11' }) {
     className,
     viewBox: '0 0 24 24',
     fill: 'none',
-    stroke: 'currentColor',
+    stroke: 'url(#bbGold)',
     strokeWidth: 1.5,
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
@@ -278,7 +302,7 @@ function TrustIcon({ name, className = 'w-11 h-11' }) {
 
 function CheckCircle({ className = 'w-6 h-6' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="url(#bbGold)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="10" />
       <path d="m9 12 2 2 4-4" />
     </svg>
@@ -440,9 +464,97 @@ function AddToCartBlock({ showDelivery = false }) {
   );
 }
 
+function CartUpsellPopup({ mode, fallbackUrl, onClose }) {
+  const cfg = CART_POPUP[mode] ?? CART_POPUP.one;
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-5 bg-black/75 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-sm bg-[#0f0f0f] rounded-2xl overflow-hidden border border-[#c49b43]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="h-[3px] w-full" style={{ background: 'linear-gradient(90deg, transparent, #c49b43, transparent)' }} />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#c49b43]/10 border border-[#c49b43]/30 flex items-center justify-center text-[#c49b43] hover:bg-[#c49b43]/20 transition-colors cursor-pointer"
+        >
+          <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+
+        <div className="bg-[#1a1400] border-b border-[#c49b43]/30 px-6 pt-5 pb-4 text-center">
+          <span className="inline-flex items-center gap-1.5 bg-[#c49b43]/10 border border-[#c49b43]/35 text-[#c49b43] text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full mb-2.5">
+            ⚡ Flash Offer
+          </span>
+          <p className="text-2xl font-black text-white tracking-wide mb-1">WAIT! DON&apos;T MISS OUT</p>
+          <p className="text-sm text-white/60">
+            Upgrade to <span className="text-[#c49b43] font-black">2 Kits</span> and pay only{' '}
+            <span className="text-[#c49b43] font-black">{cfg.subtitlePrice}</span>
+          </p>
+        </div>
+
+        <div className="px-6 pt-5 pb-4">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="relative shrink-0">
+              <div className="w-20 h-20 rounded-xl bg-[#c49b43]/[0.07] border border-[#c49b43]/20 overflow-hidden">
+                <img src={kit2} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+              </div>
+              <div className="absolute -top-2 -right-2 bg-[#c49b43] text-[#0f0f0f] text-[8px] font-black w-8 h-8 rounded-full flex flex-col items-center justify-center leading-tight">
+                <span>{cfg.discount[0]}</span>
+                <span>{cfg.discount[1]}</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-[9px] font-bold tracking-widest uppercase text-[#c49b43]/65 mb-1.5">2 Pouches · 60-Day Supply</p>
+              <div className="flex items-end gap-2 mb-1">
+                <span className="text-[38px] font-black text-[#c49b43] leading-none">{cfg.price}</span>
+                <span className="text-white/40 line-through mb-1.5">{cfg.old}</span>
+              </div>
+              <p className="text-white/70 text-sm font-semibold">{cfg.perPouch} per pouch</p>
+            </div>
+          </div>
+
+          <ul className="space-y-2 mb-4">
+            {['Double your results — 2x the support', '60-Day Money Back Guarantee', 'Free Shipping included'].map((b) => (
+              <li key={b} className="flex items-center gap-2.5 text-white/85 text-sm">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 text-[#c49b43]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <p className="text-[10px] text-white/25 italic text-center">*For best results, consistent daily use for 60+ days is recommended.</p>
+        </div>
+
+        <div className="px-6 pb-6 space-y-2">
+          <a
+            href={cfg.purchaseLink}
+            className="flex items-center justify-center gap-2 w-full py-4 bg-[#c49b43] hover:bg-[#d4aa52] text-[#0f0f0f] font-black text-sm rounded-xl transition-all hover:-translate-y-0.5 active:scale-[0.98] no-underline"
+          >
+            <CartIcon className="w-4 h-4" />
+            {cfg.cta}
+          </a>
+          <a
+            href={fallbackUrl}
+            className="block w-full py-2 text-white/30 hover:text-white/55 font-medium text-xs text-center underline underline-offset-2 no-underline"
+          >
+            No thanks, I only want 1 kit at full price
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SectionHeading({ light, children, className = '' }) {
   return (
-    <FadeUp as="h2" className={`text-[1.875rem] md:text-[2.5rem] font-bold! leading-[1.1] tracking-tight ${light ? 'text-bb-text-dark' : 'text-white'} ${className}`}>
+    <FadeUp as="h2" className={`text-[1.75rem] md:text-[2.5rem] font-bold! leading-[1.1] tracking-tight ${light ? 'text-bb-text-dark' : 'text-white'} ${className}`}>
       {children}
     </FadeUp>
   );
@@ -459,6 +571,12 @@ function CtaBand() {
 
 export default function TestosteroneCoffee() {
   const [selected, setSelected] = useState(3);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = popupOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [popupOpen]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -495,12 +613,23 @@ export default function TestosteroneCoffee() {
         </p>
       </div>
 
-      {/* Navbar */}
-      <nav className="px-4 border-b border-bb-separator bg-black/40">
-        <div className="max-w-[71.25rem] mx-auto flex items-center justify-center py-3.5">
+      {/* Navbar — idêntico ao backlog (logo + label + sacola que abre o popup de upsell) */}
+      <nav className="px-4 border-b border-bb-separator">
+        <div className="max-w-[71.25rem] mx-auto flex items-center justify-between py-3.5">
           <a href="#/" aria-label="Balls & Brains home">
             <img src={bbSymbol} alt="Balls & Brains" className="h-8 w-auto object-contain" />
           </a>
+          <span className="text-bb-gold/80 text-[0.8125rem] font-medium tracking-[0.3em] uppercase">
+            Primal Coffee
+          </span>
+          <button
+            type="button"
+            onClick={() => setPopupOpen(true)}
+            aria-label="Cart"
+            className="flex items-center text-white/80 hover:text-white transition-colors cursor-pointer"
+          >
+            <CartIcon className="w-5 h-5" />
+          </button>
         </div>
       </nav>
 
@@ -536,7 +665,7 @@ export default function TestosteroneCoffee() {
               <span className="text-white/60 text-[0.8125rem]">Rated <span className="text-white font-semibold">4.8/5</span> by 62,128 happy customers</span>
             </div>
 
-            <h1 className="text-[1.625rem] md:text-[2rem] font-bold! leading-tight tracking-tight mt-3 mb-3">
+            <h1 className="text-[1.5rem] md:text-[2rem] font-bold! leading-tight tracking-tight mt-3 mb-3">
               Balls&amp;Brains<sup className="text-[0.6em] align-super">®</sup> Primal Coffee
             </h1>
 
@@ -583,21 +712,39 @@ export default function TestosteroneCoffee() {
                 <p>Rascunho: 365-day money-back guarantee. Pause or cancel anytime.</p>
               </Accordion>
             </div>
-
-            <div>
-              <p className="text-white font-bold text-[1.0625rem] mb-3">What Our Customers Are Saying</p>
-              <div className="grid grid-cols-3 gap-3">
-                {['UGC 1', 'UGC 2', 'UGC 3'].map((u) => (
-                  <Pending key={u} label={u} className="aspect-[9/16]" />
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </main>
 
+      {/* What Our Customers Are Saying — full-width no desktop, carrossel com peek no mobile */}
+      <section className="py-14 md:py-20">
+        <div className="px-4 md:px-[3.75rem] mb-8 md:mb-10">
+          <SectionHeading className="text-center">
+            What Our <span className="text-gold-gradient">Customers</span> Are Saying
+          </SectionHeading>
+        </div>
+        <div className="flex gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scroll-smooth px-4 md:px-[3.75rem] pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {['UGC 1', 'UGC 2', 'UGC 3'].map((u) => (
+            <div
+              key={u}
+              className="snap-center shrink-0 w-[78%] sm:w-[48%] md:w-auto md:flex-1 aspect-[9/16] rounded-2xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/70 text-[0.875rem] italic">
+              {u}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Why Trust Balls & Brains */}
       <section className="px-4 py-16 md:py-24">
+        {/* Gradiente dourado dos ícones (referenciado via stroke="url(#bbGold)") */}
+        <svg width="0" height="0" className="absolute w-0 h-0" aria-hidden="true">
+          <defs>
+            <linearGradient id="bbGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FED9A5" />
+              <stop offset="100%" stopColor="#D09439" />
+            </linearGradient>
+          </defs>
+        </svg>
         <div className="max-w-[60rem] mx-auto">
           <SectionHeading className="text-center">
             Why Trust <span className="text-gold-gradient">Balls&amp;Brains</span>
@@ -605,17 +752,17 @@ export default function TestosteroneCoffee() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-10 md:mt-14">
             {TRUST_PILLARS.map(([icon, label], i) => (
-              <FadeUp key={label} delay={(i % 4) * 0.06} className="rounded-2xl border border-bb-gold-dark/50 bg-[#100d09] p-5 md:p-6 flex flex-col items-center text-center gap-4">
-                <span className="text-bb-gold-mid"><TrustIcon name={icon} className="w-11 h-11" /></span>
-                <p className="text-white font-semibold text-[0.75rem] md:text-[0.8125rem] uppercase tracking-wide leading-tight">{label}</p>
+              <FadeUp key={label} delay={(i % 4) * 0.06} className="rounded-2xl border border-bb-gold-dark/50 bg-[#100d09] p-5 md:p-7 flex flex-col items-center text-center gap-4">
+                <TrustIcon name={icon} className="w-11 h-11 md:w-14 md:h-14" />
+                <p className="text-white font-semibold text-[0.75rem] md:text-[0.9375rem] uppercase tracking-wide leading-tight">{label}</p>
               </FadeUp>
             ))}
           </div>
 
-          <FadeUp delay={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 mt-10 md:mt-12 max-w-[40rem] mx-auto">
-            {TRUST_CHECKS.map((c, i) => (
-              <div key={c} className={`flex items-center gap-3 ${i % 2 === 1 ? 'sm:border-l sm:border-white/15 sm:pl-10' : ''}`}>
-                <span className="text-bb-gold-mid shrink-0"><CheckCircle className="w-6 h-6" /></span>
+          <FadeUp delay={0.1} className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mt-10 md:mt-12 max-w-[52rem] mx-auto">
+            {TRUST_CHECKS.map((c) => (
+              <div key={c} className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 shrink-0" />
                 <span className="text-white text-[0.9375rem] md:text-[1.0625rem]">{c}</span>
               </div>
             ))}
@@ -663,36 +810,49 @@ export default function TestosteroneCoffee() {
         </div>
       </section>
 
-      {/* Here's What Happens Inside Your Body */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
+      {/* Here's What Happens Inside Your Body — tabela (3 colunas: semana dourada / título branco / tópicos pretos) */}
+      <section className="px-4 py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto">
-          <SectionHeading light className="text-center">
+          <SectionHeading className="text-center">
             Here&apos;s What Happens <span className="text-gold-gradient">Inside Your Body</span>
           </SectionHeading>
-          <FadeUp as="p" delay={0.1} className="text-bb-text-dark/65 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[42rem] mx-auto mt-5 mb-10 md:mb-14">
+          <FadeUp as="p" delay={0.1} className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[42rem] mx-auto mt-5 mb-10 md:mb-14">
             Each ingredient works on its own timeline. Here&apos;s what to expect as they build up in your system.
           </FadeUp>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {TIMELINE.map((col, i) => (
-              <FadeUp key={col.week} delay={i * 0.08} className="rounded-2xl border border-bb-text-dark/10 bg-white p-6">
-                <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-1">{col.week}</p>
-                <h3 className="text-bb-text-dark font-bold! text-[1.25rem] leading-tight mb-4">{col.title}</h3>
-                <ul className="space-y-3">
-                  {col.points.map((p) => (
-                    <li key={p} className="flex gap-2.5">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                      <span className="text-bb-text-dark/70 text-[0.875rem] leading-relaxed">{p}</span>
-                    </li>
-                  ))}
-                </ul>
-              </FadeUp>
-            ))}
+          <div className="max-w-[60rem] mx-auto overflow-x-auto">
+            <div className="grid grid-cols-3 gap-px bg-bb-separator border border-bb-separator rounded-2xl overflow-hidden min-w-[600px]">
+              {/* Linha 1 — semanas: fundo dourado em degradê, letra preta (~20px) */}
+              {TIMELINE.map((col) => (
+                <div key={col.week} className="py-3 px-3 text-center" style={{ background: 'linear-gradient(90deg, #FED9A5 0%, #D09439 100%)' }}>
+                  <span className="text-bb-text-dark font-bold text-[1.25rem]">{col.week}</span>
+                </div>
+              ))}
+              {/* Linha 2 — títulos: fundo branco, letra preta (16px) */}
+              {TIMELINE.map((col) => (
+                <div key={`${col.week}-title`} className="bg-white px-3 py-4 flex items-center justify-center text-center">
+                  <span className="text-bb-text-dark font-bold text-[1rem] leading-tight">{col.title}</span>
+                </div>
+              ))}
+              {/* Linha 3 — tópicos: fundo preto, check dourado, texto branco (16px) */}
+              {TIMELINE.map((col) => (
+                <div key={`${col.week}-body`} className="bg-black p-4 md:p-5">
+                  <ul className="space-y-3.5">
+                    {col.points.map((p) => (
+                      <li key={p} className="flex gap-2.5">
+                        <img src={checkGold} alt="" aria-hidden="true" className="w-4 h-4 mt-0.5 shrink-0" />
+                        <span className="text-white text-[1rem] leading-snug">{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-12 md:mt-16 text-center">
             <a href="#bundles" className="btn-cta btn-cta-lg inline-block">Try Risk-Free Today</a>
-            <p className="text-bb-text-dark/60 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
+            <p className="text-white/55 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
           </div>
         </div>
       </section>
@@ -961,18 +1121,29 @@ export default function TestosteroneCoffee() {
 
       <CtaBand />
 
-      {/* 365-Day Risk-Free Trial */}
-      <section className="px-4 pb-16 md:pb-24">
-        <div className="max-w-[44rem] mx-auto rounded-3xl border border-bb-gold-dark/40 bg-[#100d09] p-8 md:p-12 text-center">
-          <FadeUp>
-            <img src={guarantee365} alt="365 Day Money-Back Guarantee" width={140} height={140} loading="lazy" decoding="async" className="w-28 h-28 mx-auto mb-5 object-contain" />
+      {/* 365-Day Risk-Free Trial — padrão do componente Guarantee da home (selo on-brand + texto) */}
+      <section className="bg-[#14100C] px-4 py-14 md:py-20">
+        <div className="max-w-[71.25rem] mx-auto">
+          <FadeUp className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14">
+            <img
+              src={guaranteeStamp}
+              alt="365-Day Money-Back Guarantee"
+              width={176}
+              height={176}
+              loading="lazy"
+              decoding="async"
+              className="w-32 md:w-44 object-contain shrink-0"
+            />
+            <div className="flex flex-col gap-3 text-center md:text-left max-w-[40rem]">
+              <h2 className="text-[1.75rem] md:text-[3rem] font-bold! leading-tight tracking-tight">
+                <span className="text-white">365-Day </span>
+                <span className="text-gold-gradient">Risk-Free Trial</span>
+              </h2>
+              <p className="text-bb-text-dim text-[0.9375rem] md:text-[1.0625rem] leading-relaxed">
+                If you&apos;re not completely satisfied in your first 30 days, simply return your order for a full refund — no questions asked.
+              </p>
+            </div>
           </FadeUp>
-          <SectionHeading className="!text-[1.75rem] md:!text-[2.25rem]">
-            365-Day <span className="text-gold-gradient">Risk-Free Trial</span>
-          </SectionHeading>
-          <p className="text-white/60 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed mt-4 max-w-[34rem] mx-auto">
-            If you&apos;re not completely satisfied in your first 30 days, simply return your order for a full refund — no questions asked.
-          </p>
         </div>
       </section>
 
@@ -1023,6 +1194,10 @@ export default function TestosteroneCoffee() {
           </p>
         </div>
       </footer>
+
+      {popupOpen && (
+        <CartUpsellPopup mode="sub" fallbackUrl={CHECKOUT_URL} onClose={() => setPopupOpen(false)} />
+      )}
     </div>
   );
 }
