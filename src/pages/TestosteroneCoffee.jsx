@@ -2,245 +2,228 @@ import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import FadeUp from '../components/_shared/FadeUp';
 import bbSymbol from '../assets/utils/bb-symbol.svg';
+import footerLogo from '../assets/utils/footer-logo.svg';
 import starIcon from '../assets/icons/Star.svg';
 import checkGold from '../assets/icons/check-gold.svg';
-import kit1 from '../assets/products/1kit.webp';
-import kit2 from '../assets/products/2kits.webp';
-import kit3 from '../assets/products/3kits.webp';
-import gallery01 from '../assets/products/gallery-01.webp';
-import gallery02 from '../assets/products/gallery-02.webp';
-import gallery03 from '../assets/products/gallery-03.webp';
-import gallery04 from '../assets/products/gallery-04.webp';
-import gallery05 from '../assets/products/gallery-05.webp';
-import bonusManhood from '../assets/bonuses/manhood.webp';
-import bonusBoost from '../assets/bonuses/boost.webp';
-import bonusBed from '../assets/bonuses/bed.webp';
-import bonusEnergy from '../assets/bonuses/energy.webp';
 import pressGq from '../assets/press/gq.svg';
 import pressForbes from '../assets/press/forbes.svg';
 import pressMens from '../assets/press/mens-health.svg';
-import num1 from '../assets/numbers/num-1.svg';
-import num2 from '../assets/numbers/num-2.svg';
-import num3 from '../assets/numbers/num-3.svg';
-import num4 from '../assets/numbers/num-4.svg';
-import num5 from '../assets/numbers/num-5.svg';
-import num6 from '../assets/numbers/num-6.svg';
-import num7 from '../assets/numbers/num-7.svg';
-import pct1 from '../assets/stats/pct-1.svg';
-import pct2 from '../assets/stats/pct-2.svg';
-import pct3 from '../assets/stats/pct-3.svg';
-import pct4 from '../assets/stats/pct-4.svg';
-import pct5 from '../assets/stats/pct-5.svg';
-import imgOptimize from '../assets/sections/optimize.webp';
-import imgCleanEnergy from '../assets/sections/clean-energy.webp';
-import imgSeesaw from '../assets/sections/seesaw.webp';
-import imgBlockConversion from '../assets/sections/block-conversion.webp';
-import imgCognitive from '../assets/sections/cognitive.webp';
-import imgFounderCover from '../assets/sections/founder-cover.webp';
-import imgCheaper from '../assets/sections/cheaper.webp';
-import playVideo from '../assets/icons/play-video.svg';
-import footerLogo from '../assets/utils/footer-logo.svg';
-import { faqs as FAQ_ALL } from '../components/FAQ/FAQ';
+import heroPouch from '../assets/primal/hero-pouch.webp';
+import galleryTrust from '../assets/primal/gallery-trust.webp';
+import galleryStronger from '../assets/primal/gallery-stronger.webp';
+import galleryUgc from '../assets/primal/gallery-ugc.webp';
+import galleryActives from '../assets/primal/gallery-actives.webp';
+import pack1 from '../assets/primal/pack-1.webp';
+import pack3 from '../assets/primal/pack-3.webp';
+import pack5 from '../assets/primal/pack-5.webp';
+import guarantee365 from '../assets/primal/guarantee-365.webp';
+import suppTongkat from '../assets/primal/supp-tongkat.webp';
+import suppShilajit from '../assets/primal/supp-shilajit.webp';
+import suppAshwagandha from '../assets/primal/supp-ashwagandha.webp';
+import suppCaffeine from '../assets/primal/supp-caffeine.webp';
+import suppLionsmane from '../assets/primal/supp-lionsmane.webp';
+import suppVitamind from '../assets/primal/supp-vitamind.webp';
+import suppZinc from '../assets/primal/supp-zinc.webp';
+import suppLtheanine from '../assets/primal/supp-ltheanine.webp';
+import suppCordyceps from '../assets/primal/supp-cordyceps.webp';
+import suppChaga from '../assets/primal/supp-chaga.webp';
 
-const GALLERY = [gallery01, gallery02, gallery03, gallery04, gallery05];
-const PRESS = [pressGq, pressForbes, pressMens];
-const NUMBERS = [num1, num2, num3, num4, num5, num6, num7];
+// ⚠️ PENDENTE: links de checkout por bundle (1/3/5 pouches, subscription) ainda não fornecidos.
+// Todos apontam pro CTA canônico do projeto até o cliente passar os links corretos. Ver docs/OPEN-QUESTIONS.
+const CHECKOUT_URL = 'https://ballsnbrains.com/shp/tmc-adv/08/p2-v2/';
 
-const LEVEL2_CORTISOL = [
-  ['Ashwagandha KSM-66 (300mg)', 'Reduces cortisol by 27.9% in 60 days (clinically proven)'],
-  ['Reishi Mushroom (500mg)', 'Calms HPA axis, improves sleep quality, lowers chronic stress'],
-];
-const LEVEL2_TESTO = [
-  ['Tongkat Ali LJ100 (300mg)', 'Increases total testosterone 15–37% and FREE testosterone up to 46% in 8 weeks'],
-  ['Fadogia Agrestis (600mg)', 'Enhances luteinizing hormone production, makes testes more sensitive to testosterone signals'],
-  ['Zinc (15mg) + Vitamin D3 (2000 IU) + Shilajit (250mg)', 'Essential cofactors for testosterone synthesis'],
-];
-const LEVEL3_INHIBITORS = [
-  ['DIM (from cruciferous vegetables)', 'Directly blocks aromatase enzyme'],
-  ['Chaga Mushroom (500mg)', 'Powerful antioxidant with additional aromatase inhibition'],
-  ['Cordyceps Militaris (1000mg)', 'Supports testosterone while preventing conversion'],
-];
-const BONUS_STACK = [
-  ["Lion's Mane (1000mg)", 'Stimulates Nerve Growth Factor (NGF), improves memory and focus'],
-  ['Cordyceps (1000mg)', 'Increases cellular ATP production, boosts mental and physical energy'],
-  ['L-Theanine (100mg)', 'Creates calm, focused alertness'],
-];
-const FOUNDER_POINTS = [
-  'Why your morning coffee is destroying your testosterone',
-  'The "Hormonal Seesaw" mechanism doctors never mention',
-  'How I increased my testosterone 91% in 8 weeks without TRT',
-];
-const HEALTH_ISSUES = [
-  ['Low Testosterone', "Balls & Brains uses clinical doses of Tongkat Ali LJ100 and Fadogia Agrestis to reactivate your HPG axis and amplify testosterone production by 15–46%. Ashwagandha KSM-66 removes the cortisol brake that's been suppressing your natural production."],
-  ['Low Energy & Afternoon Crashes', 'By replacing high-cortisol coffee with clean energy from MCT Oil, L-Theanine, and 100mg caffeine, you get sustained 6–8 hour energy without the spike-and-crash cycle. Cordyceps enhances cellular ATP production for real mitochondrial energy.'],
-  ['Brain Fog & Poor Focus', "Lion's Mane stimulates Nerve Growth Factor to improve memory and cognitive function. L-Theanine creates calm, focused alertness. The combination eliminates brain fog and sharpens mental performance all day."],
-  ['Low Libido & Sexual Performance', 'When testosterone rises and estrogen normalizes, sex drive returns naturally. 89% of users report improved libido within 4–6 weeks. Morning wood returns as a visible sign of hormonal optimization.'],
-  ['Dad Bod & Stubborn Belly Fat', 'High cortisol causes belly fat storage and testosterone-to-estrogen conversion creates "soft" body composition. By lowering cortisol and raising testosterone, your body naturally burns fat and builds lean muscle more easily.'],
-  ['Man Boobs (Gynecomastia)', 'Excess estrogen from testosterone conversion causes breast tissue growth in men. DIM and Chaga block the aromatase enzyme responsible, while raising testosterone reverses the feminizing effects.'],
-  ['Stress & Irritability', "Ashwagandha and Reishi calm your stress response and lower cortisol by up to 27.9%. You'll feel calmer, more in control, and emotionally stable, even during high-pressure situations."],
-];
-const PRICE_COMPARE = [
-  ['Tongkat Ali supplement', '(clinical dose): $40–60/month'],
-  ['Ashwagandha KSM-66:', '$30–40/month'],
-  ['Fadogia Agrestis:', '$35–45/month'],
-  ["Mushroom complex (Lion's Mane, Cordyceps, Reishi, Chaga):", '$40–50/month'],
-  ['Pre-workout or energy supplement:', '$40–50/month'],
-  ['Premium coffee:', '$15–20/month'],
-];
-const RESULTS_STATS = [
-  [pct1, 'of users reported noticeable energy improvement within the first week (no 2pm crash).'],
-  [pct2, 'of users experienced improved mental clarity and focus within 14 days.'],
-  [pct3, 'of users reported return of morning wood and improved libido within 4 weeks.'],
-  [pct4, 'of users who retested blood work showed measurable testosterone increases after 8 weeks (average increase: 32%).'],
-  [pct5, 'of users reported visible body composition changes (leaner waist, more muscle definition) within 8–10 weeks.'],
+const GALLERY = [heroPouch, galleryTrust, galleryStronger, galleryUgc, galleryActives];
+
+const HERO_BENEFITS = [
+  'Supports healthy testosterone',
+  'Clean and sustained energy',
+  'Sharper focus & mental clarity',
+  'Built for male performance',
 ];
 
-// Tabela comparativa: cada linha = [label, BALLS&BRAINS, Regular Coffee, Other Mushroom Coffee, Testosterone Pills]
-// status do cell: 'ok' (verde), 'no' (vermelho), 'warn' (amarelo), 'na' (cinza)
-const COMPARE_ROWS = [
-  ['Optimizes Testosterone', ['ok', 'Yes (15–46% increase)'], ['no', 'No (suppresses it)'], ['no', 'No'], ['warn', 'Sometimes (if taken separately)']],
-  ['Lowers Cortisol', ['ok', 'Yes (up to 27.9%)'], ['no', 'No (spikes it 20–30%)'], ['warn', 'Minimal'], ['warn', 'Only if Ashwagandha included']],
-  ['Sustained Energy (6–8 hrs)', ['ok', 'Yes'], ['no', 'No (2–3 hr crash)'], ['warn', 'Gentler but not optimized'], ['no', 'No energy benefit']],
-  ['Clinical Doses', ['ok', 'Yes'], ['na', 'N/A'], ['no', 'Often underdosed'], ['warn', 'Varies by brand']],
-  ['Tastes Great', ['ok', 'Premium coffee taste'], ['ok', 'Yes'], ['no', 'Often earthy/bitter'], ['warn', 'Pills (no taste)']],
-  ['365-Day Guarantee', ['ok', 'Yes'], ['na', 'N/A'], ['warn', 'Varies'], ['warn', 'Varies']],
-  ['Replaces Multiple Products', ['ok', 'Yes (coffee + 5–10 supplements)'], ['no', 'No'], ['warn', 'Replaces coffee only'], ['no', 'No (still need coffee)']],
-];
-
-const CHECKOUT = {
-  sub: [
-    'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-subscribe-adv8-mlk3sruu/?referrer=Organic',
-    'https://links.ballsnbrains.com/go/2-mushroom-coffe-tmc-subscribe-adv8-mlk3t4rf/?referrer=Organic',
-    'https://links.ballsnbrains.com/go/3-mushroom-coffe-tmc-subscribe-adv8-mlk3tm4w/?referrer=Organic',
-  ],
-  one: [
-    'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-onetime-adv8-mlk3rio9/?referrer=Organic',
-    'https://links.ballsnbrains.com/go/2-mushroom-coffe-tmc-onetime-adv8-mlk3rwr5/?referrer=Organic',
-    'https://links.ballsnbrains.com/go/3-mushroom-coffe-tmc-onetime-adv8-mlk3sac9/?referrer=Organic',
-  ],
-};
-
-// Popup de upsell (abre ao clicar no carrinho). Variante por modo. Links verbatim do bundle live.
-const CART_POPUP = {
-  sub: {
-    subtitlePrice: '$69!',
-    price: '$69',
-    old: '$138',
-    perPouch: '$34.50',
-    discount: ['50%', 'OFF'],
-    cta: 'YES! Get 2 Kits for $69',
-    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-subscribe-adv7-mkw8bv65/?referrer=Organic',
-  },
-  one: {
-    subtitlePrice: '$89!',
-    price: '$89',
-    old: '$138',
-    perPouch: '$44.50',
-    discount: ['36%', 'OFF'],
-    cta: 'YES! Get 2 Kits for $89',
-    purchaseLink: 'https://links.ballsnbrains.com/go/1-mushroom-coffe-tmc-popup-onetime-adv7-mkw8b3xn',
-  },
-};
-
-const REVIEW_DIST = [
-  [5, 1643],
-  [4, 148],
-  [3, 37],
-  [2, 11],
-  [1, 8],
-];
-const REVIEW_TOTAL = 1847;
-const PDP_REVIEWS = [
-  { initials: 'MD', name: 'Mike_Denver', stars: 5, title: 'Works, but be realistic with expectations', helpful: 142, body: "Writing this after 10 weeks so hopefully this helps someone decide. I'm a 42-year-old software engineer so yeah, desk job = terrible posture, high stress, too much coffee.\nPROS:" },
-  { initials: 'JM', name: 'Jennifer_M', stars: 5, title: "Bought this for my husband and he's a different person", helpful: 89, body: 'My husband is 46 and has been struggling with low energy and low sex drive for 2+ years. He tried testosterone pills, nothing worked. I found this and convinced him to try it.\nWeek 1: He stopped complaining about being tired all the time. Week 3: He initiated intimacy for the first time in months (and everything worked great!). Week 8: He looks leaner, more energized, and honestly more confident.' },
-  { initials: 'JJ', name: 'Jess_J', stars: 5, title: 'Skeptical engineer approved', helpful: 67, body: 'I research EVERYTHING before buying. Read all the studies on Tongkat Ali, Ashwagandha, Fadogia. The doses in this check out—these are actual clinical doses, not pixie dust.\nBeen using for 12 weeks. Testosterone went from 410 to 695. Libido is back. Energy is sustained all day. Recovery from workouts is way faster.' },
-  { initials: 'GC', name: 'George_C', stars: 4, title: 'Good product, slightly expensive', helpful: 53, body: 'Works as advertised. Energy is great, focus is sharp, libido improved noticeably. Lost about 12 pounds of belly fat in 8 weeks without changing my diet.\nOnly giving 4 stars because $50/month feels steep compared to regular coffee. But then again, I was spending $40/month on separate Tongkat Ali and Ashwagandha anyway, so it actually saves money.' },
-  { initials: 'GJ', name: 'Gabriel_J', stars: 5, title: 'Avoided TRT thanks to this', helpful: 201, body: 'My endocrinologist wanted me on testosterone replacement at age 44. I was at 335 ng/dL. I asked if I could try natural optimization first. He said fine, retest in 3 months.\nBought the 3-month supply. Drank it every morning. Tracked everything.' },
-];
-
-const PLANS = [
+// id = nº de pouches. cartTotal = preço final do bundle.
+const BUNDLES = [
   {
-    name: '1 Pouch',
-    image: kit1,
-    sub: { save: 'Save 29%', old: '$69.00', price: '$49.00', perUnit: null, totalLabel: null, cartTotal: '$49.00' },
-    one: { save: 'Save 0%', old: null, price: '$69.00', perUnit: null, totalLabel: null, cartTotal: '$69.00' },
+    id: 1,
+    image: pack1,
+    badge: null,
+    title: 'Buy 1',
+    pouches: '1 Pouch',
+    perks: ['Free Shipping', 'Free access to Balls&Brains App'],
+    price: '$49',
+    per: null,
+    regular: '$69',
+    total: null,
+    note: '28% OFF First Order — Promo Active',
+    cartTotal: '$49',
   },
   {
-    name: '2 Pouches',
-    image: kit2,
-    sub: { save: 'Save 31%', old: '$138.00', price: '$44.00', perUnit: '/ Pouch', totalLabel: 'Total: $88.00', cartTotal: '$88.00' },
-    one: { save: 'Save 7%', old: '$138.00', price: '$64.00', perUnit: '/ Pouch', totalLabel: 'Total: $128.00', cartTotal: '$128.00' },
+    id: 3,
+    image: pack3,
+    badge: 'Most Popular',
+    title: 'Buy 2, Get 1',
+    pouches: '3 Pouches',
+    perks: ['Free Shipping', 'You save 43%', 'Free access to Balls&Brains App'],
+    price: '$39',
+    per: '/ Pouch',
+    regular: '$207',
+    total: '$117',
+    note: null,
+    cartTotal: '$117',
   },
   {
-    name: '3 Pouches',
-    image: kit3,
-    sub: { save: 'Save 34%', old: '$207.00', price: '$39.00', perUnit: '/ Pouch', totalLabel: 'Total: $117.00', cartTotal: '$117.00' },
-    one: { save: 'Save 15%', old: '$207.00', price: '$59.00', perUnit: '/ Pouch', totalLabel: 'Total: $177.00', cartTotal: '$177.00' },
+    id: 5,
+    image: pack5,
+    badge: 'Best Value',
+    title: 'Buy 3, Get 2 Free',
+    pouches: '5 Pouches',
+    perks: ['Free Shipping', 'You save 58%', 'Free access to Balls&Brains App'],
+    price: '$29',
+    per: '/ Pouch',
+    regular: '$345',
+    total: '$145',
+    note: null,
+    cartTotal: '$145',
   },
 ];
 
-const PRODUCT_BENEFITS = [
-  'Raises testosterone 15–46% naturally',
-  'Sustained 6–8 hour energy (no crash)',
-  'Blocks testosterone-to-estrogen conversion',
-  'Tastes like premium coffee',
-];
-
-const BONUSES = [
-  { img: bonusManhood, name: 'Manhood' },
-  { img: bonusBoost, name: 'Testosterone Boost' },
-  { img: bonusBed, name: 'Longer Time in Bed' },
-  { img: bonusEnergy, name: 'Energy' },
-];
+const PRESS = [pressMens, pressForbes, pressGq];
 
 const INGREDIENTS = [
-  ['Tongkat Ali LJ100®', '300 mg'],
-  ['Shilajit', '250 mg'],
-  ['Zinc Glycinate', '15 mg'],
-  ['Ashwagandha KSM-66®', '300 mg'],
-  ['Cholecalciferol (Vitamin D)', '2,000 IU'],
-  ["Lion's Mane", '1,000 mg'],
-  ['Reishi', '500 mg'],
-  ['Cordyceps Militaris', '1,000 mg'],
-  ['L-Theanine', '100 mg'],
-  ['Chaga', '500 mg'],
-  ['Caffeine', '100 mg'],
-  ['Organic Arabica Coffee', '50 mg'],
+  ['Tongkat Ali', '300mg', 'Increased testosterone by 37% and reduced cortisol by 16% in 4 weeks.'],
+  ['Shilajit', '100mg', 'Increased total testosterone by 20% in healthy men over 90 days.'],
+  ['Zinc Glycinate', '30mg', 'Zinc supplementation nearly doubled serum testosterone in deficient elderly men.'],
+  ['Ashwagandha', '300mg', 'Reduced cortisol levels by 27.9% in 60 days.'],
+  ['Cholecalciferol (Vitamin D)', '2,000UI', 'Men supplementing Vitamin D saw a 25% increase in total testosterone over 12 months.'],
+  ["Lion's Mane", '800mg', 'Significant cognitive improvement in adults with mild cognitive impairment over 16 weeks.'],
+  ['Reishi', '100mg', 'Shown to support sleep quality by modulating serotonin pathways.'],
+  ['Cordyceps Militaris', '250mg', 'Improved VO2max and increased time to exhaustion by 70 seconds in 3 weeks.'],
+  ['L-Theanine', '200mg', 'Combined with caffeine, improved attention accuracy and reduced mental fatigue.'],
+  ['Chaga', '100mg', 'Rich in polysaccharides with demonstrated antioxidant and immunomodulatory properties.'],
+  ['Caffeine', '100mg', 'Significantly improved attention, processing speed, and accuracy across 13 studies.'],
+  ['Organic Arabica Coffee', '1,000mg', 'The base. Smooth flavor profile, low acidity. The ritual stays the same.'],
+];
+
+const TIMELINE = [
+  {
+    week: 'Week 1',
+    title: 'Stress & Energy Reset',
+    points: [
+      'L-Theanine smooths your caffeine curve — energy feels cleaner, steadier.',
+      'Ashwagandha begins modulating your cortisol baseline.',
+      "Lion's Mane starts supporting nerve growth factor (NGF) production.",
+      'The afternoon crash starts fading — no more 2pm collapse.',
+    ],
+  },
+  {
+    week: 'Week 4',
+    title: 'Hormones Regulate',
+    points: [
+      'Cortisol levels measurably lower — sleep improves, recovery accelerates.',
+      'Tongkat Ali reaches effective concentration — T-support kicks in.',
+      'Cordyceps improves oxygen utilization — workouts feel different.',
+      'Focus sharpens. Energy sustains. The fog lifts.',
+    ],
+  },
+  {
+    week: 'Week 12',
+    title: 'Peak Performance & Vitality',
+    points: [
+      'Full hormonal optimization — cortisol down, testosterone supported, SHBG managed.',
+      'Ashwagandha, Tongkat Ali and Shilajit working in sync at peak levels.',
+      'Compounding effects visible in energy, body composition, drive, and bloodwork.',
+      "This isn't a spike. This is your new baseline.",
+    ],
+  },
+];
+
+const APP_STEPS = [
+  "We'll email you a secret link to sign up for the app for free",
+  "We'll give you a free hormone assessment to identify your needs",
+  'Your assessment will be sent to Jack, our AI coach, who’ll create your personalized hormone optimization challenge',
+  'You’ll receive daily challenges from Jack directly in the app',
+  'Complete challenges, earn credits, and redeem them for rewards — from discount coupons to all-inclusive trips',
+];
+
+// Slots de depoimento — preencher com UGCs reais (foto, nome, headline, texto).
+const TESTIMONIALS = [
+  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
+  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
+  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
+];
+
+// "Escrever aqui" no doc — copy rascunhada (revisar/substituir).
+const REASONS = [
+  ['Regulate your cortisol levels', 'Ashwagandha and Reishi calm the stress response and lower cortisol — the hormone that suppresses testosterone when chronically elevated.'],
+  ['Encourages natural testosterone production', 'Clinical doses of Tongkat Ali, Shilajit and Zinc support your body’s own testosterone synthesis instead of replacing it.'],
+  ['Stimulates energy metabolism', 'Cordyceps and 100mg of caffeine paired with L-Theanine deliver clean, sustained energy without the spike-and-crash.'],
+  ['Supports your memory, focus and cognition', "Lion's Mane and L-Theanine sharpen mental clarity and focus, lifting the brain fog that comes with low testosterone."],
+];
+
+const SUPPLEMENTS = [
+  ['Tongkat Ali', suppTongkat, '$39.99'],
+  ['Shilajit', suppShilajit, '$19.99'],
+  ['Ashwagandha', suppAshwagandha, '$19.95'],
+  ['Caffeine', suppCaffeine, '$25.99'],
+  ["Lion's Mane", suppLionsmane, '$34.95'],
+  ['Vitamin D3', suppVitamind, '$23.99'],
+  ['Zinc Glycinate', suppZinc, '$19.99'],
+  ['L-Theanine', suppLtheanine, '$19.95'],
+  ['Cordyceps', suppCordyceps, '$34.95'],
+  ['Chaga', suppChaga, '$34.95'],
+];
+
+const PROBLEMS = ['Low Testosterone', 'Poor Blood Flow', 'High Cortisol', 'Low Energy', 'Cognitive Decline & Brain Fog'];
+
+// Pares de ativos + o que fazem (recriação do antigo image14 composto). Imagens serão geradas pelo Pedro.
+const ACTIVES = [
+  ['Tongkat Ali · Vitamin D3', 'Increase Your T-Production Naturally'],
+  ['Shilajit · Zinc Glycinate', 'Improve Your Blood Flow'],
+  ['Ashwagandha · L-Theanine', 'Reduce Your Cortisol Levels'],
+  ['Caffeine · Cordyceps', 'Improve Your Energy Levels'],
+  ["Lion's Mane · Chaga", 'Improve Your Cognition Function'],
+];
+
+const SYMPTOM_GROUPS = [
+  ['No morning wood?', 'Low sex drive?', 'Weak erections?'],
+  ['Struggling to lose weight?', 'High blood sugar?', 'Growing man boobs?', "Feel like your belly is getting bigger every single day, even when you’re barely eating?"],
+  ['Fatigue?', 'Low drive?', 'Do you wake up with barely enough energy to get out of bed?'],
+  ['Brain fog?', 'Repeating the same stories over and over?', 'Forgetting words in the middle of a sentence?'],
+  ['Muscles getting weaker and weaker?', 'Tired legs?', 'Sudden joint pain?'],
 ];
 
 const FAQS = [
-  {
-    q: 'What is Balls and Brains?',
-    a: "Balls and Brains is the first testosterone-optimizing mushroom coffee designed for men over 30. It combines premium Colombian coffee (100mg caffeine) with clinical doses of 11 functional ingredients — including Tongkat Ali, Ashwagandha, and Lion's Mane — to naturally support testosterone while providing sustained energy for 6–8 hours.",
-  },
-  {
-    q: 'When will I see results?',
-    a: 'Most users notice cleaner energy and reduced afternoon crash within the first week. Testosterone-support effects typically build over 30–90 days as ingredients reach effective concentration.',
-  },
-  {
-    q: 'How do I prepare it?',
-    a: 'One scoop in 8–12oz of hot water. Stir or froth. Drink black or with your preferred milk. That’s it.',
-  },
-  {
-    q: "What's your refund policy?",
-    a: '365-day money-back guarantee. If you’re not satisfied for any reason, contact support@ballsnbrains.com and we’ll refund every penny. No questions asked.',
-  },
+  ['What is Balls&Brains® Primal Coffee?', 'A men’s performance mushroom coffee: roasted Arabica blended with clinical-dose adaptogens, functional mushrooms and ancestral nutrients to support testosterone, lower cortisol, and deliver clean, sustained energy — all in your daily coffee ritual.'],
+  ['Who is Balls&Brains® Primal Coffee for?', 'Men — especially over 40 — who want to support healthy testosterone, energy, focus and drive without injections or choking down a handful of pills every morning.'],
+  ['Why not just take regular coffee and separate supplements?', 'Regular coffee spikes cortisol, which suppresses testosterone. Buying clinical doses of Tongkat Ali, Ashwagandha, Shilajit, Lion’s Mane and the rest separately runs about $274/month. Primal Coffee combines them in one cup for a fraction of the cost.'],
+  ['When will I see results?', 'Most men notice cleaner energy and less afternoon crash in the first week. Hormonal and cognitive effects build over 4–12 weeks as the ingredients reach effective concentration.'],
+  ['How do I prepare it?', 'One scoop in 8–12oz of hot water. Stir or froth, drink black or with your preferred milk. The ritual stays the same.'],
+  ['Does it really taste good?', 'Yes — it’s a roasted Arabica base with a smooth flavor profile and low acidity. No earthy or bitter mushroom aftertaste.'],
+  ['How much caffeine does it have?', '100mg per serving — about a third of a strong regular coffee — paired with L-Theanine for calm, focused energy without the jitters.'],
+  ['Will I go through caffeine withdrawal?', 'Unlikely. At 100mg the caffeine is much lower than most coffee, so the transition is smooth for the vast majority of men.'],
+  ['Is this safe? Will it mess with my hormones?', 'Primal Coffee supports your body’s own natural production rather than replacing hormones. It uses clinically studied doses. If you have a medical condition or take medication, check with your physician first.'],
+  ['Can I take this if I’m already on TRT?', 'Many men do, but because you’re already managing hormones medically, talk to your prescribing doctor before adding it.'],
+  ['Can I use this as a pre-workout?', 'Absolutely — the caffeine, Cordyceps and L-Theanine make it a clean pre-workout for sustained energy and focus.'],
+  ['Do I need to cycle off?', 'No cycling required. It’s formulated for daily, long-term use.'],
+  ['What’s your refund policy?', '365-day money-back guarantee. If you’re not satisfied, contact support@ballsnbrains.com for a full refund — no questions asked.'],
 ];
 
-function StarRating() {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center gap-0.5">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <img key={i} src={starIcon} alt="" aria-hidden="true" className="w-4 h-4" />
-        ))}
-      </div>
-      <span className="text-white/55 text-[0.8125rem]">
-        <span className="text-white font-semibold">Rated 4.8/5</span> (1,847 Reviews)
-      </span>
-    </div>
-  );
-}
+const TRUST_PILLARS = [
+  ['microscope', 'Science-Backed Ingredients †'],
+  ['shield', 'Third-Party Tested'],
+  ['flask', 'Clean Formula'],
+  ['globe', 'GMP-Certified Facilities'],
+];
+
+// Ordem row-wise (grid de 2 colunas) pra bater com a diagramação da imagem.
+const TRUST_CHECKS = [
+  'Gluten-Free',
+  'No Added Sugar',
+  'No Artificial Additives',
+  'No Artificial Flavors',
+  'Allergen-Free',
+  'Easy Daily Ritual',
+];
 
 function CartIcon({ className = '' }) {
   return (
@@ -252,40 +235,86 @@ function CartIcon({ className = '' }) {
   );
 }
 
-const TRUST = [
-  {
-    title: 'Money-Back Guarantee',
-    sub: '365-day, no questions asked',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+function TrustIcon({ name, className = 'w-11 h-11' }) {
+  const common = {
+    className,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.5,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  };
+  if (name === 'microscope') {
+    return (
+      <svg {...common}>
+        <path d="M6 18h8" /><path d="M3 22h18" /><path d="M14 22a7 7 0 1 0 0-14h-1" /><path d="M9 14h2" />
+        <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" /><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" />
+      </svg>
+    );
+  }
+  if (name === 'shield') {
+    return (
+      <svg {...common}>
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
         <path d="m9 12 2 2 4-4" />
       </svg>
-    ),
-  },
-  {
-    title: 'Secure Checkout',
-    sub: '256-bit SSL encrypted',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <rect x="3" y="11" width="18" height="11" rx="2" />
-        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    );
+  }
+  if (name === 'flask') {
+    return (
+      <svg {...common}>
+        <path d="M10 2v7.31" /><path d="M14 9.3V2" /><path d="M8.5 2h7" /><path d="M14 9.3a6.5 6.5 0 1 1-4 0" /><path d="M5.52 16h12.96" />
       </svg>
-    ),
-  },
-  {
-    title: 'Fast Shipping',
-    sub: 'Delivered in 3–5 days',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-        <path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1" />
-        <circle cx="7.5" cy="18.5" r="1.5" />
-        <circle cx="17.5" cy="18.5" r="1.5" />
-      </svg>
-    ),
-  },
-];
+    );
+  }
+  return (
+    <svg {...common}>
+      <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
+    </svg>
+  );
+}
+
+function CheckCircle({ className = 'w-6 h-6' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+function Stars({ className = 'w-4 h-4' }) {
+  return (
+    <div className="inline-flex items-center gap-0.5">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <img key={i} src={starIcon} alt="" aria-hidden="true" className={className} />
+      ))}
+    </div>
+  );
+}
+
+// Placeholder visível e consistente pra conteúdo que o cliente ainda vai fornecer.
+function Pending({ label, className = '' }) {
+  return (
+    <div className={`flex items-center justify-center rounded-xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] text-bb-gold-mid/70 text-[0.75rem] italic px-4 py-6 text-center ${className}`}>
+      {label}
+    </div>
+  );
+}
+
+function ActiveCard({ names, benefit }) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-bb-gold-dark/40 bg-[#100d09] p-3">
+      <div className="w-16 h-16 shrink-0 rounded-lg border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/60 text-[0.5rem] tracking-wide">IMG</div>
+      <div className="min-w-0">
+        <p className="text-bb-gold-mid text-[0.75rem] font-semibold">{names}</p>
+        <p className="text-white font-bold text-[0.9375rem] leading-tight">{benefit}</p>
+      </div>
+    </div>
+  );
+}
 
 function Accordion({ label, defaultOpen = false, children }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -310,172 +339,126 @@ function Accordion({ label, defaultOpen = false, children }) {
   );
 }
 
-const STATUS_COLOR = { ok: 'text-bb-green-light', no: 'text-[#e35d5d]', warn: 'text-[#e0b84a]', na: 'text-white/40' };
-
-function StatusIcon({ status }) {
-  if (status === 'ok') {
-    return (
-      <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M5 12l5 5L20 7" />
-      </svg>
-    );
-  }
-  if (status === 'no') {
-    return (
-      <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M6 6l12 12M18 6 6 18" />
-      </svg>
-    );
-  }
-  if (status === 'warn') {
-    return (
-      <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-        <line x1="12" y1="9" x2="12" y2="13" />
-        <line x1="12" y1="17" x2="12.01" y2="17" />
-      </svg>
-    );
-  }
-  return null;
-}
-
-function CompareCell({ cell }) {
-  const [status, text] = cell;
-  return (
-    <span className={`inline-flex items-start justify-center gap-1.5 text-[0.875rem] leading-snug text-center ${STATUS_COLOR[status]}`}>
-      <StatusIcon status={status} />
-      <span className="whitespace-nowrap">{text}</span>
-    </span>
-  );
-}
-
 function FaqItem({ q, a, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div>
+    <div className="border border-bb-separator rounded-xl overflow-hidden bg-white/[0.02]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-4 bg-black/[0.04] rounded-xl px-5 md:px-6 py-5 text-left cursor-pointer"
+        className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 text-left cursor-pointer"
       >
-        <span className="text-bb-text-dark font-semibold text-[0.9375rem] md:text-[1.0625rem]">{q}</span>
+        <span className="text-white font-semibold text-[0.9375rem] md:text-[1rem]">{q}</span>
         <span className="text-bb-gold-mid text-2xl leading-none shrink-0 w-5 text-center">{open ? '–' : '+'}</span>
       </button>
-      {open && (
-        <p className="text-bb-text-dark/55 text-[0.875rem] md:text-[0.9375rem] leading-relaxed px-5 md:px-6 pt-4 pb-1">{a}</p>
+      {open && <p className="text-white/55 text-[0.875rem] md:text-[0.9375rem] leading-relaxed px-5 md:px-6 pb-5">{a}</p>}
+    </div>
+  );
+}
+
+function BundleSelector({ order, selected, onSelect }) {
+  const cards = order.map((id) => BUNDLES.find((b) => b.id === id));
+  return (
+    <div className="space-y-3">
+      {cards.map((b) => {
+        const active = selected === b.id;
+        return (
+          <button
+            key={b.id}
+            type="button"
+            onClick={() => onSelect(b.id)}
+            className={`relative block w-full text-left rounded-xl border-2 transition-colors cursor-pointer ${
+              active ? 'border-bb-gold-mid bg-[#1c1710]' : 'border-bb-separator bg-[#141414] hover:border-white/30'
+            }`}
+          >
+            {b.badge && (
+              <span
+                className={`block w-full text-center text-[0.6875rem] font-bold uppercase tracking-[0.18em] py-1 rounded-t-[0.6rem] ${
+                  b.badge === 'Best Value' ? 'bg-bb-gold-mid text-bb-text-dark' : 'bg-bb-green-dark text-white'
+                }`}
+              >
+                {b.badge}
+              </span>
+            )}
+            <div className="flex items-center gap-3 p-3">
+              <span className={`shrink-0 w-4 h-4 rounded-full border-2 grid place-items-center ${active ? 'border-bb-gold-mid' : 'border-white/30'}`}>
+                {active && <span className="w-2 h-2 rounded-full bg-bb-gold-mid" />}
+              </span>
+              <img src={b.image} alt={b.pouches} width={64} height={64} loading="lazy" decoding="async" className="w-14 h-14 object-contain shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="text-white font-bold text-[0.9375rem] leading-tight">{b.title}</p>
+                <p className="text-white/55 text-[0.8125rem]">{b.pouches}</p>
+                <ul className="mt-1 space-y-0.5">
+                  {b.perks.map((p) => (
+                    <li key={p} className="flex items-center gap-1.5 text-white/70 text-[0.6875rem]">
+                      <img src={checkGold} alt="" aria-hidden="true" className="w-3 h-3 shrink-0" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="text-bb-green-light font-bold text-[1.125rem] leading-none">
+                  {b.price}
+                  {b.per && <span className="text-white/55 text-[0.75rem] font-medium"> {b.per}</span>}
+                </p>
+                {b.total ? (
+                  <p className="text-[0.75rem] mt-1">
+                    <span className="text-white/40 line-through">{b.regular}</span>{' '}
+                    <span className="text-white font-semibold">{b.total}</span>
+                  </p>
+                ) : (
+                  <p className="text-white/40 text-[0.75rem] line-through mt-1">{b.regular}</p>
+                )}
+                {b.note && <p className="text-bb-gold-mid text-[0.625rem] leading-tight mt-1 max-w-[7rem]">{b.note}</p>}
+              </div>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function AddToCartBlock({ showDelivery = false }) {
+  return (
+    <div>
+      {showDelivery && (
+        <p className="text-white/65 text-[0.8125rem] text-center mb-2">🕐 Order now for delivery by: <span className="text-white font-semibold">MM/DD</span></p>
       )}
-    </div>
-  );
-}
-
-function ReviewStars({ n }) {
-  return (
-    <div className="flex gap-0.5">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <img key={i} src={starIcon} alt="" aria-hidden="true" className={`w-3.5 h-3.5 ${i < n ? '' : 'opacity-20'}`} />
-      ))}
-    </div>
-  );
-}
-
-function CartUpsellPopup({ mode, fallbackUrl, onClose }) {
-  const cfg = CART_POPUP[mode] ?? CART_POPUP.one;
-  return (
-    <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-5 bg-black/75 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-sm bg-[#0f0f0f] rounded-2xl overflow-hidden border border-[#c49b43]"
-        onClick={(e) => e.stopPropagation()}
+      <a
+        href={CHECKOUT_URL}
+        className="flex flex-col items-center justify-center w-full py-3.5 bg-[#008236] hover:brightness-110 text-white rounded-lg transition-all no-underline"
       >
-        <div className="h-[3px] w-full" style={{ background: 'linear-gradient(90deg, transparent, #c49b43, transparent)' }} />
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#c49b43]/10 border border-[#c49b43]/30 flex items-center justify-center text-[#c49b43] hover:bg-[#c49b43]/20 transition-colors cursor-pointer"
-        >
-          <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
-        </button>
-
-        <div className="bg-[#1a1400] border-b border-[#c49b43]/30 px-6 pt-5 pb-4 text-center">
-          <span className="inline-flex items-center gap-1.5 bg-[#c49b43]/10 border border-[#c49b43]/35 text-[#c49b43] text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full mb-2.5">
-            ⚡ Flash Offer
-          </span>
-          <p className="text-2xl font-black text-white tracking-wide mb-1">WAIT! DON&apos;T MISS OUT</p>
-          <p className="text-sm text-white/60">
-            Upgrade to <span className="text-[#c49b43] font-black">2 Kits</span> and pay only{' '}
-            <span className="text-[#c49b43] font-black">{cfg.subtitlePrice}</span>
-          </p>
-        </div>
-
-        <div className="px-6 pt-5 pb-4">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="relative shrink-0">
-              <div className="w-20 h-20 rounded-xl bg-[#c49b43]/[0.07] border border-[#c49b43]/20 overflow-hidden">
-                <img src={kit2} alt="" aria-hidden="true" className="w-full h-full object-contain" />
-              </div>
-              <div className="absolute -top-2 -right-2 bg-[#c49b43] text-[#0f0f0f] text-[8px] font-black w-8 h-8 rounded-full flex flex-col items-center justify-center leading-tight">
-                <span>{cfg.discount[0]}</span>
-                <span>{cfg.discount[1]}</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-[9px] font-bold tracking-widest uppercase text-[#c49b43]/65 mb-1.5">2 Pouches · 60-Day Supply</p>
-              <div className="flex items-end gap-2 mb-1">
-                <span className="text-[38px] font-black text-[#c49b43] leading-none">{cfg.price}</span>
-                <span className="text-white/40 line-through mb-1.5">{cfg.old}</span>
-              </div>
-              <p className="text-white/70 text-sm font-semibold">{cfg.perPouch} per pouch</p>
-            </div>
-          </div>
-
-          <ul className="space-y-2 mb-4">
-            {['Double your results — 2x the support', '60-Day Money Back Guarantee', 'Free Shipping included'].map((b) => (
-              <li key={b} className="flex items-center gap-2.5 text-white/85 text-sm">
-                <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 text-[#c49b43]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
-                {b}
-              </li>
-            ))}
-          </ul>
-          <p className="text-[10px] text-white/25 italic text-center">*For best results, consistent daily use for 60+ days is recommended.</p>
-        </div>
-
-        <div className="px-6 pb-6 space-y-2">
-          <a
-            href={cfg.purchaseLink}
-            className="flex items-center justify-center gap-2 w-full py-4 bg-[#c49b43] hover:bg-[#d4aa52] text-[#0f0f0f] font-black text-sm rounded-xl transition-all hover:-translate-y-0.5 active:scale-[0.98] no-underline"
-          >
-            <CartIcon className="w-4 h-4" />
-            {cfg.cta}
-          </a>
-          <a
-            href={fallbackUrl}
-            className="block w-full py-2 text-white/30 hover:text-white/55 font-medium text-xs text-center underline underline-offset-2 no-underline"
-          >
-            No thanks, I only want 1 kit at full price
-          </a>
-        </div>
-      </div>
+        <span className="flex items-center gap-2.5 text-[1.0625rem] font-extrabold tracking-wide uppercase">
+          <CartIcon className="w-5 h-5" /> Add to Cart
+        </span>
+        <span className="text-white/80 text-[0.6875rem] font-medium mt-0.5">365 Day Money-Back Guarantee</span>
+      </a>
+      <p className="text-white/55 text-[0.8125rem] text-center mt-2.5">🔄 Refills Ship Every 4 Weeks | ✅ Pause or Cancel Anytime</p>
     </div>
+  );
+}
+
+function SectionHeading({ light, children, className = '' }) {
+  return (
+    <FadeUp as="h2" className={`text-[1.875rem] md:text-[2.5rem] font-bold! leading-[1.1] tracking-tight ${light ? 'text-bb-text-dark' : 'text-white'} ${className}`}>
+      {children}
+    </FadeUp>
+  );
+}
+
+function CtaBand() {
+  return (
+    <section className="px-4 py-10 md:py-12 text-center">
+      <a href="#bundles" className="btn-cta btn-cta-lg inline-block">Try Risk-Free Today</a>
+      <p className="text-white/55 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
+    </section>
   );
 }
 
 export default function TestosteroneCoffee() {
-  const [mode, setMode] = useState('sub');
-  const [qty, setQty] = useState(2);
-  const [activeImg, setActiveImg] = useState(0);
-  const [popupOpen, setPopupOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = popupOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [popupOpen]);
+  const [selected, setSelected] = useState(3);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -495,13 +478,11 @@ export default function TestosteroneCoffee() {
     };
   }, []);
 
-  const plan = PLANS[qty];
-  const offer = plan[mode];
-  const checkoutUrl = CHECKOUT[mode][qty];
+  const [activeImg, setActiveImg] = useState(0);
 
   return (
     <div className="min-h-screen w-full bg-bb-dark text-white overflow-x-hidden">
-      {/* Top announcement bar */}
+      {/* Announcement bar */}
       <div
         className="w-full text-center py-2.5 px-4"
         style={{
@@ -509,39 +490,28 @@ export default function TestosteroneCoffee() {
           borderBottom: '1px solid #8A6A1E',
         }}
       >
-        <p className="text-bb-text-dark text-[0.75rem] font-bold tracking-[0.2em] uppercase">
-          ★ Limited Time Offer — 34% Off ★
+        <p className="text-bb-text-dark text-[0.75rem] font-bold tracking-[0.18em] uppercase">
+          SHOP NOW AND GET UP TO ⚡ 58% OFF TODAY ⚡
         </p>
       </div>
 
       {/* Navbar */}
-      <nav className="px-4 border-b border-bb-separator">
-        <div className="max-w-[71.25rem] mx-auto flex items-center justify-between py-3.5">
+      <nav className="px-4 border-b border-bb-separator bg-black/40">
+        <div className="max-w-[71.25rem] mx-auto flex items-center justify-center py-3.5">
           <a href="#/" aria-label="Balls & Brains home">
             <img src={bbSymbol} alt="Balls & Brains" className="h-8 w-auto object-contain" />
           </a>
-          <span className="text-bb-gold/80 text-[0.8125rem] font-medium tracking-[0.3em] uppercase">
-            Testosterone Coffee
-          </span>
-          <button
-            type="button"
-            onClick={() => setPopupOpen(true)}
-            aria-label="Cart"
-            className="flex items-center text-white/80 hover:text-white transition-colors cursor-pointer"
-          >
-            <CartIcon className="w-5 h-5" />
-          </button>
         </div>
       </nav>
 
+      {/* HERO / Buy box */}
       <main className="px-4 py-6 md:py-12">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-start">
-          {/* LEFT — gallery + benefits */}
-          <div className="flex flex-col gap-4">
+        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 md:items-start">
+          {/* Gallery */}
+          <div className="order-1 md:col-start-1 md:row-start-1 flex flex-col gap-4">
             <div className="w-full aspect-square rounded-2xl overflow-hidden bg-black border border-bb-separator">
-              <img src={GALLERY[activeImg]} alt="Balls & Brains Testosterone Coffee" width={400} height={400} fetchpriority="high" decoding="async" className="w-full h-full object-contain" />
+              <img src={GALLERY[activeImg]} alt="Balls & Brains Primal Coffee" width={600} height={600} fetchpriority="high" decoding="async" className="w-full h-full object-contain" />
             </div>
-
             <div className="grid grid-cols-5 gap-2.5">
               {GALLERY.map((img, i) => (
                 <button
@@ -553,178 +523,109 @@ export default function TestosteroneCoffee() {
                   }`}
                   aria-label={`View image ${i + 1}`}
                 >
-                  <img src={img} alt="" width={400} height={400} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+                  <img src={img} alt="" width={140} height={140} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                 </button>
               ))}
             </div>
+          </div>
 
-            <ul className="rounded-2xl border border-bb-separator bg-[#14100c] p-5 space-y-3">
-              {PRODUCT_BENEFITS.map((b) => (
-                <li key={b} className="flex items-center gap-3">
-                  <img src={checkGold} alt="" aria-hidden="true" className="shrink-0 w-5 h-5" />
-                  <span className="text-white/90 text-[0.875rem]">{b}</span>
+          {/* Buy box */}
+          <div className="order-2 md:col-start-2 md:row-start-1 md:row-span-2 min-w-0">
+            <div className="flex items-center gap-2">
+              <Stars />
+              <span className="text-white/60 text-[0.8125rem]">Rated <span className="text-white font-semibold">4.8/5</span> by 62,128 happy customers</span>
+            </div>
+
+            <h1 className="text-[1.625rem] md:text-[2rem] font-bold! leading-tight tracking-tight mt-3 mb-3">
+              Balls&amp;Brains<sup className="text-[0.6em] align-super">®</sup> Primal Coffee
+            </h1>
+
+            <p className="text-white/65 text-[0.9375rem] leading-relaxed mb-4">
+              Roasted arabica coffee with mushrooms, adaptogens, and ancestral nutrients to support testosterone, stress, energy and male performance.
+            </p>
+
+            <ul className="space-y-2 mb-6">
+              {HERO_BENEFITS.map((b) => (
+                <li key={b} className="flex items-center gap-2.5">
+                  <img src={checkGold} alt="" aria-hidden="true" className="w-5 h-5 shrink-0" />
+                  <span className="text-white/90 text-[0.9375rem]">{b}</span>
                 </li>
               ))}
             </ul>
+
+            <p id="bundles" className="text-white font-bold text-[1.0625rem] mb-3 scroll-mt-24">Choose Your Bundle 👇</p>
+            <BundleSelector order={[1, 3, 5]} selected={selected} onSelect={setSelected} />
+
+            <div className="mt-5">
+              <AddToCartBlock showDelivery />
+            </div>
           </div>
 
-          {/* RIGHT — buy box */}
-          <div className="min-w-0">
-            <StarRating />
-
-            <h1 className="text-[1.5rem] md:text-[1.75rem] font-bold! leading-tight tracking-tight my-4">
-              Balls &amp; Brains™ Testosterone&nbsp;Coffee
-            </h1>
-
-            <div className="flex items-center gap-2.5 flex-wrap mb-4">
-              <span className="text-[1.5rem] font-bold text-bb-green-light">
-                {offer.price}
-                {offer.perUnit && <span className="text-white/55 text-[1rem] font-medium"> {offer.perUnit}</span>}
-              </span>
-              {offer.old && <span className="text-white/40 text-[0.9375rem] line-through">{offer.old}</span>}
-              <span className="bg-[#008236] text-white text-[0.6875rem] font-bold px-2.5 py-0.5 rounded uppercase tracking-wide">
-                {offer.save}
-              </span>
-            </div>
-
-            <p className="text-white/65 text-[0.9375rem] leading-relaxed mb-3">
-              Naturally <strong className="text-white font-semibold">optimize testosterone</strong> in weeks, and eliminate brain fog, dead libido, low energy, and dad bod — all with your morning coffee ritual.
-            </p>
-
-            {/* Mode tabs */}
-            <div className="grid grid-cols-2 border-b border-bb-separator mb-4">
-              {[
-                { key: 'sub', label: 'Subscribe & Save' },
-                { key: 'one', label: 'One-Time Purchase' },
-              ].map((t) => (
-                <button
-                  key={t.key}
-                  type="button"
-                  onClick={() => setMode(t.key)}
-                  className={`py-2.5 text-[0.8125rem] font-semibold transition-all ${
-                    mode === t.key
-                      ? 'text-white font-bold shadow-[inset_0_-2px_0_var(--color-bb-gold-mid)]'
-                      : 'text-white/45 hover:text-white/70'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-
-            <p className="text-white/65 text-[0.875rem] mb-5">
-              Bundle &amp; Save:{' '}
-              <strong className="text-white">{mode === 'sub' ? 'Monthly Subscription' : 'One-Time Purchase'}</strong>
-            </p>
-
-            {/* Bundle cards */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              {PLANS.map((p, i) => {
-                const o = p[mode];
-                const active = qty === i;
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setQty(i)}
-                    className={`relative text-center rounded-xl border-2 p-2.5 pt-5 transition-colors ${
-                      active ? 'border-bb-gold-mid bg-[#261F16]' : 'border-bb-separator bg-[#181818] hover:border-white/30'
-                    }`}
-                  >
-                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-bb-gold-mid text-bb-text-dark text-[0.625rem] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                      {o.save}
-                    </span>
-                    <img src={p.image} alt="" className="w-10 h-10 mx-auto object-contain mb-2" />
-                    <p className="text-white text-[0.8125rem] font-bold leading-tight">{p.name}</p>
-                    {o.old && <p className="text-white/35 text-[0.6875rem] line-through">{o.old}</p>}
-                    <p className="text-white text-[0.8125rem] font-bold mt-0.5">
-                      {o.price}
-                      {o.perUnit && <span className="text-white/55 font-normal"> {o.perUnit}</span>}
-                    </p>
-                    {o.totalLabel && <p className="text-white/45 text-[0.625rem] mt-0.5">{o.totalLabel}</p>}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* ADD TO CART */}
-            <a
-              href={checkoutUrl}
-              className="flex items-center justify-center gap-2.5 w-full h-14 bg-[#008236] hover:brightness-110 text-white text-[0.875rem] font-extrabold tracking-widest uppercase rounded-lg transition-all no-underline mb-4"
-            >
-              <CartIcon className="w-4 h-4" />
-              Add to Cart — {offer.cartTotal}
-            </a>
-
-            <div className="flex items-center gap-2 text-white/65 text-[0.875rem] mb-5">
-              <span className="w-2.5 h-2.5 rounded-full bg-bb-green shrink-0" />
-              In stock — 121,847+ Optimized Men
-            </div>
-
-            {/* Trust badges */}
-            <div className="grid grid-cols-3 rounded-xl border border-bb-gold-dark/40 bg-[#14100c] overflow-hidden mb-6">
-              {TRUST.map((t, i) => (
-                <div key={t.title} className={`p-3.5 text-center ${i > 0 ? 'border-l border-bb-separator' : ''}`}>
-                  <span className="block w-6 h-6 mx-auto mb-1.5 text-bb-gold-mid">{t.icon}</span>
-                  <p className="text-white text-[0.6875rem] font-bold leading-tight">{t.title}</p>
-                  <p className="text-white/45 text-[0.625rem] leading-tight mt-0.5">{t.sub}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Bonuses */}
-            <p className="text-white/75 text-[0.875rem] mb-3">
-              <strong className="text-white">Exclusive Offer!</strong> Order today for free bonuses:
-            </p>
-            <div className="grid grid-cols-4 gap-2 mb-6">
-              {BONUSES.map((b) => (
-                <div key={b.name} className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-1.5 overflow-hidden">
-                    <img src={b.img} alt={b.name} width={148} height={147} loading="lazy" decoding="async" className="w-full h-full object-contain" />
-                  </div>
-                  <p className="text-white/70 text-[0.625rem] leading-tight">{b.name}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Accordions */}
+          {/* Accordions + UGC (desce abaixo da galeria no desktop, depois do buy box no mobile) */}
+          <div className="order-3 md:col-start-1 md:row-start-2 flex flex-col gap-6 md:mt-2">
             <div className="space-y-2.5">
-              <Accordion label="Shipping Details" defaultOpen>
-                <p>
-                  Free shipping on orders over $75. Standard delivery 3–5 business days. Express
-                  available at checkout. Ships from our US facility.
-                </p>
+              <Accordion label="Nutrition Facts">
+                <p>Painel completo de informações nutricionais — conteúdo a definir com o cliente.</p>
               </Accordion>
+              <Accordion label="Why you need Balls&Brains® Primal Coffee?" defaultOpen>
+                <p>Rascunho: industrial coffee floods your body with cortisol every morning, and cortisol suppresses testosterone. Primal Coffee reverses that cycle with clinical-dose adaptogens and functional mushrooms in your daily ritual.</p>
+              </Accordion>
+              <Accordion label="Product Details">
+                <p>Rascunho: 12 clinical-dose ingredients on a roasted Arabica base. Net wt. 6.5 oz (184g). One scoop daily.</p>
+              </Accordion>
+              <Accordion label="Benefits">
+                <p>Rascunho: supports healthy testosterone, clean sustained energy, sharper focus and male performance.</p>
+              </Accordion>
+              <Accordion label="Recommended Use">
+                <p>Rascunho: one scoop in 8–12oz of hot water each morning. Stir or froth and enjoy.</p>
+              </Accordion>
+              <Accordion label="Guarantee">
+                <p>Rascunho: 365-day money-back guarantee. Pause or cancel anytime.</p>
+              </Accordion>
+            </div>
 
-              <Accordion label="Ingredients">
-                <p className="mb-3">12 clinical-dose ingredients in every cup, on a base of smooth organic Colombian Arabica:</p>
-                <ul className="space-y-1.5">
-                  {INGREDIENTS.map(([name, dose]) => (
-                    <li key={name} className="flex items-center justify-between gap-4 border-b border-bb-separator/60 pb-1.5">
-                      <span className="text-white/85">{name}</span>
-                      <span className="text-bb-gold-mid font-medium whitespace-nowrap">{dose}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Accordion>
-
-              <Accordion label="Frequently Asked Questions">
-                <div className="space-y-4">
-                  {FAQS.map((f) => (
-                    <div key={f.q}>
-                      <p className="text-white font-semibold mb-1">{f.q}</p>
-                      <p>{f.a}</p>
-                    </div>
-                  ))}
-                </div>
-              </Accordion>
+            <div>
+              <p className="text-white font-bold text-[1.0625rem] mb-3">What Our Customers Are Saying</p>
+              <div className="grid grid-cols-3 gap-3">
+                {['UGC 1', 'UGC 2', 'UGC 3'].map((u) => (
+                  <Pending key={u} label={u} className="aspect-[9/16]" />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Press strip — marquee */}
+      {/* Why Trust Balls & Brains */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="max-w-[60rem] mx-auto">
+          <SectionHeading className="text-center">
+            Why Trust <span className="text-gold-gradient">Balls&amp;Brains</span>
+          </SectionHeading>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-10 md:mt-14">
+            {TRUST_PILLARS.map(([icon, label], i) => (
+              <FadeUp key={label} delay={(i % 4) * 0.06} className="rounded-2xl border border-bb-gold-dark/50 bg-[#100d09] p-5 md:p-6 flex flex-col items-center text-center gap-4">
+                <span className="text-bb-gold-mid"><TrustIcon name={icon} className="w-11 h-11" /></span>
+                <p className="text-white font-semibold text-[0.75rem] md:text-[0.8125rem] uppercase tracking-wide leading-tight">{label}</p>
+              </FadeUp>
+            ))}
+          </div>
+
+          <FadeUp delay={0.1} className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 mt-10 md:mt-12 max-w-[40rem] mx-auto">
+            {TRUST_CHECKS.map((c, i) => (
+              <div key={c} className={`flex items-center gap-3 ${i % 2 === 1 ? 'sm:border-l sm:border-white/15 sm:pl-10' : ''}`}>
+                <span className="text-bb-gold-mid shrink-0"><CheckCircle className="w-6 h-6" /></span>
+                <span className="text-white text-[0.9375rem] md:text-[1.0625rem]">{c}</span>
+              </div>
+            ))}
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* As seen in — press marquee */}
       <div className="bg-white overflow-hidden">
+        <p className="text-center text-bb-text-dark/60 text-[0.6875rem] font-bold tracking-[0.3em] uppercase pt-4">As Seen In</p>
         <div className="flex w-max items-center py-4" style={{ animation: 'marquee 30s linear infinite' }}>
           {[0, 1, 2].map((copy) => (
             <div key={copy} className="flex items-center shrink-0">
@@ -738,476 +639,370 @@ export default function TestosteroneCoffee() {
         </div>
       </div>
 
-      {/* Optimize Testosterone Naturally */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-white">Optimize</span>
-              <br />
-              <span className="text-gold-gradient">Testosterone Naturally</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
-              <p>
-                Modern years of stress, poor sleep, and high-cortisol coffee habits have disrupted your body’s{' '}
-                <strong className="text-white font-semibold">natural hormone production system</strong>. When cortisol stays elevated 24/7, it suppresses the HPG axis (the brain-to-testicles signal) and blocks your body’s ability to produce testosterone.
-              </p>
-              <p>
-                Even worse: the testosterone you DO produce gets converted into estrogen by the aromatase enzyme, leading to{' '}
-                <strong className="text-white font-semibold">belly fat, man boobs, low libido, and brain fog.</strong>
-              </p>
-              <p>
-                Drinking Balls &amp; Brains Testosterone Coffee each morning rebalances the Hormonal Seesaw—lowering cortisol by up to 27.9% while amplifying testosterone production by 15–46%—using the combined power of clinical-dose Tongkat Ali, Ashwagandha, Fadogia, and functional mushrooms.
-              </p>
-              <p>
-                This stops the testosterone-to-estrogen conversion and restores your natural masculine hormone levels, leaving you with{' '}
-                <span className="text-bb-gold font-semibold">sustained energy, sharp focus, lean muscle, and high sex drive.</span> Forever.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 mt-7 rounded-xl border border-bb-separator bg-[#14100c] px-4 py-3.5">
-              <img src={checkGold} alt="" aria-hidden="true" className="shrink-0 w-5 h-5" />
-              <p className="text-white/70 text-[0.875rem]">
-                <span className="text-bb-gold font-bold">89%</span> of users reported{' '}
-                <span className="text-bb-gold">measurable testosterone increases</span> within 8 weeks
-              </p>
-            </div>
-            </FadeUp>
-          </div>
-
-          <FadeUp className="order-first md:order-none">
-            <img src={imgOptimize} alt="Man training in the gym" width={476} height={543} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* LEVEL 1 — Clean Energy Without Cortisol Spike (seção clara) */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 1</p>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-bb-text-dark">Clean Energy Without</span>
-              <br />
-              <span className="text-gold-gradient">Cortisol Spike</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
-              <p>
-                <strong className="text-bb-text-dark font-semibold">The Problem:</strong> Regular coffee contains 200–300mg of caffeine that spikes cortisol by 20–30% within minutes. This cortisol surge directly{' '}
-                <strong className="text-bb-text-dark font-semibold">suppresses your HPG axis</strong>—the system that tells your body to make testosterone.
-              </p>
-              <p>
-                <strong className="text-bb-text-dark font-semibold">The Solution:</strong> Balls &amp; Brains uses just 100mg of caffeine (1/3 of regular coffee) combined with L-Theanine (100mg) and MCT Oil Powder (2000mg).
-              </p>
-              <p>
-                This creates smooth, sustained energy for 6–8 hours with{' '}
-                <span className="text-bb-gold-mid font-semibold">zero cortisol spike</span>. You get alertness and mental clarity without triggering the stress response that destroys testosterone.
-              </p>
-              <p>
-                <strong className="text-bb-text-dark font-semibold">Clinical Backing:</strong> A study in the American Journal of Clinical Nutrition showed this exact combination provides{' '}
-                <span className="text-bb-gold-mid font-semibold">sustained cognitive performance</span> without raising cortisol levels.
-              </p>
-            </div>
-            </FadeUp>
-          </div>
-
-          <FadeUp className="order-first md:order-none">
-            <img src={imgCleanEnergy} alt="Stressed brain versus calm brain with product" width={476} height={543} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* LEVEL 2 — Rebalance The Hormonal Seesaw (escuro, imagem à esquerda) */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <FadeUp>
-            <img src={imgSeesaw} alt="Hormonal seesaw — cortisol versus testosterone" width={476} height={643} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
-
-          <div>
-            <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 2</p>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-gold-gradient">Rebalance</span> <span className="text-white">The Hormonal Seesaw</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
-              <p><strong className="text-white font-semibold">The Problem:</strong> Your hormones exist on a biological seesaw. When cortisol goes up, testosterone MUST come down. Chronic stress and coffee keep cortisol elevated 24/7, crushing testosterone into the dirt.</p>
-              <p><strong className="text-white font-semibold">The Solution:</strong> Balls &amp; Brains Testosterone Coffee attacks both sides of the seesaw simultaneously:</p>
-            </div>
-
-            <p className="text-white font-bold text-[0.9375rem] mt-5 mb-2.5">Cortisol Reduction:</p>
-            <ul className="space-y-2.5">
-              {LEVEL2_CORTISOL.map(([name, desc]) => (
-                <li key={name} className="flex gap-2.5">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                  <span className="text-white/60 text-[0.9375rem] leading-relaxed"><strong className="text-white font-semibold">{name}</strong> — {desc}</span>
-                </li>
-              ))}
-            </ul>
-
-            <p className="text-white font-bold text-[0.9375rem] mt-5 mb-2.5">Testosterone Amplification:</p>
-            <ul className="space-y-2.5">
-              {LEVEL2_TESTO.map(([name, desc]) => (
-                <li key={name} className="flex gap-2.5">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                  <span className="text-white/60 text-[0.9375rem] leading-relaxed"><strong className="text-white font-semibold">{name}</strong> — {desc}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-7 border-l-4 border-bb-gold-mid rounded-r-lg bg-[#14100c] px-5 py-4">
-              <p className="text-bb-gold text-[0.9375rem] leading-relaxed">
-                <strong className="font-bold">The Result:</strong> Cortisol DOWN, Testosterone UP — the seesaw rebalances for the first time in years.
-              </p>
-            </div>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* LEVEL 3 — Block Testosterone-to-Estrogen Conversion (claro, texto à esquerda) */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Level 3</p>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-bb-text-dark">Block </span>
-              <span className="text-gold-gradient">Testosterone-to-Estrogen Conversion</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <div className="space-y-4 text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">
-              <p><strong className="text-bb-text-dark font-semibold">The Problem:</strong> When testosterone is low, an enzyme called <strong className="text-bb-text-dark font-semibold">aromatase</strong> activates and converts your remaining testosterone into estrogen. This causes man boobs, belly fat, mood swings, and further testosterone suppression.</p>
-              <p><strong className="text-bb-text-dark font-semibold">The Solution:</strong> Balls &amp; Brains Testosterone Coffee includes natural aromatase inhibitors:</p>
-            </div>
-
-            <ul className="space-y-2.5 mt-4">
-              {LEVEL3_INHIBITORS.map(([name, desc]) => (
-                <li key={name} className="flex gap-2.5">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                  <span className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed"><strong className="text-bb-text-dark font-semibold">{name}</strong> — {desc}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-7 border-l-4 border-bb-gold-mid rounded-r-lg bg-[#1a140b] px-5 py-4">
-              <p className="text-bb-gold text-[0.9375rem] italic leading-relaxed">
-                The Result: You KEEP the testosterone your body produces instead of watching it convert into the female hormone.
-              </p>
-            </div>
-            </FadeUp>
-          </div>
-
-          <FadeUp className="order-first md:order-none">
-            <img src={imgBlockConversion} alt="Shield blocking testosterone-to-estrogen conversion" width={476} height={527} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* BONUS — Cognitive Enhancement Stack (claro, imagem à esquerda) */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <FadeUp>
-            <img src={imgCognitive} alt="Cognitive enhancement — mushrooms, coffee and neurons" width={476} height={503} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
-
-          <div>
-            <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-3">Bonus</p>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight text-gold-gradient">
-              Cognitive Enhancement Stack
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <p className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed mb-5">
-              While optimizing your hormones, Balls &amp; Brains also enhances brain performance:
-            </p>
-
-            <ul className="space-y-2.5">
-              {BONUS_STACK.map(([name, desc]) => (
-                <li key={name} className="flex gap-2.5">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                  <span className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed"><strong className="text-bb-text-dark font-semibold">{name}</strong> — {desc}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-7 border-l-4 border-bb-gold-mid rounded-r-lg bg-[#1a140b] px-5 py-4">
-              <p className="text-bb-gold text-[0.9375rem] italic leading-relaxed">
-                The Result: Razor-sharp mental clarity, sustained focus, and cognitive performance that lasts all day.
-              </p>
-            </div>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder video — Tired of Reading? (escuro, texto à esquerda) */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-gold-gradient">Tired of Reading?</span> <span className="text-white">Here&apos;s a Message From Our Founder</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-
-            <FadeUp delay={0.1}>
-            <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
-              <p>I&apos;m Dr. Michael Bennett, MD, specialist in Sports Medicine &amp; Men&apos;s Hormonal Health at Mass General Hospital</p>
-              <p>and I&apos;m the founder of <strong className="text-bb-gold font-semibold">Balls &amp; Brains.</strong></p>
-              <p>{'Three years ago, I was staring at my testosterone results: 360 ng/dL. Other doctors said it was "normal for my age." But I felt like absolute shit.'}</p>
-              <p>I spent 18 months researching the connection between cortisol, coffee, and testosterone. What I discovered changed everything.</p>
-              <p>In this video, I&apos;ll explain:</p>
-            </div>
-
-            <ul className="space-y-2 my-4">
-              {FOUNDER_POINTS.map((pt) => (
-                <li key={pt} className="flex items-start gap-2.5">
-                  <img src={starIcon} alt="" aria-hidden="true" className="w-3.5 h-3.5 mt-1 shrink-0" />
-                  <span className="text-white/60 text-[0.9375rem]">{pt}</span>
-                </li>
-              ))}
-            </ul>
-
-            <p className="text-white/60 text-[0.9375rem]">Watch to find out more.</p>
-            </FadeUp>
-          </div>
-
-          {/* Capa do vídeo do founder (vídeo em si pendente). Play personalizado sobre a capa. */}
-          <FadeUp className="relative w-full rounded-2xl overflow-hidden order-first md:order-none">
-            <img src={imgFounderCover} alt="Dr. Michael Bennett — message from our founder" width={476} height={522} loading="lazy" decoding="async" className="w-full h-auto" />
-            <button type="button" aria-label="Play founder video" className="absolute inset-0 flex items-center justify-center group cursor-pointer">
-              <img src={playVideo} alt="" className="w-20 h-20 transition-transform duration-300 group-hover:scale-110" />
-            </button>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Beneficial Against Multiple Health Issues (full-width, 60px das bordas) */}
+      {/* 12 Clinical-Dose Ingredients */}
       <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
-        <div>
-          <FadeUp as="h2" className="text-[1.875rem] md:text-[3rem] font-bold! leading-tight tracking-tight text-center">
-            <span className="text-white">Beneficial Against Multiple </span>
-            <span className="text-gold-gradient">Health Issues</span>
-          </FadeUp>
-          <FadeUp as="p" delay={0.1} className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-12 md:mb-16">
-            With the help of functional medicine doctors and hormone specialists, we developed Balls &amp; Brains to target the most common issues men face from declining testosterone:
+        <div className="max-w-[75rem] mx-auto">
+          <SectionHeading className="text-center">
+            12 <span className="text-gold-gradient">Clinical-Dose Ingredients</span> in 1 Cup
+          </SectionHeading>
+          <FadeUp as="p" delay={0.1} className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[42rem] mx-auto mt-5 mb-10 md:mb-14">
+            Industrial coffee floods your body with cortisol every morning. Cortisol suppresses testosterone. We engineered a coffee that reverses this cycle.
           </FadeUp>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {HEALTH_ISSUES.map(([title, body], i) => (
-              <FadeUp key={title} delay={(i % 3) * 0.08} className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5 rounded-2xl border border-bb-separator bg-[#121212] p-5 md:p-6">
-                <img src={NUMBERS[i]} alt="" aria-hidden="true" className="w-12 h-12 shrink-0" />
-                <h3 className="text-white font-bold! text-[1.0625rem] leading-tight">{title}</h3>
-                <p className="col-span-2 text-bb-gold/80 text-[0.75rem] md:text-[0.875rem] leading-relaxed">{body}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-bb-separator border border-bb-separator rounded-2xl overflow-hidden">
+            {INGREDIENTS.map(([name, dose, claim], i) => (
+              <FadeUp key={name} delay={(i % 3) * 0.06} className="bg-bb-dark p-5">
+                <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                  <h3 className="text-white font-bold! text-[1.0625rem] leading-tight">{name}</h3>
+                  <span className="text-bb-gold-mid font-bold text-[0.875rem] whitespace-nowrap">{dose}</span>
+                </div>
+                <p className="text-white/50 text-[0.8125rem] leading-relaxed">{claim}</p>
               </FadeUp>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 25 Times Cheaper Than Separate Supplements (escuro, texto à esquerda) */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <FadeUp as="h2" className="text-[2rem] md:text-[2.75rem] font-bold! leading-[1.1] tracking-tight">
-              <span className="text-gold-gradient">25 Times Cheaper</span> <span className="text-white">Than Separate Supplements</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-4 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
+      {/* Here's What Happens Inside Your Body */}
+      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <SectionHeading light className="text-center">
+            Here&apos;s What Happens <span className="text-gold-gradient">Inside Your Body</span>
+          </SectionHeading>
+          <FadeUp as="p" delay={0.1} className="text-bb-text-dark/65 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[42rem] mx-auto mt-5 mb-10 md:mb-14">
+            Each ingredient works on its own timeline. Here&apos;s what to expect as they build up in your system.
+          </FadeUp>
 
-            <FadeUp delay={0.1}>
-            <p className="text-white/60 text-[0.9375rem] leading-relaxed">
-              Balls &amp; Brains combines testosterone optimization, cognitive enhancement, stress reduction, and clean energy in one product. Conventionally...
-            </p>
-
-            <ul className="space-y-2.5 my-5">
-              {PRICE_COMPARE.map(([label, val]) => (
-                <li key={label} className="flex gap-2.5">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
-                  <span className="text-[0.9375rem] leading-relaxed">
-                    <strong className="text-white font-semibold">{label}</strong> <span className="text-bb-gold/80">{val}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="border-t border-bb-separator pt-4 mb-5">
-              <p className="text-white font-bold text-[0.9375rem]">Total separate cost: $200–265/month</p>
-            </div>
-
-            <div className="space-y-4 text-white/60 text-[0.9375rem] leading-relaxed">
-              <p>
-                At the supplement-recommended standard of clinical doses, buying these separately would cost about{' '}
-                <strong className="text-white font-semibold">$2,400–3,180 per year</strong>, which is{' '}
-                <span className="text-bb-gold font-semibold">up to 25 times more expensive than Balls &amp; Brains subscription price</span> ($39/month).
-              </p>
-              <p>Plus you&apos;d be choking down 10+ pills every morning instead of enjoying one delicious cup of coffee.</p>
-              <p>{'Our sale ends soon, so click "add to cart" to get your Balls & Brains Testosterone Coffee before inventory runs out.'}</p>
-            </div>
-            </FadeUp>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {TIMELINE.map((col, i) => (
+              <FadeUp key={col.week} delay={i * 0.08} className="rounded-2xl border border-bb-text-dark/10 bg-white p-6">
+                <p className="text-bb-gold-mid text-[0.75rem] font-bold tracking-[0.3em] uppercase mb-1">{col.week}</p>
+                <h3 className="text-bb-text-dark font-bold! text-[1.25rem] leading-tight mb-4">{col.title}</h3>
+                <ul className="space-y-3">
+                  {col.points.map((p) => (
+                    <li key={p} className="flex gap-2.5">
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-bb-gold-mid shrink-0" />
+                      <span className="text-bb-text-dark/70 text-[0.875rem] leading-relaxed">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </FadeUp>
+            ))}
           </div>
 
-          <FadeUp className="order-first md:order-none">
-            <img src={imgCheaper} alt="Balls & Brains coffee preparation" width={476} height={594} loading="lazy" decoding="async" className="w-full h-auto rounded-2xl" />
-          </FadeUp>
+          <div className="mt-12 md:mt-16 text-center">
+            <a href="#bundles" className="btn-cta btn-cta-lg inline-block">Try Risk-Free Today</a>
+            <p className="text-bb-text-dark/60 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
+          </div>
         </div>
       </section>
 
-      {/* Real Results, Real People (claro, stats à direita) */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
-            <FadeUp as="h2" className="text-[2.625rem] md:text-[3.625rem] font-bold! leading-[1.05] tracking-tight">
-              <span className="text-bb-text-dark">Real </span>
-              <span className="text-gold-gradient">Results,</span>
-              <br />
-              <span className="text-bb-text-dark">Real People</span>
-            </FadeUp>
-            <span className="block w-16 h-0.5 mt-5 mb-7 rounded-full" style={{ background: 'linear-gradient(90deg, #CF9947 0%, #7D5D2C 100%)' }} />
-            <FadeUp as="p" delay={0.1} className="text-bb-text-dark/70 text-[0.9375rem] md:text-[1rem] leading-relaxed max-w-[28rem]">
-              We conducted a pilot study where{' '}
-              <span className="text-bb-gold-mid font-medium">287 men aged 35–60 with confirmed low testosterone</span>{' '}
-              (under 450 ng/dL.) used Balls &amp; Brains for 8–12 weeks. Here are the results:
-            </FadeUp>
+      {/* Balls & Brains App */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="max-w-[60rem] mx-auto rounded-3xl border border-bb-gold-dark/40 bg-[#100d09] p-8 md:p-12">
+          <SectionHeading className="text-center">
+            Subscribe today and receive free access to <span className="text-gold-gradient">Balls&amp;Brains® App</span>
+          </SectionHeading>
+          <FadeUp as="p" delay={0.1} className="text-white/60 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[40rem] mx-auto mt-5 mb-10">
+            The Balls&amp;Brains® app brings together everything you need to optimize your protocol — and get results even faster.
+          </FadeUp>
+          <ol className="space-y-4 max-w-[44rem] mx-auto">
+            {APP_STEPS.map((step, i) => (
+              <FadeUp key={i} as="li" delay={i * 0.06} className="flex items-start gap-4">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-bb-gold-mid/15 text-bb-gold-mid font-bold flex items-center justify-center">{i + 1}</span>
+                <span className="text-white/75 text-[0.9375rem] leading-relaxed pt-1">{step}</span>
+              </FadeUp>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Real Stories, Real Results */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <div className="text-center mb-10 md:mb-14">
+            <Stars className="w-5 h-5" />
+            <SectionHeading className="mt-3">
+              Real Stories, <span className="text-gold-gradient">Real Results</span>
+            </SectionHeading>
+            <p className="text-white/60 text-[0.9375rem] md:text-[1.0625rem] mt-4">
+              See what our customers are saying about Balls&amp;Brains® Primal Coffee
+            </p>
           </div>
 
-          <div className="space-y-6">
-            {RESULTS_STATS.map(([icon, text], i) => (
-              <FadeUp key={text} delay={i * 0.08} className="flex items-center gap-4">
-                <img src={icon} alt="" aria-hidden="true" className="w-16 h-16 shrink-0" />
-                <p className="text-bb-text-dark/70 text-[0.9375rem] leading-relaxed">{text}</p>
+          <div className="mb-10">
+            <Pending label="Slideshow c/ UGCs segurando o nosso produto" className="py-16" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {TESTIMONIALS.map((t, i) => (
+              <FadeUp key={i} delay={i * 0.08} className="rounded-2xl border border-bb-text-dark/10 bg-white p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-bb-text-dark font-bold text-[0.875rem]">4.9</span>
+                  <Stars className="w-3.5 h-3.5" />
+                </div>
+                <p className="text-bb-text-dark font-bold! text-[1.0625rem] mb-2">&ldquo;{t.headline}&rdquo;</p>
+                <p className="text-bb-text-dark/65 text-[0.875rem] leading-relaxed mb-5">{t.body}</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-bb-text-dark/10">
+                  <span className="w-10 h-10 rounded-full bg-bb-text-dark/10 grid place-items-center text-bb-text-dark/40 text-[0.625rem]">FOTO</span>
+                  <div>
+                    <p className="text-bb-text-dark font-semibold text-[0.875rem]">{t.name}</p>
+                    <p className="text-bb-text-dark/45 text-[0.75rem]">Verified Customer</p>
+                  </div>
+                </div>
               </FadeUp>
             ))}
           </div>
         </div>
       </section>
 
-      {/* What Makes Balls & Brains Better? (escuro, tabela comparativa full-width) */}
-      <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
-        <div>
-          <FadeUp as="h2" className="text-[1.875rem] md:text-[2.75rem] font-bold! leading-tight tracking-tight text-center mb-10 md:mb-14">
-            <span className="text-white">What Makes </span>
-            <span className="text-gold-gradient">Balls &amp; Brains</span>
-            <span className="text-white"> Better?</span>
+      {/* 4 Reasons Why Men Over 40 Choose Primal Coffee */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <SectionHeading className="text-center">
+            4 Reasons Why Men Over 40 <span className="text-gold-gradient">Choose Primal Coffee</span>
+          </SectionHeading>
+          <FadeUp as="p" delay={0.1} className="text-white/55 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-10 md:mb-14">
+            The only men&apos;s performance coffee built to target stress, hormones, energy, memory and blood flow.
           </FadeUp>
 
-          <div className="overflow-x-auto">
-            <div className="grid grid-cols-[minmax(9rem,1.1fr)_minmax(max-content,0.7fr)_minmax(max-content,1fr)_minmax(max-content,1.05fr)_minmax(max-content,1.05fr)]">
-              {/* Header */}
-              <div />
-              <div className="rounded-t-2xl border-t border-x border-bb-gold-mid bg-bb-gold-mid/[0.06] px-4 pt-6 pb-5 flex flex-col items-center text-center">
-                <img src={bbSymbol} alt="" aria-hidden="true" className="h-7 w-auto mb-2" />
-                <span className="text-white font-bold tracking-wide text-[0.95rem]">BALLS &amp; BRAINS</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {REASONS.map(([title, body], i) => (
+              <FadeUp key={title} delay={(i % 2) * 0.08} className="rounded-2xl border border-bb-gold-dark/40 bg-[#100d09] p-6">
+                <h3 className="text-bb-gold font-bold! text-[1.125rem] leading-tight mb-2">{title}</h3>
+                <p className="text-white/60 text-[0.875rem] leading-relaxed">{body}</p>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Buy 10 Supplements — fundo claro (fotos dos suplementos têm fundo branco) */}
+      <section className="bg-bb-light text-bb-text-dark px-4 md:px-[3.75rem] py-16 md:py-24">
+        <div className="max-w-[75rem] mx-auto">
+          <SectionHeading light className="text-center">
+            Why Buy 10 Supplements When <span className="text-gold-gradient">One Coffee Has It Covered?</span>
+          </SectionHeading>
+          <FadeUp as="p" delay={0.1} className="text-bb-text-dark/65 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed text-center max-w-[44rem] mx-auto mt-5 mb-10">
+            Balls&amp;Brains® Primal Coffee gives you the key active ingredients for male performance in one daily ritual — without the cost of buying them separately.
+          </FadeUp>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {PROBLEMS.map((p) => (
+              <span key={p} className="inline-flex items-center gap-1.5 rounded-full border border-[#e35d5d]/40 bg-[#e35d5d]/10 text-[#c0392b] text-[0.6875rem] font-semibold px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#e35d5d]" /> {p}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {SUPPLEMENTS.map(([name, img, cost]) => (
+              <div key={name} className="rounded-xl border border-bb-text-dark/10 bg-white p-3 text-center flex flex-col items-center">
+                <div className="h-24 flex items-center justify-center mb-2">
+                  <img src={img} alt={name} loading="lazy" decoding="async" className="max-h-24 w-auto object-contain" />
+                </div>
+                <p className="text-bb-text-dark text-[0.8125rem] font-semibold leading-tight">{name}</p>
+                <p className="text-bb-text-dark/40 text-[0.625rem] uppercase tracking-wide mt-1.5">Monthly Cost</p>
+                <p className="text-[#c0392b] font-bold text-[0.9375rem]">{cost}</p>
               </div>
-              <div className="px-4 py-5 flex items-end justify-center text-center"><span className="text-white/80 font-bold text-[0.95rem] whitespace-nowrap">Regular Coffee</span></div>
-              <div className="px-4 py-5 flex items-end justify-center text-center"><span className="text-white/80 font-bold text-[0.95rem] whitespace-nowrap">Other Mushroom Coffee</span></div>
-              <div className="px-4 py-5 flex items-end justify-center text-center"><span className="text-white/80 font-bold text-[0.95rem] whitespace-nowrap">Testosterone Pills</span></div>
-
-              {/* Rows */}
-              {COMPARE_ROWS.map((row, ri) => {
-                const last = ri === COMPARE_ROWS.length - 1;
-                const [label, bb, ...rest] = row;
-                return (
-                  <div key={label} className="contents">
-                    <div className="border-b border-bb-separator py-5 pr-4 flex items-center">
-                      <span className="text-white/55 font-bold uppercase tracking-[0.08em] text-[0.6875rem] leading-tight">{label}</span>
-                    </div>
-                    <div className={`border-x border-bb-gold-mid bg-bb-gold-mid/[0.06] px-4 py-5 flex items-center justify-center ${last ? 'border-b rounded-b-2xl' : ''}`}>
-                      <CompareCell cell={bb} />
-                    </div>
-                    {rest.map((c, ci) => (
-                      <div key={ci} className="border-b border-bb-separator px-4 py-5 flex items-center justify-center">
-                        <CompareCell cell={c} />
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ — Questions Answered (claro) */}
-      <section className="bg-bb-light text-bb-text-dark px-4 py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto">
-          <FadeUp as="p" className="text-center text-bb-gold-mid text-[0.8125rem] font-bold tracking-[0.35em] mb-3">[ F.A.Q ]</FadeUp>
-          <FadeUp as="h2" className="text-center text-[2rem] md:text-[3rem] font-bold! leading-tight tracking-tight mb-10 md:mb-14">Questions Answered</FadeUp>
-          <div className="space-y-3">
-            {FAQ_ALL.map((f, i) => (
-              <FadeUp key={f.q} delay={Math.min(i, 4) * 0.04}>
-                <FaqItem q={f.q} a={f.a} defaultOpen={i === 0} />
-              </FadeUp>
             ))}
           </div>
+
+          <div className="mt-6 rounded-xl bg-[#fbe9e9] border border-[#e35d5d]/30 px-5 py-4 text-center">
+            <p className="text-bb-text-dark font-bold text-[1.0625rem] md:text-[1.25rem]">
+              Total Cost Without Primal Coffee: <span className="text-[#c0392b]">$274.70/month</span>
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Reviews (escuro) */}
-      <section className="px-4 py-16 md:py-24">
+      {/* All The Actives In One Cup — recriada do zero (imagem do produto + 1 imagem por card de ativo) */}
+      <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
         <div className="max-w-[71.25rem] mx-auto">
-          <FadeUp className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-center pb-8 border-b border-bb-separator">
-            <div>
-              <p className="text-[3.5rem] font-black leading-none text-white">4.8</p>
-              <div className="flex gap-1 my-2">{[0, 1, 2, 3, 4].map((i) => <img key={i} src={starIcon} alt="" aria-hidden="true" className="w-5 h-5" />)}</div>
-              <p className="text-white/50 text-sm">Based on 1,847 reviews</p>
-            </div>
-            <div className="space-y-1.5">
-              {REVIEW_DIST.map(([star, count]) => (
-                <div key={star} className="flex items-center gap-2 text-[0.75rem]">
-                  <span className="text-white/70 flex items-center gap-1 w-7 shrink-0">{star}<img src={starIcon} alt="" aria-hidden="true" className="w-2.5 h-2.5" /></span>
-                  <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full bg-bb-gold-mid" style={{ width: `${((count / REVIEW_TOTAL) * 100).toFixed(1)}%` }} />
-                  </div>
-                  <span className="text-white/50 w-10 text-right shrink-0">{count}</span>
-                </div>
+          <SectionHeading className="text-center">
+            All The Actives Your Body Needs <span className="text-gold-gradient">In Just One Cup</span>
+          </SectionHeading>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 md:items-center mt-10 md:mt-14">
+            <div className="flex flex-col gap-4 order-2 md:order-1">
+              {ACTIVES.slice(0, 2).map(([names, benefit]) => (
+                <ActiveCard key={names} names={names} benefit={benefit} />
               ))}
             </div>
-            <div className="text-center md:text-right">
-              <p className="text-[3.25rem] font-black leading-none text-white">96%</p>
-              <p className="text-white/50 text-sm mt-2">would recommend these products</p>
+            <div className="order-1 md:order-2">
+              <Pending label="Imagem do produto (Primal Coffee)" className="aspect-square" />
             </div>
-          </FadeUp>
-
-          <div className="flex items-center justify-between gap-4 py-6 flex-wrap">
-            <button type="button" className="border border-bb-gold-mid/60 text-bb-gold-mid rounded-md px-4 py-2 text-sm font-medium cursor-pointer hover:bg-bb-gold-mid/10 transition-colors">Filters</button>
-            <p className="text-white/50 text-sm">1,092 reviews · Sort: Most Recent</p>
-            <a href="#" className="btn-cta-gold text-[0.875rem]">Write a Review</a>
+            <div className="flex flex-col gap-4 order-3">
+              {ACTIVES.slice(2).map(([names, benefit]) => (
+                <ActiveCard key={names} names={names} benefit={benefit} />
+              ))}
+            </div>
           </div>
 
-          <div>
-            {PDP_REVIEWS.map((r, i) => (
-              <FadeUp key={r.name} delay={Math.min(i, 4) * 0.05} className="grid grid-cols-1 md:grid-cols-[210px_1fr] gap-3 md:gap-8 py-7 border-b border-bb-separator">
+          <div className="mt-10 text-center">
+            <p className="text-white font-bold text-[1.125rem] md:text-[1.5rem]">
+              Total Cost With Primal Coffee: <span className="text-bb-green-light">$29/month</span>
+            </p>
+            <p className="text-white/40 text-[0.75rem] italic mt-3 max-w-[40rem] mx-auto">
+              * The regular price of one pouch is $69. But today, when you buy 3 pouches, 2 are completely free.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <CtaBand />
+
+      {/* Testosterone declines after 40 */}
+      <section className="px-4 md:px-[3.75rem] py-16 md:py-20">
+        <div className="max-w-[71.25rem] mx-auto rounded-3xl overflow-hidden border border-[#3a2c18]">
+          <div className="bg-[#241a0e] px-6 py-6 text-center">
+            <SectionHeading className="!text-[1.5rem] md:!text-[2rem]">
+              Your Testosterone Production Starts to Decline <span className="text-gold-gradient">After 40!</span>
+            </SectionHeading>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-10 items-center">
+            <FadeUp delay={0.1}>
+              <div className="space-y-4 text-white/65 text-[0.9375rem] leading-relaxed">
+                <p>After 40, the <strong className="text-white font-semibold">male body reduces testosterone production by 3%</strong> — year after year.</p>
+                <p>That means that by 50, your body is producing <strong className="text-white font-semibold">30% less testosterone</strong> than it once did.</p>
+                <p>Why is that bad? <strong className="text-white font-semibold">Because testosterone is the main male hormone.</strong></p>
+                <p>It controls your emotional, sexual, metabolic, cardiovascular, and even brain health.</p>
+                <p>In practice, taking that away from you is like taking the fuel out of a car.</p>
+              </div>
+            </FadeUp>
+            <Pending label="Inserir gráfico (declínio de testosterona após os 40)" className="min-h-[16rem] h-full" />
+          </div>
+        </div>
+      </section>
+
+      {/* Most male problems caused by low T */}
+      <section className="px-4 md:px-[3.75rem] pb-16 md:pb-24">
+        <div className="max-w-[71.25rem] mx-auto rounded-3xl overflow-hidden border border-[#3a2c18]">
+          <div className="bg-[#241a0e] px-6 py-6 text-center">
+            <p className="text-white/70 text-[0.9375rem] mb-2">Now here&apos;s what almost nobody knows… 👇</p>
+            <SectionHeading className="!text-[1.375rem] md:!text-[1.875rem]">
+              Most Male Problems After 40 Are <span className="text-gold-gradient">Directly Caused by Low Testosterone</span>
+            </SectionHeading>
+          </div>
+          <div className="divide-y divide-[#2d2d2d]">
+            {SYMPTOM_GROUPS.map((symptoms, i) => (
+              <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 md:p-8 items-center">
                 <div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-9 h-9 rounded-full bg-bb-gold-mid/15 text-bb-gold-mid text-[0.6875rem] font-bold flex items-center justify-center shrink-0">{r.initials}</span>
-                    <span className="text-white font-semibold text-sm">{r.name}</span>
-                  </div>
-                  <p className="text-white/35 text-[0.625rem] uppercase tracking-[0.18em] mt-3 mb-1.5">Reviewing</p>
-                  <div className="flex items-center gap-2">
-                    <img src={kit1} alt="" aria-hidden="true" className="w-8 h-8 rounded object-contain bg-black/40 shrink-0" />
-                    <span className="text-white/60 text-xs leading-tight">Balls &amp; Brains™<br />Testosterone Coffee</span>
-                  </div>
-                  <p className="text-bb-green-light text-xs mt-2.5">✓ I recommend this product</p>
-                </div>
-                <div>
-                  <ReviewStars n={r.stars} />
-                  <p className="text-white font-bold text-[1.0625rem] mt-2 mb-2">{r.title}</p>
-                  <p className="text-white/60 text-[0.875rem] leading-relaxed whitespace-pre-line">{r.body}</p>
-                  <p className="text-bb-gold-mid font-bold text-sm mt-2 cursor-pointer">Read More</p>
-                  <p className="text-white/35 text-xs mt-3 flex items-center gap-3">
-                    Was this helpful? <span>👍 {r.helpful}</span> <span>👎 0</span>
+                  <ul className="space-y-2 mb-3">
+                    {symptoms.map((s) => (
+                      <li key={s} className="flex items-start gap-2.5 text-white/75 text-[0.9375rem]">
+                        <span className="text-bb-gold-mid mt-0.5 shrink-0">➜</span>
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="flex items-center gap-2 text-white font-bold text-[0.9375rem]">
+                    <span className="text-bb-green-light">✓</span> Low Testosterone
                   </p>
                 </div>
+                <Pending label="Estudo científico" className="min-h-[8rem] h-full" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2 Options */}
+      <section className="px-4 md:px-[3.75rem] pb-16 md:pb-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <div className="bg-black border border-bb-separator rounded-t-2xl px-6 py-5 text-center">
+            <SectionHeading className="!text-[1.5rem] md:!text-[2rem]">There Are Only 2 Options to Fix This 👇</SectionHeading>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="border-x border-b border-bb-separator">
+              <div className="bg-[#7a1f1f] px-6 py-4 text-center">
+                <p className="text-white/80 text-[0.8125rem] font-semibold">Option #1:</p>
+                <p className="text-white font-bold text-[1.125rem]">TRT Injections 💉</p>
+              </div>
+              <div className="p-6">
+                <p className="text-[#e98a8a] font-bold text-[0.875rem] uppercase tracking-wide mb-3">Desvantagens</p>
+                <Pending label="Lista de desvantagens — preencher" className="min-h-[8rem]" />
+              </div>
+            </div>
+            <div className="border-x border-b border-bb-separator md:border-l-0">
+              <div className="bg-bb-green-dark px-6 py-4 text-center">
+                <p className="text-white/80 text-[0.8125rem] font-semibold">Option #2:</p>
+                <p className="text-white font-bold text-[1.125rem]">Balls&amp;Brains® Primal Coffee ☕</p>
+              </div>
+              <div className="p-6">
+                <p className="text-bb-green-light font-bold text-[0.875rem] uppercase tracking-wide mb-3">Vantagens</p>
+                <Pending label="Lista de vantagens — preencher" className="min-h-[8rem]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* #1 Expert-Recommended */}
+      <section className="px-4 md:px-[3.75rem] pb-16 md:pb-24">
+        <div className="max-w-[71.25rem] mx-auto">
+          <div className="bg-black border border-bb-separator rounded-t-2xl px-6 py-6 text-center">
+            <SectionHeading className="!text-[1.5rem] md:!text-[2rem]">
+              Balls&amp;Brains® Primal Coffee <span className="text-gold-gradient">Is The #1 Expert-Recommended Option</span>
+            </SectionHeading>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-x border-b border-bb-separator">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className={`p-6 ${i > 0 ? 'border-t md:border-t-0 md:border-l border-bb-separator' : ''}`}>
+                <Pending label="[ Especialista c/ Produto ]" className="aspect-[4/3] mb-4" />
+                <p className="text-white font-bold text-[0.9375rem]">Nome do Especialista</p>
+                <p className="text-bb-gold-mid text-[0.8125rem] mb-3">Especialidade</p>
+                <p className="text-white/55 text-[0.875rem] italic">&ldquo;Escrever aqui&rdquo;</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CtaBand />
+
+      {/* 365-Day Risk-Free Trial */}
+      <section className="px-4 pb-16 md:pb-24">
+        <div className="max-w-[44rem] mx-auto rounded-3xl border border-bb-gold-dark/40 bg-[#100d09] p-8 md:p-12 text-center">
+          <FadeUp>
+            <img src={guarantee365} alt="365 Day Money-Back Guarantee" width={140} height={140} loading="lazy" decoding="async" className="w-28 h-28 mx-auto mb-5 object-contain" />
+          </FadeUp>
+          <SectionHeading className="!text-[1.75rem] md:!text-[2.25rem]">
+            365-Day <span className="text-gold-gradient">Risk-Free Trial</span>
+          </SectionHeading>
+          <p className="text-white/60 text-[0.9375rem] md:text-[1.0625rem] leading-relaxed mt-4 max-w-[34rem] mx-auto">
+            If you&apos;re not completely satisfied in your first 30 days, simply return your order for a full refund — no questions asked.
+          </p>
+        </div>
+      </section>
+
+      {/* Today Only — bundle selector #2 */}
+      <section className="px-4 pb-16 md:pb-24">
+        <div className="max-w-[34rem] mx-auto">
+          <div className="text-center mb-6">
+            <p className="text-bb-gold-mid text-[0.8125rem] font-bold tracking-[0.2em] uppercase">Today Only (MM/DD)</p>
+            <SectionHeading className="!text-[1.5rem] md:!text-[2rem] mt-2">
+              Buy 3 Pouches, <span className="text-gold-gradient">Get 2 Free</span>
+            </SectionHeading>
+            <p className="text-white font-bold text-[1.0625rem] mt-5">Choose Your Bundle 👇</p>
+          </div>
+          <BundleSelector order={[5, 3, 1]} selected={selected} onSelect={setSelected} />
+          <div className="mt-5">
+            <AddToCartBlock />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="px-4 py-16 md:py-24 border-t border-bb-separator">
+        <div className="max-w-[48rem] mx-auto">
+          <SectionHeading className="text-center mb-10 md:mb-14">
+            Frequently Asked <span className="text-gold-gradient">Questions</span>
+          </SectionHeading>
+          <div className="space-y-3">
+            {FAQS.map(([q, a], i) => (
+              <FadeUp key={q} delay={Math.min(i, 4) * 0.04}>
+                <FaqItem q={`${i + 1}) ${q}`} a={a} defaultOpen={i === 0} />
               </FadeUp>
             ))}
           </div>
@@ -1228,10 +1023,6 @@ export default function TestosteroneCoffee() {
           </p>
         </div>
       </footer>
-
-      {popupOpen && (
-        <CartUpsellPopup mode={mode} fallbackUrl={CHECKOUT.one[0]} onClose={() => setPopupOpen(false)} />
-      )}
     </div>
   );
 }
