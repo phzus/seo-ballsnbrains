@@ -148,6 +148,19 @@
   to   { transform: translateX(-33.333%); }
 }
 
+/* Marquee vertical — colunas de depoimentos com scroll contínuo (lista renderizada 2x → -50%). */
+@keyframes marqueeY {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+.marquee-y:hover { animation-play-state: paused; }
+
+/* Fade suave no topo/base das colunas de depoimentos. */
+.fade-y-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+}
+
 /* Swiper marquee — força timing linear pra loop contínuo sem ease in/out */
 .benefits-marquee .swiper-wrapper,
 .social-marquee .swiper-wrapper {

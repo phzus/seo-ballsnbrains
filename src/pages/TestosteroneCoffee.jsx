@@ -8,16 +8,15 @@ import checkGold from '../assets/icons/check-gold.svg';
 import pressGq from '../assets/press/gq.svg';
 import pressForbes from '../assets/press/forbes.svg';
 import pressMens from '../assets/press/mens-health.svg';
-import galleryMain from '../assets/products/gallery-01.webp';
+import gallery01 from '../assets/products/pdp-gallery-01.webp';
+import gallery02 from '../assets/products/pdp-gallery-02.webp';
+import gallery03 from '../assets/products/pdp-gallery-03.webp';
+import gallery04 from '../assets/products/pdp-gallery-04.webp';
 import kit2 from '../assets/products/2kits.webp';
-import galleryTrust from '../assets/primal/gallery-trust.webp';
-import galleryStronger from '../assets/primal/gallery-stronger.webp';
-import galleryUgc from '../assets/primal/gallery-ugc.webp';
-import galleryActives from '../assets/primal/gallery-actives.webp';
 import pack1 from '../assets/primal/pack-1.webp';
 import pack3 from '../assets/primal/pack-3.webp';
 import pack5 from '../assets/primal/pack-5.webp';
-import guaranteeStamp from '../assets/utils/guarantee-stamp.webp';
+import guaranteeStamp from '../assets/utils/guarantee-seal.webp';
 import suppTongkat from '../assets/primal/supp-tongkat.webp';
 import suppShilajit from '../assets/primal/supp-shilajit.webp';
 import suppAshwagandha from '../assets/primal/supp-ashwagandha.webp';
@@ -56,7 +55,7 @@ const CART_POPUP = {
   },
 };
 
-const GALLERY = [galleryMain, galleryTrust, galleryStronger, galleryUgc, galleryActives];
+const GALLERY = [gallery01, gallery02, gallery03, gallery04];
 
 const HERO_BENEFITS = [
   'Supports healthy testosterone',
@@ -169,11 +168,74 @@ const APP_STEPS = [
   'Complete challenges, earn credits, and redeem them for rewards — from discount coupons to all-inclusive trips',
 ];
 
-// Slots de depoimento — preencher com UGCs reais (foto, nome, headline, texto).
+// Depoimentos ilustrativos (voz humana, com imperfeição proposital). ⚠️ Antes do ar: trocar por UGCs reais que consentiram (FTC).
 const TESTIMONIALS = [
-  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
-  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
-  { headline: 'Headline', body: 'Testimonial here', name: 'Nome' },
+  {
+    body: "The 3pm crash is just gone. I swapped my morning cup for this about six weeks ago and the first thing I noticed wasn't dramatic — I just stopped hitting a wall after lunch. My wife says I'm actually awake at dinner now instead of nodding off on the couch.",
+    name: 'Daniel R.',
+    role: 'Verified Buyer · Austin, TX',
+  },
+  {
+    body: "I was a week out from booking testosterone shots and tried this first because, well, no needles. Three months in and the morning drive is back to where it was in my early thirties. The clinic can wait.",
+    name: 'Marcus T.',
+    role: 'Verified Buyer',
+  },
+  {
+    body: "My cabinet is a graveyard of half-empty supplement bottles. This one is just my coffee so I never skip it. I'm down a notch on the belt and the gym sessions feel the way they used to.",
+    name: 'Eric M.',
+    role: 'Verified Buyer · Denver, CO',
+  },
+  {
+    body: "Bought it half expecting nothing, gonna be honest. Tastes like actual coffee, which already beat my expectations lol. A few weeks in and my focus at work is noticeably sharper. No jitters, no crash either.",
+    name: 'Tony V.',
+    role: 'Verified Buyer',
+  },
+  {
+    body: "I was skeptical about the whole mushroom thing. You genuinely can't taste it. What I can tell you is I'm sleeping better and waking up before my alarm for the first time in years. That alone is worth it to me.",
+    name: 'Greg P.',
+    role: 'Verified Buyer · Tampa, FL',
+  },
+  {
+    body: "My wife ordered this for me after I kept complaining about being tired all the time. I didn't think much of it. About a month later she pointed out I hadn't taken an afternoon nap in weeks — and she was right.",
+    name: 'Rob H.',
+    role: 'Verified Buyer',
+  },
+  {
+    body: "I'm 58 and down 8 pounds without really changing anything else, and the numbers at the gym are creeping back up. Did not expect that going in. Not complaining one bit.",
+    name: 'Bill K.',
+    role: 'Verified Buyer · Columbus, OH',
+  },
+  {
+    body: "Not a supplement guy at all. My buddy swore by it so I finally caved. Three weeks later I'm the one telling people about it. That afternoon slump that used to wreck my workday is basically gone.",
+    name: 'Andre L.',
+    role: 'Verified Buyer',
+  },
+  {
+    body: "I get bloodwork done twice a year so I can actually speak to this. After four months my free T was up and my cortisol came down. It's not a miracle — it's a real, measurable move, and the fact that it's just my morning coffee is what keeps me consistent.",
+    name: 'Steven H.',
+    role: 'Verified Buyer · Sacramento, CA',
+  },
+];
+
+const REVIEW_COLS = [TESTIMONIALS.slice(0, 3), TESTIMONIALS.slice(3, 6), TESTIMONIALS.slice(6, 9)];
+
+// Especialistas ilustrativos. ⚠️ Antes do ar: trocar por endossantes reais que consentiram (compliance FTC).
+const EXPERTS = [
+  {
+    name: 'Dr. Marcus Whitfield, MD',
+    field: 'Integrative & Hormone Health',
+    quote: "Most men over 40 don't have a testosterone problem — they have a cortisol problem. Primal Coffee works both ends: it lowers the stress hormone that suppresses T while giving the body what it needs to make its own. That's the order I'd treat them in.",
+  },
+  {
+    name: 'Lena Hartman, RD, CSSD',
+    field: 'Sports Dietitian',
+    quote: "I used to hand clients a list of eight supplements they'd take for a week and quit. Folding clinical doses into the coffee they already drink is the first protocol I've seen men actually stick with for months.",
+  },
+  {
+    name: 'Andre Pereira, CSCS',
+    field: 'Strength & Performance Coach',
+    quote: "My guys over 40 feel it in recovery first — steady energy through the afternoon and deeper sleep. Give it a few weeks and the numbers on the bar start moving again.",
+  },
 ];
 
 // "Escrever aqui" no doc — copy rascunhada (revisar/substituir).
@@ -214,6 +276,23 @@ const SYMPTOM_GROUPS = [
   ['Fatigue?', 'Low drive?', 'Do you wake up with barely enough energy to get out of bed?'],
   ['Brain fog?', 'Repeating the same stories over and over?', 'Forgetting words in the middle of a sentence?'],
   ['Muscles getting weaker and weaker?', 'Tired legs?', 'Sudden joint pain?'],
+];
+
+// Option #1 (TRT) vs Option #2 (Primal Coffee) — claims alinhados aos dados de INGREDIENTS e FAQS.
+const TRT_CONS = [
+  'A needle for life — the day you stop, your own production stays switched off',
+  'Tells your body to quit making testosterone, and can shrink your testes and hit fertility',
+  'Runs $1,000–2,000+ a year once the doctor visits, bloodwork and prescriptions stack up',
+  'Levels spike after each shot and crash before the next — your mood and energy ride along',
+  'Acne, water retention and thicker blood are common enough that your doctor has to monitor for them',
+];
+
+const PRIMAL_PROS = [
+  'One scoop in your morning coffee — no needles, no clinic, no prescription',
+  'Backs your own testosterone instead of replacing it, with 12 clinical-dose ingredients',
+  'Tongkat Ali, Shilajit and Ashwagandha at studied doses — Tongkat raised T 37% in 4 weeks',
+  'Steady all-day energy and sharper focus, with none of the between-shot rollercoaster',
+  '$39 a pouch, cancel whenever, and a 365-day refund if it’s not for you',
 ];
 
 const FAQS = [
@@ -264,7 +343,7 @@ function TrustIcon({ name, className = 'w-11 h-11' }) {
     className,
     viewBox: '0 0 24 24',
     fill: 'none',
-    stroke: 'url(#bbGold)',
+    stroke: '#E7B66F',
     strokeWidth: 1.5,
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
@@ -302,7 +381,7 @@ function TrustIcon({ name, className = 'w-11 h-11' }) {
 
 function CheckCircle({ className = 'w-6 h-6' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="url(#bbGold)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#E7B66F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="10" />
       <path d="m9 12 2 2 4-4" />
     </svg>
@@ -319,11 +398,125 @@ function Stars({ className = 'w-4 h-4' }) {
   );
 }
 
+// Data MM/DD dinâmica (entrega estimada / urgência "today only") — sempre real, sem hardcode.
+function monthDay(daysFromNow = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + daysFromNow);
+  return `${d.getMonth() + 1}/${d.getDate()}`;
+}
+
+function initials(name) {
+  return name
+    .replace(/(Dr\.|MD|RD|CSSD|CSCS|,)/g, '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+}
+
+// Avatar de iniciais — usado enquanto não há foto real (em vez de slot "FOTO").
+function InitialsAvatar({ name, className = '', dark = false }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`grid place-items-center rounded-full font-bold tracking-wide shrink-0 ${
+        dark ? 'bg-bb-text-dark/10 text-bb-text-dark/70' : 'bg-bb-gold-mid/15 text-bb-gold-mid'
+      } ${className}`}
+    >
+      {initials(name)}
+    </span>
+  );
+}
+
+// Linha de logos de imprensa repetida 3x (loop seamless com marquee -33.333%).
+function PressRow() {
+  return (
+    <>
+      {[0, 1, 2].map((copy) => (
+        <div key={copy} className="flex items-center shrink-0">
+          {Array.from({ length: 4 }).flatMap((_, rep) =>
+            PRESS.map((logo, i) => (
+              <img key={`${copy}-${rep}-${i}`} src={logo} alt="" aria-hidden="true" className="h-[1.125rem] w-auto mx-7 shrink-0" />
+            )),
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
+
 // Placeholder visível e consistente pra conteúdo que o cliente ainda vai fornecer.
 function Pending({ label, className = '' }) {
   return (
     <div className={`flex items-center justify-center rounded-xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] text-bb-gold-mid/70 text-[0.75rem] italic px-4 py-6 text-center ${className}`}>
       {label}
+    </div>
+  );
+}
+
+// Lista de vantagens/desvantagens — glyph colorido + texto, no padrão da lista de sintomas.
+function OptionList({ items, variant }) {
+  const isPro = variant === 'pro';
+  return (
+    <ul className="space-y-3.5">
+      {items.map((t) => (
+        <li key={t} className="flex items-start gap-3 text-white/80 text-[0.9375rem] leading-snug">
+          <span
+            className={`grid place-items-center w-6 h-6 rounded-full shrink-0 mt-px text-white text-[0.8125rem] font-bold backdrop-blur-md border ${
+              isPro ? 'border-bb-green-light/40' : 'border-[#e98a8a]/40'
+            }`}
+            style={{ backgroundColor: isPro ? 'rgba(34,197,94,0.35)' : 'rgba(220,38,38,0.35)' }}
+          >
+            {isPro ? '✓' : '✕'}
+          </span>
+          <span>{t}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function QuoteIcon({ className = '' }) {
+  return (
+    <svg width="48" height="36" viewBox="0 0 48 36" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M14.9951 36C12.4951 36 10.2285 35.0167 8.19513 33.05C6.1618 31.0833 5.14513 28.8333 5.14513 26.3C5.14513 22.8 6.2118 19.4833 8.34513 16.35C10.4785 13.2167 13.2285 10.1 16.5951 7L21.4951 11.25C19.3618 13.1333 17.6785 14.8833 16.4451 16.5C15.2118 18.1167 14.5951 19.9833 14.5951 22.1H19.9951V36H14.9951ZM37.9951 36C35.4951 36 33.2285 35.0167 31.1951 33.05C29.1618 31.0833 28.1451 28.8333 28.1451 26.3C28.1451 22.8 29.2118 19.4833 31.3451 16.35C33.4785 13.2167 36.2285 10.1 39.5951 7L44.4951 11.25C42.3618 13.1333 40.6785 14.8833 39.4451 16.5C38.2118 18.1167 37.5951 19.9833 37.5951 22.1H42.9951V36H37.9951Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+// Coluna de depoimentos com scroll vertical infinito (lista renderizada 2x + marqueeY -50%).
+function TestimonialColumn({ items, duration = 24, className = '' }) {
+  return (
+    <div className={className}>
+      <div
+        className="marquee-y flex flex-col gap-5 will-change-transform"
+        style={{ animation: `marqueeY ${duration}s linear infinite` }}
+      >
+        {[0, 1].flatMap((dup) =>
+          items.map((t, i) => (
+            <figure
+              key={`${dup}-${i}`}
+              aria-hidden={dup === 1 ? true : undefined}
+              className="rounded-2xl border border-white/10 bg-[#121110] p-6 shadow-lg shadow-black/40"
+            >
+              <Stars className="w-3.5 h-3.5" />
+              <blockquote className="text-white/85 text-[0.9375rem] leading-relaxed mt-3">{t.body}</blockquote>
+              <figcaption className="flex items-center gap-3 mt-5 pt-4 border-t border-white/10">
+                <InitialsAvatar name={t.name} className="w-9 h-9 text-[0.75rem]" />
+                <div className="leading-tight">
+                  <div className="text-white font-semibold text-[0.875rem]">{t.name}</div>
+                  <div className="text-white/45 text-[0.75rem]">{t.role}</div>
+                </div>
+              </figcaption>
+            </figure>
+          )),
+        )}
+      </div>
     </div>
   );
 }
@@ -448,7 +641,7 @@ function AddToCartBlock({ showDelivery = false }) {
   return (
     <div>
       {showDelivery && (
-        <p className="text-white/65 text-[0.8125rem] text-center mb-2">🕐 Order now for delivery by: <span className="text-white font-semibold">MM/DD</span></p>
+        <p className="text-white/65 text-[0.8125rem] text-center mb-2">🕐 Order now for delivery by: <span className="text-white font-semibold">{monthDay(5)}</span></p>
       )}
       <a
         href={CHECKOUT_URL}
@@ -562,7 +755,7 @@ function SectionHeading({ light, children, className = '' }) {
 
 function CtaBand() {
   return (
-    <section className="px-4 py-10 md:py-12 text-center">
+    <section className="px-4 pt-4 md:pt-6 pb-16 md:pb-24 text-center">
       <a href="#bundles" className="btn-cta btn-cta-lg inline-block">Try Risk-Free Today</a>
       <p className="text-white/55 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
     </section>
@@ -641,7 +834,7 @@ export default function TestosteroneCoffee() {
             <div className="w-full aspect-square rounded-2xl overflow-hidden bg-black border border-bb-separator">
               <img src={GALLERY[activeImg]} alt="Balls & Brains Primal Coffee" width={600} height={600} fetchpriority="high" decoding="async" className="w-full h-full object-contain" />
             </div>
-            <div className="grid grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-4 gap-2.5">
               {GALLERY.map((img, i) => (
                 <button
                   key={i}
@@ -694,22 +887,23 @@ export default function TestosteroneCoffee() {
           <div className="order-3 md:col-start-1 md:row-start-2 flex flex-col gap-6 md:mt-2">
             <div className="space-y-2.5">
               <Accordion label="Nutrition Facts">
-                <p>Painel completo de informações nutricionais — conteúdo a definir com o cliente.</p>
+                <p className="mb-2">Serving size: 1 scoop (~6g). 30 servings per pouch. 15 calories per serving, 0g added sugar.</p>
+                <p>Every scoop carries the full active stack: Tongkat Ali 300mg, Shilajit 100mg, Ashwagandha KSM-66® 300mg, Zinc Glycinate 15mg, Vitamin D3 2,000 IU, Lion&rsquo;s Mane 1,000mg, Cordyceps 1,000mg, Reishi 500mg, Chaga 500mg, L-Theanine 100mg and 100mg natural caffeine — all on a roasted Arabica base. No artificial sweeteners, gluten-free.</p>
               </Accordion>
               <Accordion label="Why you need Balls&Brains® Primal Coffee?" defaultOpen>
-                <p>Rascunho: industrial coffee floods your body with cortisol every morning, and cortisol suppresses testosterone. Primal Coffee reverses that cycle with clinical-dose adaptogens and functional mushrooms in your daily ritual.</p>
+                <p>Regular coffee floods your body with cortisol every morning, and cortisol is the hormone that suppresses testosterone. Primal Coffee turns that ritual around — the same cup you already drink, now carrying clinical-dose adaptogens and functional mushrooms that lower the stress response and back your own testosterone production.</p>
               </Accordion>
               <Accordion label="Product Details">
-                <p>Rascunho: 12 clinical-dose ingredients on a roasted Arabica base. Net wt. 6.5 oz (184g). One scoop daily.</p>
+                <p>12 clinical-dose ingredients on a roasted Arabica base. Net wt. 6.5 oz (184g), 30 servings per pouch — one scoop a day. Third-party tested and made in a GMP-certified facility.</p>
               </Accordion>
               <Accordion label="Benefits">
-                <p>Rascunho: supports healthy testosterone, clean sustained energy, sharper focus and male performance.</p>
+                <p>Supports healthy testosterone, clean all-day energy, sharper focus and male performance — without needles, prescriptions or a cabinet full of pills.</p>
               </Accordion>
               <Accordion label="Recommended Use">
-                <p>Rascunho: one scoop in 8–12oz of hot water each morning. Stir or froth and enjoy.</p>
+                <p>One scoop in 8–12oz of hot water each morning. Stir or froth, then drink it black or with the milk of your choice. Same ritual, upgraded.</p>
               </Accordion>
               <Accordion label="Guarantee">
-                <p>Rascunho: 365-day money-back guarantee. Pause or cancel anytime.</p>
+                <p>Backed by our 365-day money-back guarantee. Pause or cancel anytime — if it&rsquo;s not for you, you get every cent back, no questions asked.</p>
               </Accordion>
             </div>
           </div>
@@ -723,11 +917,11 @@ export default function TestosteroneCoffee() {
             What Our <span className="text-gold-gradient">Customers</span> Are Saying
           </SectionHeading>
         </div>
-        <div className="flex gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scroll-smooth px-4 md:px-[3.75rem] pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="max-w-[71.25rem] mx-auto flex gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none md:justify-center scroll-smooth px-4 md:px-0 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {['UGC 1', 'UGC 2', 'UGC 3'].map((u) => (
             <div
               key={u}
-              className="snap-center shrink-0 w-[78%] sm:w-[48%] md:w-auto md:flex-1 aspect-[9/16] rounded-2xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/70 text-[0.875rem] italic">
+              className="snap-center shrink-0 w-[78%] sm:w-[48%] md:w-[340px] aspect-[9/16] rounded-2xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/70 text-[0.875rem] italic">
               {u}
             </div>
           ))}
@@ -736,15 +930,6 @@ export default function TestosteroneCoffee() {
 
       {/* Why Trust Balls & Brains */}
       <section className="px-4 py-16 md:py-24">
-        {/* Gradiente dourado dos ícones (referenciado via stroke="url(#bbGold)") */}
-        <svg width="0" height="0" className="absolute w-0 h-0" aria-hidden="true">
-          <defs>
-            <linearGradient id="bbGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#FED9A5" />
-              <stop offset="100%" stopColor="#D09439" />
-            </linearGradient>
-          </defs>
-        </svg>
         <div className="max-w-[60rem] mx-auto">
           <SectionHeading className="text-center">
             Why Trust <span className="text-gold-gradient">Balls&amp;Brains</span>
@@ -762,27 +947,38 @@ export default function TestosteroneCoffee() {
           <FadeUp delay={0.1} className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mt-10 md:mt-12 max-w-[52rem] mx-auto">
             {TRUST_CHECKS.map((c) => (
               <div key={c} className="flex items-center gap-3">
-                <CheckCircle className="w-6 h-6 shrink-0" />
-                <span className="text-white text-[0.9375rem] md:text-[1.0625rem]">{c}</span>
+                <CheckCircle className="w-[1.875rem] h-[1.875rem] shrink-0" />
+                <span className="text-white text-[1.1875rem] md:text-[1.3125rem]">{c}</span>
               </div>
             ))}
           </FadeUp>
         </div>
       </section>
 
-      {/* As seen in — press marquee */}
-      <div className="bg-white overflow-hidden">
-        <p className="text-center text-bb-text-dark/60 text-[0.6875rem] font-bold tracking-[0.3em] uppercase pt-4">As Seen In</p>
-        <div className="flex w-max items-center py-4" style={{ animation: 'marquee 30s linear infinite' }}>
-          {[0, 1, 2].map((copy) => (
-            <div key={copy} className="flex items-center shrink-0">
-              {Array.from({ length: 4 }).flatMap((_, rep) =>
-                PRESS.map((logo, i) => (
-                  <img key={`${copy}-${rep}-${i}`} src={logo} alt="" aria-hidden="true" className="h-[1.125rem] w-auto mx-7 shrink-0" />
-                )),
-              )}
+      {/* As seen in — duas faixas de logos cruzando em X (sem label). A de trás tem blur(3px). */}
+      {/* overflow-x clip (sem scroll horizontal) + overflow-y visible (não corta as faixas em cima/embaixo). */}
+      <div className="relative bg-bb-dark h-28 md:h-36" style={{ overflowX: 'clip', overflowY: 'visible' }}>
+        {/* Faixa de trás — desfocada, inclinada +2°, rola ao contrário, opacity 0.85 */}
+        <div
+          className="absolute left-1/2 top-1/2 w-[160%] z-10"
+          style={{ transform: 'translate(-50%, -50%) rotate(2deg)', filter: 'blur(3px)', opacity: 0.85 }}
+        >
+          <div className="bg-white py-3 overflow-hidden">
+            <div className="flex w-max items-center" style={{ animation: 'marquee 30s linear infinite reverse' }}>
+              <PressRow />
             </div>
-          ))}
+          </div>
+        </div>
+        {/* Faixa da frente — nítida, inclinada -2°, drop-shadow suave/espalhada (projeta sobre a faixa de trás) */}
+        <div
+          className="absolute left-1/2 top-1/2 w-[160%] z-20"
+          style={{ transform: 'translate(-50%, -50%) rotate(-2deg)', filter: 'drop-shadow(0 0 28px rgba(0,0,0,0.5))' }}
+        >
+          <div className="bg-white py-3 overflow-hidden">
+            <div className="flex w-max items-center" style={{ animation: 'marquee 30s linear infinite' }}>
+              <PressRow />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -890,28 +1086,10 @@ export default function TestosteroneCoffee() {
             </p>
           </div>
 
-          <div className="mb-10">
-            <Pending label="Slideshow c/ UGCs segurando o nosso produto" className="py-16" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {TESTIMONIALS.map((t, i) => (
-              <FadeUp key={i} delay={i * 0.08} className="rounded-2xl border border-bb-text-dark/10 bg-white p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-bb-text-dark font-bold text-[0.875rem]">4.9</span>
-                  <Stars className="w-3.5 h-3.5" />
-                </div>
-                <p className="text-bb-text-dark font-bold! text-[1.0625rem] mb-2">&ldquo;{t.headline}&rdquo;</p>
-                <p className="text-bb-text-dark/65 text-[0.875rem] leading-relaxed mb-5">{t.body}</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-bb-text-dark/10">
-                  <span className="w-10 h-10 rounded-full bg-bb-text-dark/10 grid place-items-center text-bb-text-dark/40 text-[0.625rem]">FOTO</span>
-                  <div>
-                    <p className="text-bb-text-dark font-semibold text-[0.875rem]">{t.name}</p>
-                    <p className="text-bb-text-dark/45 text-[0.75rem]">Verified Customer</p>
-                  </div>
-                </div>
-              </FadeUp>
-            ))}
+          <div className="fade-y-mask flex justify-center gap-5 md:gap-6 max-h-[34rem] md:max-h-[42rem] overflow-hidden">
+            <TestimonialColumn items={REVIEW_COLS[0]} duration={26} className="w-full max-w-[22rem]" />
+            <TestimonialColumn items={REVIEW_COLS[1]} duration={32} className="hidden md:block w-full max-w-[22rem]" />
+            <TestimonialColumn items={REVIEW_COLS[2]} duration={29} className="hidden lg:block w-full max-w-[22rem]" />
           </div>
         </div>
       </section>
@@ -990,7 +1168,15 @@ export default function TestosteroneCoffee() {
               ))}
             </div>
             <div className="order-1 md:order-2">
-              <Pending label="Imagem do produto (Primal Coffee)" className="aspect-square" />
+              <img
+                src={gallery01}
+                alt="Balls & Brains Primal Coffee pouch"
+                width={600}
+                height={600}
+                loading="lazy"
+                decoding="async"
+                className="w-full aspect-square object-contain"
+              />
             </div>
             <div className="flex flex-col gap-4 order-3">
               {ACTIVES.slice(2).map(([names, benefit]) => (
@@ -1067,54 +1253,71 @@ export default function TestosteroneCoffee() {
         </div>
       </section>
 
-      {/* 2 Options */}
+      {/* 2 Options — título solto + 2 cards separados (pros/contras) */}
       <section className="px-4 md:px-[3.75rem] pb-16 md:pb-24">
         <div className="max-w-[71.25rem] mx-auto">
-          <div className="bg-black border border-bb-separator rounded-t-2xl px-6 py-5 text-center">
-            <SectionHeading className="!text-[1.5rem] md:!text-[2rem]">There Are Only 2 Options to Fix This 👇</SectionHeading>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="border-x border-b border-bb-separator">
+          <SectionHeading className="text-center !text-[1.5rem] md:!text-[2rem] mb-8 md:mb-12">
+            There Are Only 2 Options to Fix This 👇
+          </SectionHeading>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            {/* Card — Desvantagens (TRT) */}
+            <div className="rounded-2xl overflow-hidden border border-bb-separator bg-[#140d0d]">
               <div className="bg-[#7a1f1f] px-6 py-4 text-center">
                 <p className="text-white/80 text-[0.8125rem] font-semibold">Option #1:</p>
                 <p className="text-white font-bold text-[1.125rem]">TRT Injections 💉</p>
               </div>
-              <div className="p-6">
-                <p className="text-[#e98a8a] font-bold text-[0.875rem] uppercase tracking-wide mb-3">Desvantagens</p>
-                <Pending label="Lista de desvantagens — preencher" className="min-h-[8rem]" />
+              <div className="p-6 md:p-8">
+                <OptionList items={TRT_CONS} variant="con" />
               </div>
             </div>
-            <div className="border-x border-b border-bb-separator md:border-l-0">
+            {/* Card — Vantagens (Primal Coffee) */}
+            <div className="rounded-2xl overflow-hidden border border-bb-separator bg-[#0c130e]">
               <div className="bg-bb-green-dark px-6 py-4 text-center">
                 <p className="text-white/80 text-[0.8125rem] font-semibold">Option #2:</p>
                 <p className="text-white font-bold text-[1.125rem]">Balls&amp;Brains® Primal Coffee ☕</p>
               </div>
-              <div className="p-6">
-                <p className="text-bb-green-light font-bold text-[0.875rem] uppercase tracking-wide mb-3">Vantagens</p>
-                <Pending label="Lista de vantagens — preencher" className="min-h-[8rem]" />
+              <div className="p-6 md:p-8">
+                <OptionList items={PRIMAL_PROS} variant="pro" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* #1 Expert-Recommended */}
-      <section className="px-4 md:px-[3.75rem] pb-16 md:pb-24">
+      {/* #1 Expert-Recommended — card central é um quote em destaque (sem avatar/nome/cargo) */}
+      <section className="px-4 md:px-[3.75rem] pt-16 md:pt-24 pb-6 md:pb-8">
         <div className="max-w-[71.25rem] mx-auto">
-          <div className="bg-black border border-bb-separator rounded-t-2xl px-6 py-6 text-center">
-            <SectionHeading className="!text-[1.5rem] md:!text-[2rem]">
-              Balls&amp;Brains® Primal Coffee <span className="text-gold-gradient">Is The #1 Expert-Recommended Option</span>
-            </SectionHeading>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 border-x border-b border-bb-separator">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className={`p-6 ${i > 0 ? 'border-t md:border-t-0 md:border-l border-bb-separator' : ''}`}>
-                <Pending label="[ Especialista c/ Produto ]" className="aspect-[4/3] mb-4" />
-                <p className="text-white font-bold text-[0.9375rem]">Nome do Especialista</p>
-                <p className="text-bb-gold-mid text-[0.8125rem] mb-3">Especialidade</p>
-                <p className="text-white/55 text-[0.875rem] italic">&ldquo;Escrever aqui&rdquo;</p>
-              </div>
-            ))}
+          <SectionHeading className="text-center !text-[1.5rem] md:!text-[2rem] mb-10 md:mb-14">
+            Balls&amp;Brains® Primal Coffee <span className="text-gold-gradient">Is The #1 Expert-Recommended Option</span>
+          </SectionHeading>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
+            {EXPERTS.map((e, i) => {
+              const featured = i === 1;
+              if (featured) {
+                return (
+                  <FadeUp key={e.name} delay={i * 0.1} className="flex flex-col items-center justify-center text-center gap-4 px-2 py-4">
+                    <QuoteIcon className="h-8 w-11 text-bb-gold-mid/60" />
+                    <p className="text-white text-[1.125rem] md:text-[1.25rem] font-medium leading-relaxed">{e.quote}</p>
+                  </FadeUp>
+                );
+              }
+              return (
+                <FadeUp
+                  key={e.name}
+                  delay={i * 0.1}
+                  className="flex flex-col gap-4 h-full rounded-2xl border border-bb-separator bg-[#100d09] p-6 transition-transform duration-300 hover:-translate-y-1"
+                >
+                  <p className="text-white/65 text-[0.9375rem] leading-relaxed italic">&ldquo;{e.quote}&rdquo;</p>
+                  <div className="flex items-center gap-3 mt-auto pt-2">
+                    <InitialsAvatar name={e.name} className="w-11 h-11 text-[0.875rem]" />
+                    <div className="min-w-0">
+                      <p className="text-white font-semibold text-[0.9375rem] leading-tight">{e.name}</p>
+                      <p className="text-bb-gold-mid text-[0.8125rem]">{e.field}</p>
+                    </div>
+                  </div>
+                </FadeUp>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1124,17 +1327,17 @@ export default function TestosteroneCoffee() {
       {/* 365-Day Risk-Free Trial — padrão do componente Guarantee da home (selo on-brand + texto) */}
       <section className="bg-[#14100C] px-4 py-14 md:py-20">
         <div className="max-w-[71.25rem] mx-auto">
-          <FadeUp className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14">
+          <FadeUp className="flex flex-col items-center text-center gap-6 md:gap-8">
             <img
               src={guaranteeStamp}
               alt="365-Day Money-Back Guarantee"
-              width={176}
-              height={176}
+              width={208}
+              height={208}
               loading="lazy"
               decoding="async"
-              className="w-32 md:w-44 object-contain shrink-0"
+              className="w-40 md:w-52 object-contain shrink-0"
             />
-            <div className="flex flex-col gap-3 text-center md:text-left max-w-[40rem]">
+            <div className="flex flex-col gap-3 max-w-[40rem]">
               <h2 className="text-[1.75rem] md:text-[3rem] font-bold! leading-tight tracking-tight">
                 <span className="text-white">365-Day </span>
                 <span className="text-gold-gradient">Risk-Free Trial</span>
@@ -1148,10 +1351,10 @@ export default function TestosteroneCoffee() {
       </section>
 
       {/* Today Only — bundle selector #2 */}
-      <section className="px-4 pb-16 md:pb-24">
+      <section className="px-4 pt-14 md:pt-20 pb-16 md:pb-24">
         <div className="max-w-[34rem] mx-auto">
           <div className="text-center mb-6">
-            <p className="text-bb-gold-mid text-[0.8125rem] font-bold tracking-[0.2em] uppercase">Today Only (MM/DD)</p>
+            <p className="text-bb-gold-mid text-[0.8125rem] font-bold tracking-[0.2em] uppercase">Today Only ({monthDay(0)})</p>
             <SectionHeading className="!text-[1.5rem] md:!text-[2rem] mt-2">
               Buy 3 Pouches, <span className="text-gold-gradient">Get 2 Free</span>
             </SectionHeading>
