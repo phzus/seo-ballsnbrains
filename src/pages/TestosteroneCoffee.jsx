@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import FadeUp from '../components/_shared/FadeUp';
 import bbSymbol from '../assets/utils/bb-symbol.svg';
+import playIcon from '../assets/icons/play-button.svg';
 import footerLogo from '../assets/utils/footer-logo.svg';
 import starIcon from '../assets/icons/Star.svg';
 import checkGold from '../assets/icons/check-gold.svg';
@@ -27,6 +28,24 @@ import suppZinc from '../assets/primal/supp-zinc.webp';
 import suppLtheanine from '../assets/primal/supp-ltheanine.webp';
 import suppCordyceps from '../assets/primal/supp-cordyceps.webp';
 import suppChaga from '../assets/primal/supp-chaga.webp';
+import ugc01 from '../assets/ugc/ugc-01.mp4';
+import ugc02 from '../assets/ugc/ugc-02.mp4';
+import ugc03 from '../assets/ugc/ugc-03.mp4';
+import ugc01Poster from '../assets/ugc/ugc-01-poster.webp';
+import ugc02Poster from '../assets/ugc/ugc-02-poster.webp';
+import ugc03Poster from '../assets/ugc/ugc-03-poster.webp';
+import activesBgDesk from '../assets/sections/actives-bg-desk.webp';
+import activesBgMob from '../assets/sections/actives-bg-mob.webp';
+import declineChart from '../assets/sections/decline-chart.webp';
+import symptomSex from '../assets/sections/symptom-sex.webp';
+import symptomEnergy from '../assets/sections/symptom-energy.webp';
+import symptomBrain from '../assets/sections/symptom-brain.webp';
+import symptomMuscle from '../assets/sections/symptom-muscle.webp';
+import activeTProduction from '../assets/ingredients/active-t-production.webp';
+import activeBloodFlow from '../assets/ingredients/active-blood-flow.webp';
+import activeCortisol from '../assets/ingredients/active-cortisol.webp';
+import activeEnergy from '../assets/ingredients/active-energy.webp';
+import activeCognition from '../assets/ingredients/active-cognition.webp';
 
 // ⚠️ PENDENTE: links de checkout por bundle (1/3/5 pouches, subscription) ainda não fornecidos.
 // Todos apontam pro CTA canônico do projeto até o cliente passar os links corretos. Ver docs/OPEN-QUESTIONS.
@@ -56,6 +75,14 @@ const CART_POPUP = {
 };
 
 const GALLERY = [gallery01, gallery02, gallery03, gallery04];
+
+// Depoimentos em vídeo (UGC real do cliente). Cada vídeo tem sua capa própria (poster).
+// Sem nomes inventados — são pessoas reais; usamos só o selo "Verified Buyer" (FTC).
+const UGC = [
+  { src: ugc01, poster: ugc01Poster },
+  { src: ugc02, poster: ugc02Poster },
+  { src: ugc03, poster: ugc03Poster },
+];
 
 const HERO_BENEFITS = [
   'Supports healthy testosterone',
@@ -261,21 +288,24 @@ const SUPPLEMENTS = [
 
 const PROBLEMS = ['Low Testosterone', 'Poor Blood Flow', 'High Cortisol', 'Low Energy', 'Cognitive Decline & Brain Fog'];
 
-// Pares de ativos + o que fazem (recriação do antigo image14 composto). Imagens serão geradas pelo Pedro.
+// Pares de ativos + benefício + foto (dupla). 5 cards = os 5 PROBLEMS do doc (Pedro confirmou: são 5 benefícios).
+// Ordem = sequência dos PROBLEMS. (Há 6 fotos dos pares, mas o doc só define 5 benefícios; a 04 não é usada.)
 const ACTIVES = [
-  ['Tongkat Ali · Vitamin D3', 'Increase Your T-Production Naturally'],
-  ['Shilajit · Zinc Glycinate', 'Improve Your Blood Flow'],
-  ['Ashwagandha · L-Theanine', 'Reduce Your Cortisol Levels'],
-  ['Caffeine · Cordyceps', 'Improve Your Energy Levels'],
-  ["Lion's Mane · Chaga", 'Improve Your Cognition Function'],
+  ['Tongkat Ali · Vitamin D3', 'Increase Your T-Production Naturally', activeTProduction],
+  ['Shilajit · Zinc Glycinate', 'Improve Your Blood Flow', activeBloodFlow],
+  ['Ashwagandha · L-Theanine', 'Reduce Your Cortisol Levels', activeCortisol],
+  ['Caffeine · Cordyceps', 'Improve Your Energy Levels', activeEnergy],
+  ["Lion's Mane · Chaga", 'Improve Your Cognition Function', activeCognition],
 ];
 
+// Infográficos mapeados por CONTEÚDO (os nomes dos arquivos vieram trocados:
+// "Fatigue.png" = cérebro, "Struggling to lose weight.png" = energia). Grupo do peso ainda sem imagem.
 const SYMPTOM_GROUPS = [
-  ['No morning wood?', 'Low sex drive?', 'Weak erections?'],
-  ['Struggling to lose weight?', 'High blood sugar?', 'Growing man boobs?', "Feel like your belly is getting bigger every single day, even when you’re barely eating?"],
-  ['Fatigue?', 'Low drive?', 'Do you wake up with barely enough energy to get out of bed?'],
-  ['Brain fog?', 'Repeating the same stories over and over?', 'Forgetting words in the middle of a sentence?'],
-  ['Muscles getting weaker and weaker?', 'Tired legs?', 'Sudden joint pain?'],
+  { symptoms: ['No morning wood?', 'Low sex drive?', 'Weak erections?'], image: symptomSex },
+  { symptoms: ['Struggling to lose weight?', 'High blood sugar?', 'Growing man boobs?', "Feel like your belly is getting bigger every single day, even when you’re barely eating?"], image: null, heading: 'Low Testosterone Packs On Belly Fat & Stalls Your Metabolism' },
+  { symptoms: ['Fatigue?', 'Low drive?', 'Do you wake up with barely enough energy to get out of bed?'], image: symptomEnergy },
+  { symptoms: ['Brain fog?', 'Repeating the same stories over and over?', 'Forgetting words in the middle of a sentence?'], image: symptomBrain },
+  { symptoms: ['Muscles getting weaker and weaker?', 'Tired legs?', 'Sudden joint pain?'], image: symptomMuscle },
 ];
 
 // Option #1 (TRT) vs Option #2 (Primal Coffee) — claims alinhados aos dados de INGREDIENTS e FAQS.
@@ -447,15 +477,6 @@ function PressRow() {
   );
 }
 
-// Placeholder visível e consistente pra conteúdo que o cliente ainda vai fornecer.
-function Pending({ label, className = '' }) {
-  return (
-    <div className={`flex items-center justify-center rounded-xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] text-bb-gold-mid/70 text-[0.75rem] italic px-4 py-6 text-center ${className}`}>
-      {label}
-    </div>
-  );
-}
-
 // Lista de vantagens/desvantagens — glyph colorido + texto, no padrão da lista de sintomas.
 function OptionList({ items, variant }) {
   const isPro = variant === 'pro';
@@ -521,13 +542,76 @@ function TestimonialColumn({ items, duration = 24, className = '' }) {
   );
 }
 
-function ActiveCard({ names, benefit }) {
+// Card de depoimento em vídeo (9:16) — poster (capa própria) + botão de play dourado, igual à home.
+// iOS Safari: usa o truque de mostrar o primeiro frame caso o poster falhe.
+function UgcVideo({ src, poster }) {
+  const ref = useRef(null);
+  const [playing, setPlaying] = useState(false);
+
+  function togglePlay() {
+    const v = ref.current;
+    if (!v) return;
+    if (playing) {
+      v.pause();
+      setPlaying(false);
+    } else {
+      v.play();
+      setPlaying(true);
+    }
+  }
+
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-bb-gold-dark/40 bg-[#100d09] p-3">
-      <div className="w-16 h-16 shrink-0 rounded-lg border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/60 text-[0.5rem] tracking-wide">IMG</div>
+    <button
+      type="button"
+      onClick={togglePlay}
+      aria-label={playing ? 'Pause testimonial' : 'Play testimonial'}
+      className="group snap-center shrink-0 w-[78%] sm:w-[48%] md:w-[20.625rem] relative aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-black cursor-pointer"
+    >
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        className="w-full h-full object-cover"
+        playsInline
+        webkit-playsinline="true"
+        preload="none"
+        onEnded={() => setPlaying(false)}
+      />
+      {!playing && (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-black/25" />
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-black/55 backdrop-blur-sm border border-white/15 px-2.5 py-1 text-[0.6875rem] font-semibold text-white">
+            <img src={checkGold} alt="" aria-hidden="true" className="w-3.5 h-3.5" /> Verified Buyer
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-bb-gold flex items-center justify-center shadow-lg shadow-black/40 transition-transform duration-300 group-hover:scale-110">
+              <img src={playIcon} alt="" aria-hidden="true" className="w-7 h-7 md:w-8 md:h-8 ml-1" />
+            </span>
+          </span>
+          <span className="absolute left-4 bottom-4">
+            <Stars className="w-4 h-4" />
+          </span>
+        </>
+      )}
+    </button>
+  );
+}
+
+function ActiveCard({ names, benefit, image }) {
+  return (
+    <div className="flex items-center gap-3 lg:gap-4 rounded-2xl border border-bb-gold-dark/40 bg-[#100d09]/85 backdrop-blur-md p-2.5 shadow-lg shadow-black/30">
+      <img
+        src={image}
+        alt={names}
+        width={128}
+        height={128}
+        loading="lazy"
+        decoding="async"
+        className="w-16 h-16 lg:w-20 lg:h-20 shrink-0 rounded-xl object-cover"
+      />
       <div className="min-w-0">
-        <p className="text-bb-gold-mid text-[0.75rem] font-semibold">{names}</p>
-        <p className="text-white font-bold text-[0.9375rem] leading-tight">{benefit}</p>
+        <p className="text-bb-gold-mid text-[0.6875rem] lg:text-[0.8125rem] font-semibold leading-tight">{names}</p>
+        <p className="text-white font-bold text-[0.9375rem] lg:text-[1.0625rem] leading-[1.15] mt-0.5">{benefit}</p>
       </div>
     </div>
   );
@@ -757,7 +841,7 @@ function CtaBand() {
   return (
     <section className="px-4 pt-4 md:pt-6 pb-16 md:pb-24 text-center">
       <a href="#bundles" className="btn-cta btn-cta-lg inline-block">Try Risk-Free Today</a>
-      <p className="text-white/55 text-[0.8125rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
+      <p className="text-white/55 text-[0.9375rem] mt-4">🛡️ 365 Day Money-Back Guarantee | ✅ Pause or Cancel Anytime</p>
     </section>
   );
 }
@@ -832,7 +916,7 @@ export default function TestosteroneCoffee() {
           {/* Gallery */}
           <div className="order-1 md:col-start-1 md:row-start-1 flex flex-col gap-4">
             <div className="w-full aspect-square rounded-2xl overflow-hidden bg-black border border-bb-separator">
-              <img src={GALLERY[activeImg]} alt="Balls & Brains Primal Coffee" width={600} height={600} fetchpriority="high" decoding="async" className="w-full h-full object-contain" />
+              <img src={GALLERY[activeImg]} alt="Balls & Brains Primal Coffee" width={600} height={600} fetchPriority="high" decoding="async" className="w-full h-full object-contain" />
             </div>
             <div className="grid grid-cols-4 gap-2.5">
               {GALLERY.map((img, i) => (
@@ -918,12 +1002,8 @@ export default function TestosteroneCoffee() {
           </SectionHeading>
         </div>
         <div className="max-w-[71.25rem] mx-auto flex gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none md:justify-center scroll-smooth px-4 md:px-0 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {['UGC 1', 'UGC 2', 'UGC 3'].map((u) => (
-            <div
-              key={u}
-              className="snap-center shrink-0 w-[78%] sm:w-[48%] md:w-[340px] aspect-[9/16] rounded-2xl border border-dashed border-bb-gold-mid/40 bg-bb-gold-mid/[0.04] grid place-items-center text-bb-gold-mid/70 text-[0.875rem] italic">
-              {u}
-            </div>
+          {UGC.map((u, i) => (
+            <UgcVideo key={i} src={u.src} poster={u.poster} />
           ))}
         </div>
       </section>
@@ -1154,45 +1234,60 @@ export default function TestosteroneCoffee() {
         </div>
       </section>
 
-      {/* All The Actives In One Cup — recriada do zero (imagem do produto + 1 imagem por card de ativo) */}
-      <section className="px-4 md:px-[3.75rem] py-16 md:py-24">
-        <div className="max-w-[71.25rem] mx-auto">
-          <SectionHeading className="text-center">
+      {/* All The Actives In One Cup — imagem do produto como BACKGROUND cover da seção; título + 6 cards (2×3) sobrepostos à direita (mockup do designer) */}
+      <section className="overflow-hidden">
+        {/* Mobile — título acima + imagem cover de fundo (pt abre espaço pro produto) + 6 cards empilhados */}
+        <div className="md:hidden pt-16">
+          <SectionHeading className="text-center px-4 mb-8 !text-[1.5rem]">
             All The Actives Your Body Needs <span className="text-gold-gradient">In Just One Cup</span>
           </SectionHeading>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 md:items-center mt-10 md:mt-14">
-            <div className="flex flex-col gap-4 order-2 md:order-1">
-              {ACTIVES.slice(0, 2).map(([names, benefit]) => (
-                <ActiveCard key={names} names={names} benefit={benefit} />
-              ))}
-            </div>
-            <div className="order-1 md:order-2">
-              <img
-                src={gallery01}
-                alt="Balls & Brains Primal Coffee pouch"
-                width={600}
-                height={600}
-                loading="lazy"
-                decoding="async"
-                className="w-full aspect-square object-contain"
-              />
-            </div>
-            <div className="flex flex-col gap-4 order-3">
-              {ACTIVES.slice(2).map(([names, benefit]) => (
-                <ActiveCard key={names} names={names} benefit={benefit} />
+          <div className="relative">
+            <img src={activesBgMob} alt="Balls & Brains Primal Coffee" className="absolute inset-0 w-full h-full object-cover object-[center_12%]" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2" style={{ background: 'linear-gradient(to top, #070707 14%, rgba(7,7,7,0))' }} />
+            <div className="relative pt-[72vw] px-4 pb-1 flex flex-col gap-3">
+              {ACTIVES.map(([names, benefit, image]) => (
+                <ActiveCard key={names} names={names} benefit={benefit} image={image} />
               ))}
             </div>
           </div>
+        </div>
 
-          <div className="mt-10 text-center">
-            <p className="text-white font-bold text-[1.125rem] md:text-[1.5rem]">
-              Total Cost With Primal Coffee: <span className="text-bb-green-light">$29/month</span>
-            </p>
-            <p className="text-white/40 text-[0.75rem] italic mt-3 max-w-[40rem] mx-auto">
-              * The regular price of one pouch is $69. But today, when you buy 3 pouches, 2 are completely free.
-            </p>
+        {/* Desktop — imagem cover de fundo ocupando 100vh + título e cards (2 colunas, 5ª centralizada) sobrepostos à direita */}
+        <div className="hidden md:flex relative min-h-screen items-center">
+          <img src={activesBgDesk} alt="Balls & Brains Primal Coffee" className="absolute inset-0 w-full h-full object-cover object-[30%_center]" />
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(90deg, rgba(7,7,7,0) 16%, rgba(7,7,7,0.55) 44%, rgba(7,7,7,0.9) 70%, rgba(7,7,7,0.96) 100%)' }}
+          />
+          {/* Fade no 1/4 inferior → cor do fundo da próxima seção (#0a0908) pra transição suave */}
+          <div className="absolute inset-x-0 bottom-0 h-1/4" style={{ background: 'linear-gradient(to top, #0a0908 0%, rgba(10,9,8,0) 100%)' }} />
+          <div className="relative max-w-[71.25rem] w-full mx-auto px-4 py-16 flex justify-end">
+            <div className="w-[58%] lg:w-[54%]">
+              <SectionHeading className="text-center mb-6 lg:mb-8">
+                All The Actives Your Body Needs <span className="text-gold-gradient">In Just One Cup</span>
+              </SectionHeading>
+              <div className="grid grid-cols-2 gap-3 lg:gap-4">
+                {ACTIVES.map(([names, benefit, image], i) =>
+                  i === ACTIVES.length - 1 && ACTIVES.length % 2 === 1 ? (
+                    <div key={names} className="col-span-2 mx-auto w-[calc(50%-0.5rem)]">
+                      <ActiveCard names={names} benefit={benefit} image={image} />
+                    </div>
+                  ) : (
+                    <ActiveCard key={names} names={names} benefit={benefit} image={image} />
+                  )
+                )}
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div className="mt-10 md:mt-14 px-4 text-center pb-2 md:pb-3">
+          <p className="text-white font-bold text-[1.375rem] md:text-[2rem]">
+            Total Cost With Primal Coffee: <span className="text-bb-green-light">$29/month</span>
+          </p>
+          <p className="text-white/50 text-[0.875rem] md:text-[0.9375rem] italic mt-3 max-w-[40rem] mx-auto">
+            * The regular price of one pouch is $69. But today, when you buy 3 pouches, 2 are completely free.
+          </p>
         </div>
       </section>
 
@@ -1216,7 +1311,17 @@ export default function TestosteroneCoffee() {
                 <p>In practice, taking that away from you is like taking the fuel out of a car.</p>
               </div>
             </FadeUp>
-            <Pending label="Inserir gráfico (declínio de testosterona após os 40)" className="min-h-[16rem] h-full" />
+            <FadeUp delay={0.15}>
+              <img
+                src={declineChart}
+                alt="Testosterone declines about 3% per year after 40 — roughly 30% lower by age 50."
+                width={1000}
+                height={1000}
+                loading="lazy"
+                decoding="async"
+                className="w-full rounded-2xl border border-bb-gold-dark/30"
+              />
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -1230,11 +1335,22 @@ export default function TestosteroneCoffee() {
               Most Male Problems After 40 Are <span className="text-gold-gradient">Directly Caused by Low Testosterone</span>
             </SectionHeading>
           </div>
-          <div className="divide-y divide-[#2d2d2d]">
-            {SYMPTOM_GROUPS.map((symptoms, i) => (
-              <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 md:p-8 items-center">
-                <div>
-                  <ul className="space-y-2 mb-3">
+          <div className="p-5 md:p-8 space-y-5 md:space-y-7">
+            {SYMPTOM_GROUPS.map(({ symptoms, image, heading }, i) =>
+              image ? (
+                <FadeUp key={i} delay={Math.min(i, 3) * 0.05}>
+                  <img
+                    src={image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="block w-full max-w-[46rem] mx-auto rounded-2xl border border-bb-separator"
+                  />
+                </FadeUp>
+              ) : (
+                <FadeUp key={i} className="w-full max-w-[46rem] mx-auto rounded-2xl border border-bb-separator bg-black/40 p-6 md:p-8">
+                  <p className="text-white font-bold text-center text-[1.0625rem] md:text-[1.25rem] mb-5">{heading}</p>
+                  <ul className="space-y-2 mb-4 max-w-[28rem] mx-auto">
                     {symptoms.map((s) => (
                       <li key={s} className="flex items-start gap-2.5 text-white/75 text-[0.9375rem]">
                         <span className="text-bb-gold-mid mt-0.5 shrink-0">➜</span>
@@ -1242,13 +1358,12 @@ export default function TestosteroneCoffee() {
                       </li>
                     ))}
                   </ul>
-                  <p className="flex items-center gap-2 text-white font-bold text-[0.9375rem]">
+                  <p className="flex items-center justify-center gap-2 text-white font-bold text-[0.9375rem]">
                     <span className="text-bb-green-light">✓</span> Low Testosterone
                   </p>
-                </div>
-                <Pending label="Estudo científico" className="min-h-[8rem] h-full" />
-              </div>
-            ))}
+                </FadeUp>
+              ),
+            )}
           </div>
         </div>
       </section>
