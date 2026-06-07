@@ -1237,14 +1237,14 @@ export default function TestosteroneCoffee() {
       {/* All The Actives In One Cup — imagem do produto como BACKGROUND cover da seção; título + 6 cards (2×3) sobrepostos à direita (mockup do designer) */}
       <section className="overflow-hidden">
         {/* Mobile — título acima + imagem cover de fundo (pt abre espaço pro produto) + 6 cards empilhados */}
-        <div className="md:hidden pt-16">
-          <SectionHeading className="text-center px-4 mb-8 !text-[1.5rem]">
+        <div className="md:hidden pt-20">
+          <SectionHeading className="text-center px-4 mb-10 !text-[1.5rem]">
             All The Actives Your Body Needs <span className="text-gold-gradient">In Just One Cup</span>
           </SectionHeading>
           <div className="relative overflow-hidden">
-            <img src={activesBgMob} alt="Balls & Brains Primal Coffee" className="absolute inset-x-0 bottom-0 w-full h-[calc(100%+1.25rem)] object-cover object-top" />
+            <img src={activesBgMob} alt="Balls & Brains Primal Coffee" className="absolute inset-x-0 bottom-0 w-full h-[calc(100%+2.75rem)] object-cover object-top" />
             <div className="absolute inset-x-0 bottom-0 h-1/2" style={{ background: 'linear-gradient(to top, #070707 14%, rgba(7,7,7,0))' }} />
-            <div className="relative pt-[87vw] px-4 pb-1 flex flex-col gap-3">
+            <div className="relative pt-[112vw] px-4 pb-1 flex flex-col gap-3">
               {ACTIVES.map(([names, benefit, image]) => (
                 <ActiveCard key={names} names={names} benefit={benefit} image={image} />
               ))}
