@@ -1024,11 +1024,11 @@ export default function TestosteroneCoffee() {
             ))}
           </div>
 
-          <FadeUp delay={0.1} className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mt-10 md:mt-12 max-w-[52rem] mx-auto">
+          <FadeUp delay={0.1} className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-6 gap-y-3.5 mt-10 md:mt-12 max-w-[52rem] mx-auto">
             {TRUST_CHECKS.map((c) => (
-              <div key={c} className="flex items-center gap-3">
-                <CheckCircle className="w-[1.875rem] h-[1.875rem] shrink-0" />
-                <span className="text-white text-[1.1875rem] md:text-[1.3125rem]">{c}</span>
+              <div key={c} className="flex items-center gap-2 md:gap-2.5">
+                <CheckCircle className="w-5 h-5 md:w-[1.625rem] md:h-[1.625rem] shrink-0" />
+                <span className="text-white text-[0.8125rem] md:text-[1.125rem] whitespace-nowrap">{c}</span>
               </div>
             ))}
           </FadeUp>
@@ -1241,10 +1241,10 @@ export default function TestosteroneCoffee() {
           <SectionHeading className="text-center px-4 mb-8 !text-[1.5rem]">
             All The Actives Your Body Needs <span className="text-gold-gradient">In Just One Cup</span>
           </SectionHeading>
-          <div className="relative">
-            <img src={activesBgMob} alt="Balls & Brains Primal Coffee" className="absolute inset-0 w-full h-full object-cover object-[center_12%]" />
+          <div className="relative overflow-hidden">
+            <img src={activesBgMob} alt="Balls & Brains Primal Coffee" className="absolute inset-x-0 bottom-0 w-full h-[calc(100%+1.25rem)] object-cover object-top" />
             <div className="absolute inset-x-0 bottom-0 h-1/2" style={{ background: 'linear-gradient(to top, #070707 14%, rgba(7,7,7,0))' }} />
-            <div className="relative pt-[72vw] px-4 pb-1 flex flex-col gap-3">
+            <div className="relative pt-[87vw] px-4 pb-1 flex flex-col gap-3">
               {ACTIVES.map(([names, benefit, image]) => (
                 <ActiveCard key={names} names={names} benefit={benefit} image={image} />
               ))}
