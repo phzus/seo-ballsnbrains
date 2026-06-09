@@ -71,8 +71,8 @@ export default function HowToMake() {
 
   const [text1Visible, setText1Visible] = useState(false);
   const [text2Visible, setText2Visible] = useState(false);
-  const [pinPx, setPinPx] = useState(3800);
-  const thresholdsRef = useRef({ t1Start: 500, t1End: 1700, t2Start: 2600, t2End: 3800 });
+  const [pinPx, setPinPx] = useState(2150);
+  const thresholdsRef = useRef({ t1Start: 250, t1End: 1000, t2Start: 1400, t2End: 2150 });
 
   useVisibilityPlayback(videoRef);
 
@@ -82,8 +82,8 @@ export default function HowToMake() {
     const computeThresholds = () => {
       const isMobile = window.innerWidth < 768;
       const t = isMobile
-        ? { lead: 300, win: 750, gap: 600 }
-        : { lead: 500, win: 1200, gap: 900 };
+        ? { lead: 150, win: 500, gap: 300 }
+        : { lead: 250, win: 750, gap: 400 };
       const t1End = t.lead + t.win;
       const t2Start = t1End + t.gap;
       const t2End = t2Start + t.win;
