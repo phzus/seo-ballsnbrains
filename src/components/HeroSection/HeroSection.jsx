@@ -59,41 +59,33 @@ export default function HeroSection() {
         paddingTop: 'var(--navbar-height, 0px)',
       }}
     >
-      {/* Vídeo do produto — contido, com moldura em degradê (feather) que dissolve
-          no bg-bb-dark, dando a impressão de que o vídeo se estende na página.
-          Mobile: largura travada em 100vw pra o feather lateral não ser cortado. */}
-      <div
-        aria-hidden="true"
+      <video
+        ref={videoRef}
+        key={isMobile ? 'mobile' : 'desktop'}
         className={
           isMobile
-            ? 'absolute top-16 left-0 right-0 max-w-[100vw] z-0 pointer-events-none'
-            : 'absolute top-1/2 right-0 -translate-y-1/2 w-[55%] max-w-[55rem] z-0 pointer-events-none'
+            ? 'absolute top-18 -left-18 min-w-[118%] z-0 pointer-events-none'
+            : 'absolute top-12 left-1/2 -translate-x-1/2 h-full w-auto min-w-full max-w-none object-cover object-bottom z-0 pointer-events-none'
         }
-        style={{ aspectRatio: isMobile ? '650 / 1156' : '1820 / 1024' }}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        poster={videoPoster}
+        disablePictureInPicture
+        disableRemotePlayback
+        aria-hidden="true"
       >
-        <video
-          ref={videoRef}
-          key={isMobile ? 'mobile' : 'desktop'}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster={videoPoster}
-          disablePictureInPicture
-          disableRemotePlayback
-        >
-          <source src={videoWebm} type="video/webm" />
-          <source src={videoMp4} type="video/mp4" />
-        </video>
+        <source src={videoWebm} type="video/webm" />
+        <source src={videoMp4} type="video/mp4" />
+      </video>
 
-        {/* Moldura em degradê — cada borda dissolve no bg-bb-dark */}
-        <div className="absolute inset-x-0 top-0 h-[18%] bg-linear-to-b from-bb-dark to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-[18%] bg-linear-to-t from-bb-dark to-transparent" />
-        <div className="absolute inset-y-0 left-0 w-[15%] bg-linear-to-r from-bb-dark to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-[15%] bg-linear-to-l from-bb-dark to-transparent" />
-      </div>
+      {/* Bottom fade — desktop only, suaviza transição com a próxima section (bg-bb-dark) */}
+      <div
+        aria-hidden="true"
+        className="hidden md:block absolute inset-x-0 bottom-0 h-40 z-5 pointer-events-none bg-linear-to-t from-bb-dark to-transparent"
+      />
 
       <div className="relative z-10 max-w-[71.25rem] mx-auto w-full pt-72 pb-16 md:pt-4 md:pb-14 flex flex-col items-start justify-end md:justify-center gap-5">
         <span className="inline-flex items-center justify-center gap-2 bg-[rgba(32,32,32,0.80)] border border-bb-separator rounded-full px-4 md:px-8 py-2 text-white text-[0.8rem] md:text-[0.875rem] font-medium">
